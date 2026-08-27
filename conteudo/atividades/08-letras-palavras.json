@@ -1,0 +1,157 @@
+{
+  "eixo": "letras_palavras",
+  "atividades": [
+    {
+      "id": "LP-001", "nivel": 1, "subhabilidade": "reconhecer_letra", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "escolha_imagem",
+      "comando": "Toque na letra A.",
+      "nota_professor": "Sempre em caixa alta: é a forma que a criança de pré-escola reconhece e produz primeiro.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "A", "rotulo": "letra A", "correta": true },
+        { "texto": "M", "rotulo": "letra M", "correta": false },
+        { "texto": "S", "rotulo": "letra S", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Essa é o A.", "erro": "O A é a primeira letra do alfabeto, parece uma casinha." }
+    },
+    {
+      "id": "LP-002", "nivel": 1, "subhabilidade": "reconhecer_letra", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "escolha_imagem",
+      "comando": "Toque na letra M.",
+      "nota_professor": "Distratores com formas visualmente distintas para não virar teste de percepção visual.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "M", "rotulo": "letra M", "correta": true },
+        { "texto": "O", "rotulo": "letra O", "correta": false },
+        { "texto": "T", "rotulo": "letra T", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Essa é o M, de mamãe.", "erro": "O M tem duas montanhinhas." }
+    },
+    {
+      "id": "LP-003", "nivel": 2, "subhabilidade": "vogais", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "selecao_multipla",
+      "comando": "Toque em TODAS as vogais.",
+      "nota_professor": "Cinco opções, três corretas. Cante as vogais com a turma antes.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "A", "rotulo": "letra A", "correta": true },
+        { "texto": "E", "rotulo": "letra E", "correta": true },
+        { "texto": "U", "rotulo": "letra U", "correta": true },
+        { "texto": "P", "rotulo": "letra P", "correta": false },
+        { "texto": "R", "rotulo": "letra R", "correta": false }
+      ]},
+      "feedback": { "acerto": "Muito bem! A, E, U são vogais.", "erro": "As vogais são A, E, I, O, U. Procure de novo." }
+    },
+    {
+      "id": "LP-004", "nivel": 2, "subhabilidade": "letra_inicial", "bncc_sugerido": ["EI03EF09", "EI03EF02"],
+      "tipo": "escolha_imagem",
+      "comando": "Com que letra começa CASA?",
+      "nota_professor": "Ponte entre som e letra. Fale a palavra, alongue o som inicial e só então mostre as letras.",
+      "estimulo": { "tipo": "imagem", "asset": "img/objetos/casa.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "C", "rotulo": "letra C", "correta": true },
+        { "texto": "D", "rotulo": "letra D", "correta": false },
+        { "texto": "P", "rotulo": "letra P", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! CASA começa com C.", "erro": "Fale devagar: Cccasa. Qual letra faz esse som?" }
+    },
+    {
+      "id": "LP-005", "nivel": 2, "subhabilidade": "letra_inicial", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "escolha_imagem",
+      "comando": "Toque na figura que começa com a letra B.",
+      "nota_professor": "Caminho inverso do LP-004: parte da letra e chega na palavra.",
+      "estimulo": { "tipo": "imagem", "asset": "img/letras/B.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": true },
+        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false },
+        { "imagem": "img/natureza/sol.png", "rotulo": "sol", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! BOLA começa com B.", "erro": "Fale o nome de cada figura e escute qual começa com B." }
+    },
+    {
+      "id": "LP-006", "nivel": 2, "subhabilidade": "maiuscula_minuscula", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "parear",
+      "comando": "Ligue cada letra grande à letra pequena igual.",
+      "nota_professor": "Correspondência entre os dois traçados da mesma letra. Escolha letras cujas formas maiúscula e minúscula sejam bem diferentes, senão é trivial.",
+      "interacao": { "pares": [
+        { "a": { "texto": "A", "rotulo": "A maiúsculo" }, "b": { "texto": "a", "rotulo": "a minúsculo" } },
+        { "a": { "texto": "B", "rotulo": "B maiúsculo" }, "b": { "texto": "b", "rotulo": "b minúsculo" } },
+        { "a": { "texto": "E", "rotulo": "E maiúsculo" }, "b": { "texto": "e", "rotulo": "e minúsculo" } }
+      ]},
+      "feedback": { "acerto": "Muito bem! Cada letra com o seu par.", "erro": "É a mesma letra, só que escrita de outro jeito." }
+    },
+    {
+      "id": "LP-007", "nivel": 2, "subhabilidade": "palavra_imagem", "bncc_sugerido": ["EI03EF08", "EI03EF09"],
+      "tipo": "parear",
+      "comando": "Ligue cada palavra à figura certa.",
+      "nota_professor": "Palavras curtas e com letras iniciais diferentes, para que a criança possa se apoiar só na inicial. Ao tocar na palavra o jogo deve lê-la em voz alta.",
+      "interacao": { "pares": [
+        { "a": { "texto": "BOLA", "rotulo": "bola" }, "b": { "imagem": "img/objetos/bola.png", "rotulo": "figura da bola" } },
+        { "a": { "texto": "PATO", "rotulo": "pato" }, "b": { "imagem": "img/animais/pato.png", "rotulo": "figura do pato" } },
+        { "a": { "texto": "SOL", "rotulo": "sol" }, "b": { "imagem": "img/natureza/sol.png", "rotulo": "figura do sol" } }
+      ]},
+      "feedback": { "acerto": "Perfeito! Você leu pelas letras.", "erro": "Olhe a primeira letra da palavra e pense no som." }
+    },
+    {
+      "id": "LP-008", "nivel": 3, "subhabilidade": "discriminar_palavra", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "escolha_imagem",
+      "comando": "Toque na palavra BOLA.",
+      "nota_professor": "As três palavras começam com BO e têm o mesmo comprimento: força a leitura além da primeira letra. Item difícil de propósito.",
+      "estimulo": { "tipo": "imagem", "asset": "img/objetos/bola.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "BOLA", "rotulo": "bola", "correta": true },
+        { "texto": "BOTA", "rotulo": "bota", "correta": false },
+        { "texto": "BOCA", "rotulo": "boca", "correta": false }
+      ]},
+      "feedback": { "acerto": "Muito bem! Essa é BOLA.", "erro": "Todas começam igual. Olhe a letra do meio." }
+    },
+    {
+      "id": "LP-009", "nivel": 3, "subhabilidade": "letra_final", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "escolha_imagem",
+      "comando": "Com que letra TERMINA a palavra SOL?",
+      "nota_professor": "Letra final. Mostre a palavra escrita e peça para a criança apontar a última letra com o dedo.",
+      "estimulo": { "tipo": "imagem", "asset": "img/palavras/sol-escrito.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "L", "rotulo": "letra L", "correta": true },
+        { "texto": "S", "rotulo": "letra S", "correta": false },
+        { "texto": "O", "rotulo": "letra O", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! SOL termina com L.", "erro": "A última é a que fica no fim, do lado direito." }
+    },
+    {
+      "id": "LP-010", "nivel": 3, "subhabilidade": "montar_palavra", "bncc_sugerido": ["EI03EF09"],
+      "tipo": "ordenar_sequencia",
+      "comando": "Coloque as letras na ordem certa para escrever SOL.",
+      "nota_professor": "Escrita apoiada. O jogo deve falar o som de cada letra ao ser tocada.",
+      "estimulo": { "tipo": "imagem", "asset": "img/natureza/sol.png" },
+      "interacao": { "itens": [
+        { "texto": "S", "rotulo": "letra S", "ordem": 1 },
+        { "texto": "O", "rotulo": "letra O", "ordem": 2 },
+        { "texto": "L", "rotulo": "letra L", "ordem": 3 }
+      ]},
+      "feedback": { "acerto": "Perfeito! S-O-L, sol.", "erro": "Fale bem devagar: Sss... ooo... lll. Qual vem primeiro?" }
+    },
+    {
+      "id": "LP-011", "nivel": 3, "subhabilidade": "comprimento_da_palavra", "bncc_sugerido": ["EI03EF09", "EI03ET01"],
+      "tipo": "escolha_imagem",
+      "comando": "Qual palavra é a MAIOR, a que tem mais letras?",
+      "nota_professor": "Cuidado clássico: a criança tende a escolher a palavra do objeto maior. Aqui BOI (objeto grande) é a menor palavra, de propósito.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "ELEFANTE", "rotulo": "elefante", "correta": true },
+        { "texto": "BOI", "rotulo": "boi", "correta": false },
+        { "texto": "PATO", "rotulo": "pato", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! ELEFANTE tem muitas letras.", "erro": "Conte as letrinhas de cada palavra, não o tamanho do bicho." }
+    },
+    {
+      "id": "LP-012", "nivel": 3, "subhabilidade": "nome_proprio", "bncc_sugerido": ["EI03EF09", "EI03EO03"],
+      "tipo": "ordenar_sequencia",
+      "personalizavel": true,
+      "comando": "Coloque as letras na ordem certa para escrever o SEU nome.",
+      "nota_professor": "Item personalizado: o jogo monta as letras a partir do nome cadastrado da criança. O nome próprio é a primeira escrita com sentido para ela — vale mais que qualquer outro item deste eixo. Requer cadastro da turma. O exemplo abaixo usa ANA como fallback quando não houver nome cadastrado.",
+      "interacao": { "itens": [
+        { "texto": "A", "rotulo": "letra A", "ordem": 1 },
+        { "texto": "N", "rotulo": "letra N", "ordem": 2 },
+        { "texto": "A", "rotulo": "letra A", "ordem": 3 }
+      ]},
+      "feedback": { "acerto": "Muito bem! Esse é o seu nome.", "erro": "Olhe o seu crachá e compare letra por letra." }
+    }
+  ]
+}

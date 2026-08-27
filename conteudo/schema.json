@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Arquivo de atividades de um eixo",
+  "type": "object",
+  "required": ["eixo", "atividades"],
+  "properties": {
+    "eixo": { "type": "string" },
+    "atividades": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/atividade" }
+    }
+  },
+  "$defs": {
+    "midia": {
+      "type": "object",
+      "description": "Uma opção mostrada à criança. Use 'imagem' para figuras e 'texto' para letras/numerais (renderizados em fonte grande). 'rotulo' é o nome falado pelo leitor de tela e usado na revisão pedagógica.",
+      "required": ["rotulo"],
+      "properties": {
+        "imagem": { "type": "string" },
+        "texto":  { "type": "string" },
+        "rotulo": { "type": "string" }
+      },
+      "anyOf": [ { "required": ["imagem"] }, { "required": ["texto"] } ]
+    },
+    "atividade": {
+      "type": "object",
+      "required": ["id", "nivel", "subhabilidade", "bncc_sugerido", "tipo", "comando", "interacao", "feedback"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z]{2}-[0-9]{3}$" },
+        "nivel": { "type": "integer", "enum": [1, 2, 3] },
+        "subhabilidade": { "type": "string" },
+        "bncc_sugerido": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "tipo": {
+          "type": "string",
+          "enum": ["escolha_imagem", "selecao_multipla", "arrastar_para_alvo", "ordenar_sequencia", "parear", "contar_toques"]
+        },
+        "comando": {
+          "type": "string",
+          "description": "Texto FALADO à criança. Nunca é exibido como texto a ser lido — nesta faixa etária a criança não lê. Vira áudio: TTS pt-BR no MVP, locução gravada em audio/comandos/<ID>.mp3 depois."
+        },
+        "nota_professor": { "type": "string" },
+        "personalizavel": {
+          "type": "boolean",
+          "description": "true = a atividade usa o nome da criança e precisa do cadastro da turma."
+        },
+        "estimulo": {
+          "type": ["object", "null"],
+          "description": "Mídia apresentada ANTES das opções (som a identificar, história a ouvir, figura-modelo).",
+          "required": ["tipo"],
+          "properties": {
+            "tipo": { "type": "string", "enum": ["audio", "audio_sequencia", "imagem", "narrativa"] },
+            "asset": { "type": "string" },
+            "assets": { "type": "array", "items": { "type": "string" } },
+            "texto": { "type": "string" }
+          }
+        },
+        "interacao": { "type": "object" },
+        "feedback": {
+          "type": "object",
+          "required": ["acerto", "erro"],
+          "properties": {
+            "acerto": { "type": "string" },
+            "erro": {
+              "type": "string",
+              "description": "Nunca corretivo ou negativo: reformula a pista e convida a tentar de novo."
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "tipo": { "const": "escolha_imagem" } } },
+          "then": {
+            "properties": {
+              "interacao": {
+                "required": ["opcoes"],
+                "properties": {
+                  "embaralhar": { "type": "boolean", "default": true },
+                  "opcoes": {
+                    "type": "array", "minItems": 2, "maxItems": 4,
+                    "items": {
+                      "allOf": [ { "$ref": "#/$defs/midia" } ],
+                      "required": ["correta"],
+                      "properties": { "correta": { "type": "boolean" } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "tipo": { "const": "selecao_multipla" } } },
+          "then": {
+            "properties": {
+              "interacao": {
+                "required": ["opcoes"],
+                "properties": {
+                  "embaralhar": { "type": "boolean" },
+                  "opcoes": {
+                    "type": "array", "minItems": 3, "maxItems": 6,
+                    "items": {
+                      "allOf": [ { "$ref": "#/$defs/midia" } ],
+                      "required": ["correta"],
+                      "properties": { "correta": { "type": "boolean" } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "tipo": { "const": "arrastar_para_alvo" } } },
+          "then": {
+            "properties": {
+              "interacao": {
+                "required": ["alvos", "arrastaveis"],
+                "properties": {
+                  "alvos": {
+                    "type": "array", "minItems": 1, "maxItems": 3,
+                    "items": {
+                      "allOf": [ { "$ref": "#/$defs/midia" } ],
+                      "required": ["id"],
+                      "properties": { "id": { "type": "string" } }
+                    }
+                  },
+                  "arrastaveis": {
+                    "type": "array", "minItems": 1, "maxItems": 6,
+                    "items": {
+                      "allOf": [ { "$ref": "#/$defs/midia" } ],
+                      "required": ["alvo"],
+                      "properties": { "alvo": { "type": ["string", "null"], "description": "id do alvo correto; null = distrator que não deve ser arrastado." } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "tipo": { "const": "ordenar_sequencia" } } },
+          "then": {
+            "properties": {
+              "interacao": {
+                "required": ["itens"],
+                "properties": {
+                  "itens": {
+                    "type": "array", "minItems": 3, "maxItems": 5,
+                    "items": {
+                      "allOf": [ { "$ref": "#/$defs/midia" } ],
+                      "required": ["ordem"],
+                      "properties": { "ordem": { "type": "integer", "minimum": 1 } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "tipo": { "const": "parear" } } },
+          "then": {
+            "properties": {
+              "interacao": {
+                "required": ["pares"],
+                "properties": {
+                  "pares": {
+                    "type": "array", "minItems": 2, "maxItems": 4,
+                    "items": {
+                      "type": "object",
+                      "required": ["a", "b"],
+                      "properties": { "a": { "$ref": "#/$defs/midia" }, "b": { "$ref": "#/$defs/midia" } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "tipo": { "const": "contar_toques" } } },
+          "then": {
+            "properties": {
+              "interacao": {
+                "required": ["alvo", "quantidade"],
+                "properties": {
+                  "alvo": { "$ref": "#/$defs/midia" },
+                  "quantidade": { "type": "integer", "minimum": 1, "maximum": 10 }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

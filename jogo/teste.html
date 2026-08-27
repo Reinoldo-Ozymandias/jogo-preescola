@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Autoteste do jogo</title>
+<!-- o palco PRECISA do estilo real: sem o flex de .faixa-arrastaveis os itens
+     empilham e caem fora da viewport, onde elementFromPoint devolve null e o
+     arrastar falha por motivo que não existe no jogo de verdade -->
+<link rel="stylesheet" href="css/estilo.css">
+<style>
+  /* vem depois de estilo.css de propósito */
+  body { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin: 0; background: #14171c; color: #d8dee9; }
+  header { padding: 18px 24px; background: #1b1f26; position: sticky; top: 0; border-bottom: 1px solid #2b313b; }
+  h1 { margin: 0 0 6px; font-size: 17px; }
+  #placar { font-size: 14px; color: #8d99ac; }
+  #placar b.ok { color: #7ec699; } #placar b.mau { color: #e88; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 5px 24px; border-bottom: 1px solid #21262e; }
+  td:first-child { width: 90px; color: #8d99ac; }
+  td:nth-child(2) { width: 170px; color: #6f7b8f; }
+  tr.mau { background: #2a1a1a; } tr.mau td:last-child { color: #ff9a9a; }
+  tr.ok td:last-child { color: #7ec699; }
+  /* o palco precisa estar DENTRO da viewport: o arrastar usa elementFromPoint,
+     que não enxerga nada em coordenada negativa. opacity:0 continua clicável. */
+  #palco { position: fixed; inset: 0; opacity: 0; z-index: 9999; overflow: hidden;
+           display: flex; flex-direction: column; }
+  #t-area { flex: 1; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 18px; padding: 12px; min-height: 0; }
+  #t-acao { display: flex; justify-content: center; padding: 8px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Autoteste do jogo — resolve cada atividade do banco por dentro</h1>
+  <div id="placar">carregando…</div>
+</header>
+<table id="saida"></table>
+<div id="palco"><div id="t-area"></div><div id="t-acao"></div></div>
+<script type="module" src="js/teste.js"></script>
+</body>
+</html>

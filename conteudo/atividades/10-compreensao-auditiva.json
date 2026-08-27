@@ -1,0 +1,157 @@
+{
+  "eixo": "compreensao_auditiva",
+  "atividades": [
+    {
+      "id": "CA-001", "nivel": 1, "subhabilidade": "som_do_cotidiano", "bncc_sugerido": ["EI03TS03", "EI03EF01"],
+      "tipo": "escolha_imagem",
+      "comando": "Escute. Que som é esse?",
+      "nota_professor": "Som ambiente familiar. Verifique o volume da sala antes; fone de ouvido ajuda muito neste eixo.",
+      "estimulo": { "tipo": "audio", "asset": "audio/ambiente/chuva.mp3" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/natureza/chuva.png", "rotulo": "chuva", "correta": true },
+        { "imagem": "img/natureza/fogo.png", "rotulo": "fogo", "correta": false },
+        { "imagem": "img/natureza/vento.png", "rotulo": "vento", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! É som de chuva caindo.", "erro": "Escute de novo e feche os olhos para imaginar o lugar." }
+    },
+    {
+      "id": "CA-002", "nivel": 1, "subhabilidade": "seguir_instrucao", "bncc_sugerido": ["EI03EF01", "EI03CG02"],
+      "tipo": "ordenar_sequencia",
+      "comando": "Toque primeiro no cachorro, depois na bola.",
+      "nota_professor": "Instrução de dois passos. O jogo registra a ORDEM dos toques, não só o acerto das figuras.",
+      "interacao": { "itens": [
+        { "imagem": "img/animais/cachorro.png", "rotulo": "cachorro", "ordem": 1 },
+        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "ordem": 2 },
+        { "imagem": "img/objetos/casa.png", "rotulo": "casa", "ordem": 3 }
+      ]},
+      "feedback": { "acerto": "Isso! Na ordem certinha.", "erro": "Escute de novo: primeiro o cachorro, depois a bola." }
+    },
+    {
+      "id": "CA-003", "nivel": 2, "subhabilidade": "som_do_cotidiano", "bncc_sugerido": ["EI03TS03"],
+      "tipo": "escolha_imagem",
+      "comando": "Escute. O que está fazendo esse barulho?",
+      "nota_professor": "Sons urbanos. Bom gancho para conversar sobre segurança e sobre os sons do bairro.",
+      "estimulo": { "tipo": "audio", "asset": "audio/ambiente/sirene.mp3" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/transporte/ambulancia.png", "rotulo": "ambulância", "correta": true },
+        { "imagem": "img/objetos/telefone.png", "rotulo": "telefone", "correta": false },
+        { "imagem": "img/transporte/moto.png", "rotulo": "moto", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! É a sirene da ambulância.", "erro": "Esse som avisa que alguém precisa de ajuda depressa." }
+    },
+    {
+      "id": "CA-004", "nivel": 2, "subhabilidade": "timbre", "bncc_sugerido": ["EI03TS01", "EI03TS03"],
+      "tipo": "escolha_imagem",
+      "comando": "Escute. Qual instrumento está tocando?",
+      "nota_professor": "Qualidade do som: timbre. Se a escola tiver os instrumentos, toque ao vivo antes.",
+      "estimulo": { "tipo": "audio", "asset": "audio/instrumentos/violao.mp3" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/instrumentos/violao.png", "rotulo": "violão", "correta": true },
+        { "imagem": "img/instrumentos/tambor.png", "rotulo": "tambor", "correta": false },
+        { "imagem": "img/instrumentos/flauta.png", "rotulo": "flauta", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! É o violão, de cordas.", "erro": "Escute de novo: esse som vem de cordas sendo tocadas." }
+    },
+    {
+      "id": "CA-005", "nivel": 2, "subhabilidade": "intensidade", "bncc_sugerido": ["EI03TS03"],
+      "tipo": "escolha_imagem",
+      "comando": "Você vai escutar dois sons. Toque no botão do som mais FORTE.",
+      "nota_professor": "Intensidade (forte/fraco). Cuidado com o volume geral: a diferença deve estar no arquivo, não no volume do aparelho.",
+      "estimulo": { "tipo": "audio_sequencia", "assets": ["audio/intensidade/tambor-forte.mp3", "audio/intensidade/tambor-fraco.mp3"] },
+      "interacao": { "embaralhar": false, "opcoes": [
+        { "imagem": "img/audio/botao-som-1.png", "rotulo": "primeiro som", "correta": true },
+        { "imagem": "img/audio/botao-som-2.png", "rotulo": "segundo som", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! O primeiro foi bem mais forte.", "erro": "Escute os dois de novo: um é forte, o outro é fraquinho." }
+    },
+    {
+      "id": "CA-006", "nivel": 2, "subhabilidade": "compreender_historia", "bncc_sugerido": ["EI03EF04", "EI03EF01"],
+      "tipo": "escolha_imagem",
+      "comando": "Escute a história e responda: o que a Ana levou para a escola?",
+      "nota_professor": "Compreensão literal de história curta. Conte a história duas vezes antes de mostrar as opções.",
+      "estimulo": { "tipo": "narrativa", "asset": "audio/historias/ana-chuva.mp3", "texto": "A Ana acordou e olhou pela janela. Estava chovendo forte. Então ela pegou o guarda-chuva e foi para a escola." },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/objetos/guarda-chuva.png", "rotulo": "guarda-chuva", "correta": true },
+        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": false },
+        { "imagem": "img/roupas/bone.png", "rotulo": "boné", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Ela levou o guarda-chuva.", "erro": "Escute a história de novo e preste atenção no que ela pegou." }
+    },
+    {
+      "id": "CA-007", "nivel": 3, "subhabilidade": "inferir_causa", "bncc_sugerido": ["EI03EF04"],
+      "tipo": "escolha_imagem",
+      "comando": "Escute de novo e responda: POR QUE a Ana levou o guarda-chuva?",
+      "nota_professor": "Agora não é mais literal: exige inferir a causa. Reaproveita a mesma história do CA-006 de propósito.",
+      "estimulo": { "tipo": "narrativa", "asset": "audio/historias/ana-chuva.mp3", "texto": "A Ana acordou e olhou pela janela. Estava chovendo forte. Então ela pegou o guarda-chuva e foi para a escola." },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/natureza/chuva.png", "rotulo": "porque estava chovendo", "correta": true },
+        { "imagem": "img/natureza/sol.png", "rotulo": "porque estava ensolarado", "correta": false },
+        { "imagem": "img/natureza/neve.png", "rotulo": "porque estava frio", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Levou por causa da chuva.", "erro": "Como estava o tempo quando ela olhou pela janela?" }
+    },
+    {
+      "id": "CA-008", "nivel": 3, "subhabilidade": "sequencia_narrativa", "bncc_sugerido": ["EI03EF04", "EI03EF05"],
+      "tipo": "ordenar_sequencia",
+      "comando": "Escute a história e coloque as cenas na ordem em que aconteceram.",
+      "nota_professor": "Sequência temporal de três cenas. É a base do reconto — peça para a criança contar a história com as próprias palavras depois.",
+      "estimulo": { "tipo": "narrativa", "asset": "audio/historias/semente.mp3", "texto": "O João plantou uma sementinha na terra. Todo dia ele regava com água. Depois de muitos dias, nasceu uma flor bonita." },
+      "interacao": { "itens": [
+        { "imagem": "img/historias/semente-1-plantar.png", "rotulo": "plantando a semente", "ordem": 1 },
+        { "imagem": "img/historias/semente-2-regar.png", "rotulo": "regando", "ordem": 2 },
+        { "imagem": "img/historias/semente-3-flor.png", "rotulo": "a flor nasceu", "ordem": 3 }
+      ]},
+      "feedback": { "acerto": "Perfeito! Foi bem assim que aconteceu.", "erro": "O que aconteceu primeiro de tudo na história?" }
+    },
+    {
+      "id": "CA-009", "nivel": 3, "subhabilidade": "seguir_instrucao", "bncc_sugerido": ["EI03EF01", "EI03CG02"],
+      "tipo": "ordenar_sequencia",
+      "comando": "Toque no sol, depois no peixe e por último na casa.",
+      "nota_professor": "Instrução de três passos: exige memória de trabalho auditiva. Fale uma vez só, em ritmo normal.",
+      "interacao": { "itens": [
+        { "imagem": "img/natureza/sol.png", "rotulo": "sol", "ordem": 1 },
+        { "imagem": "img/animais/peixe-m.png", "rotulo": "peixe", "ordem": 2 },
+        { "imagem": "img/objetos/casa.png", "rotulo": "casa", "ordem": 3 }
+      ]},
+      "feedback": { "acerto": "Muito bem! Você lembrou dos três.", "erro": "Repita baixinho a ordem antes de começar a tocar." }
+    },
+    {
+      "id": "CA-010", "nivel": 3, "subhabilidade": "instrucao_com_negacao", "bncc_sugerido": ["EI03EF01"],
+      "tipo": "selecao_multipla",
+      "comando": "Toque em todos os animais, MENOS o gato.",
+      "nota_professor": "Instrução com exclusão. Nesta idade a palavra MENOS costuma ser ignorada — enfatize e faça pausa depois dela.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/animais/cachorro.png", "rotulo": "cachorro", "correta": true },
+        { "imagem": "img/animais/pato.png", "rotulo": "pato", "correta": true },
+        { "imagem": "img/animais/vaca.png", "rotulo": "vaca", "correta": true },
+        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Você deixou o gato de fora.", "erro": "Atenção: todos, MENOS o gato." }
+    },
+    {
+      "id": "CA-011", "nivel": 3, "subhabilidade": "memoria_auditiva", "bncc_sugerido": ["EI03TS01", "EI03TS03"],
+      "tipo": "ordenar_sequencia",
+      "comando": "Escute os três sons e coloque os instrumentos na ordem em que tocaram.",
+      "nota_professor": "Memória auditiva sequencial. Toque a sequência no máximo duas vezes.",
+      "estimulo": { "tipo": "audio_sequencia", "assets": ["audio/instrumentos/tambor.mp3", "audio/instrumentos/flauta.mp3", "audio/instrumentos/chocalho.mp3"] },
+      "interacao": { "itens": [
+        { "imagem": "img/instrumentos/tambor.png", "rotulo": "tambor", "ordem": 1 },
+        { "imagem": "img/instrumentos/flauta.png", "rotulo": "flauta", "ordem": 2 },
+        { "imagem": "img/instrumentos/chocalho.png", "rotulo": "chocalho", "ordem": 3 }
+      ]},
+      "feedback": { "acerto": "Muito bem! Você lembrou a ordem dos sons.", "erro": "Escute de novo e vá apontando enquanto cada som toca." }
+    },
+    {
+      "id": "CA-012", "nivel": 3, "subhabilidade": "andamento", "bncc_sugerido": ["EI03TS01", "EI03TS03"],
+      "tipo": "escolha_imagem",
+      "comando": "Escute a música. Ela está RÁPIDA ou DEVAGAR?",
+      "nota_professor": "Andamento. Deixe a turma se movimentar no ritmo antes de responder — o corpo entende antes da cabeça.",
+      "estimulo": { "tipo": "audio", "asset": "audio/andamento/musica-lenta.mp3" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/audio/tartaruga-devagar.png", "rotulo": "devagar, como a tartaruga", "correta": true },
+        { "imagem": "img/audio/coelho-rapido.png", "rotulo": "rápido, como o coelho", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Essa música é bem devagarinho.", "erro": "Bata palmas junto com a música: você bate rápido ou devagar?" }
+    }
+  ]
+}

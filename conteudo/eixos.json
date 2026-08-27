@@ -1,0 +1,120 @@
+{
+  "versao": "0.1.0",
+  "publico": "Educação Infantil — Pré-escola II (5 a 6 anos)",
+  "aviso_bncc": "Os códigos em 'bncc_sugerido' são um MAPEAMENTO PROPOSTO pelo desenvolvedor, não uma validação pedagógica. Devem ser conferidos com a coordenação pedagógica da Secretaria Municipal de Educação de Brusque antes da entrega final.",
+  "eixos": [
+    {
+      "id": "grandezas_comparacoes",
+      "ordem": 1,
+      "nome": "Grandezas e Comparações",
+      "descricao": "Comparar objetos por tamanho, altura, comprimento, peso, espessura e capacidade; ordenar por grandeza.",
+      "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+      "cor": "#F2994A",
+      "icone": "balanca",
+      "arquivo": "atividades/01-grandezas-comparacoes.json"
+    },
+    {
+      "id": "nocoes_espaciais",
+      "ordem": 2,
+      "nome": "Noções Espaciais",
+      "descricao": "Localizar-se e localizar objetos: em cima/embaixo, dentro/fora, frente/atrás, perto/longe, entre, esquerda/direita.",
+      "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+      "cor": "#2D9CDB",
+      "icone": "bussola",
+      "arquivo": "atividades/02-nocoes-espaciais.json"
+    },
+    {
+      "id": "contagem_quantidades",
+      "ordem": 3,
+      "nome": "Contagem e Quantidades",
+      "descricao": "Contar até 10, relacionar numeral e quantidade, comparar quantidades, sequência numérica (antes/depois/entre).",
+      "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+      "cor": "#27AE60",
+      "icone": "contador",
+      "arquivo": "atividades/03-contagem-quantidades.json"
+    },
+    {
+      "id": "cores",
+      "ordem": 4,
+      "nome": "Cores",
+      "descricao": "Reconhecer e nomear cores primárias e secundárias, agrupar por cor, noção de mistura e de tom claro/escuro.",
+      "campo_experiencia": "Traços, sons, cores e formas",
+      "cor": "#EB5757",
+      "icone": "paleta",
+      "arquivo": "atividades/04-cores.json"
+    },
+    {
+      "id": "animais_habitats",
+      "ordem": 5,
+      "nome": "Animais e seus Habitats",
+      "descricao": "Identificar animais, seus sons, onde vivem, o que comem e como se deslocam; fauna da Mata Atlântica catarinense.",
+      "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+      "cor": "#6FCF97",
+      "icone": "pegada",
+      "arquivo": "atividades/05-animais-habitats.json"
+    },
+    {
+      "id": "consciencia_fonologica",
+      "ordem": 6,
+      "nome": "Consciência Fonológica",
+      "descricao": "Perceber rimas, aliterações, som inicial e som final das palavras — sempre pela escuta, nunca pela leitura.",
+      "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+      "cor": "#BB6BD9",
+      "icone": "onda_som",
+      "arquivo": "atividades/06-consciencia-fonologica.json"
+    },
+    {
+      "id": "consciencia_silabica",
+      "ordem": 7,
+      "nome": "Consciência Silábica",
+      "descricao": "Segmentar palavras em sílabas, contar sílabas, identificar sílaba inicial, juntar sílabas para formar palavras.",
+      "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+      "cor": "#9B51E0",
+      "icone": "palmas",
+      "arquivo": "atividades/07-consciencia-silabica.json"
+    },
+    {
+      "id": "letras_palavras",
+      "ordem": 8,
+      "nome": "Letras e Palavras",
+      "descricao": "Reconhecer letras do alfabeto, vogais, letra inicial e final, relacionar palavra escrita e imagem, escrever o próprio nome.",
+      "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+      "cor": "#F2C94C",
+      "icone": "abc",
+      "arquivo": "atividades/08-letras-palavras.json"
+    },
+    {
+      "id": "percepcao_visual",
+      "ordem": 9,
+      "nome": "Percepção Visual",
+      "descricao": "Discriminar igual/diferente, sombras, parte-todo, padrões, formas geométricas e constância de forma.",
+      "campo_experiencia": "Traços, sons, cores e formas",
+      "cor": "#56CCF2",
+      "icone": "olho",
+      "arquivo": "atividades/09-percepcao-visual.json"
+    },
+    {
+      "id": "compreensao_auditiva",
+      "ordem": 10,
+      "nome": "Compreensão Auditiva",
+      "descricao": "Seguir instruções faladas, identificar sons do cotidiano, qualidades do som e compreender histórias curtas ouvidas.",
+      "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+      "cor": "#F2994A",
+      "icone": "orelha",
+      "arquivo": "atividades/10-compreensao-auditiva.json"
+    }
+  ],
+  "tipos_interacao": {
+    "escolha_imagem": "Uma resposta certa entre 2 e 4 opções. Criança toca na opção. Cobre a maior parte do banco — implemente este primeiro.",
+    "selecao_multipla": "Várias respostas certas; criança toca em todas e confirma. Variação pequena do escolha_imagem.",
+    "arrastar_para_alvo": "Arrastar um ou mais itens até uma ou mais áreas de destino.",
+    "ordenar_sequencia": "Colocar itens em ordem (tamanho, número, etapas de uma história).",
+    "parear": "Ligar itens da coluna A aos correspondentes da coluna B.",
+    "contar_toques": "Tocar N vezes em um objeto — resposta é a contagem de toques."
+  },
+  "niveis": {
+    "1": "Entrada. 2 opções, contraste máximo, vocabulário do dia a dia.",
+    "2": "Intermediário. 3 opções, distratores plausíveis.",
+    "3": "Avançado. 3 a 4 opções, exige raciocínio relacional, negação ou memória."
+  }
+}

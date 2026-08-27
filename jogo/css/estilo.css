@@ -1,0 +1,551 @@
+/* Jogo educacional — Pré-escola II
+   Regras que valem para tudo: alvo de toque nunca menor que 96px, texto grande,
+   contraste alto, animação curta. A criança não lê: o texto na tela é apoio,
+   quem manda é o áudio. */
+
+:root {
+  --fundo: #fdf6ec;
+  --fundo-cartao: #ffffff;
+  --tinta: #33291f;
+  --tinta-suave: #7a6a58;
+  --borda: #e8dcc8;
+  --acerto: #34a853;
+  --acerto-claro: #e6f4ea;
+  --tenta: #f2994a;
+  --tenta-claro: #fdf0e2;
+  --sombra: 0 4px 0 rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .06);
+  --sombra-alta: 0 8px 0 rgba(0, 0, 0, .1), 0 16px 32px rgba(0, 0, 0, .12);
+  --raio: 24px;
+  --fonte: ui-rounded, "Nunito", "Segoe UI Rounded", "Varela Round",
+           system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--fonte);
+  background: var(--fundo);
+  color: var(--tinta);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* ─── telas ─────────────────────────────────────────────────────── */
+
+.tela {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.tela.ativa { display: flex; }
+
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 8px;
+}
+.topo h2 { margin: 0; font-size: clamp(22px, 3.4vw, 32px); }
+
+/* ─── abertura e fim ────────────────────────────────────────────── */
+
+.abertura-conteudo, .fim-conteudo {
+  margin: auto;
+  text-align: center;
+  padding: 32px;
+  max-width: 640px;
+}
+.abertura-emoji { font-size: clamp(72px, 16vw, 132px); line-height: 1; }
+.abertura-conteudo h1, .fim-conteudo h1 {
+  font-size: clamp(30px, 5.5vw, 48px);
+  margin: 16px 0 28px;
+}
+.abertura-nota, .fim-resumo {
+  color: var(--tinta-suave);
+  font-size: clamp(15px, 2.2vw, 19px);
+  margin-top: 22px;
+  line-height: 1.5;
+}
+.fim-estrelas { font-size: clamp(34px, 7vw, 56px); letter-spacing: 6px; min-height: 1.2em; }
+.fim-botoes { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 26px; }
+
+/* ─── botões ────────────────────────────────────────────────────── */
+
+.botao-grande, .botao-secundario {
+  font-family: inherit;
+  font-weight: 800;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 20px 44px;
+  font-size: clamp(19px, 2.8vw, 25px);
+  min-height: 68px;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.botao-grande {
+  background: var(--acerto);
+  color: #fff;
+  box-shadow: 0 5px 0 #268141;
+}
+.botao-secundario {
+  background: var(--fundo-cartao);
+  color: var(--tinta);
+  border: 3px solid var(--borda);
+  box-shadow: 0 5px 0 var(--borda);
+}
+/* ação destrutiva não deve ser o maior alvo da tela */
+.botao-secundario.perigo {
+  color: #c0392b; border-color: #f0c8c2; box-shadow: 0 4px 0 #f0c8c2;
+  margin-top: 26px; padding: 12px 24px; font-size: 15px; min-height: 0;
+}
+.botao-grande:active, .botao-secundario:active { transform: translateY(4px); box-shadow: none; }
+.botao-grande[disabled] { opacity: .45; box-shadow: none; transform: none; cursor: default; }
+
+.botao-icone {
+  font-size: 30px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 3px solid var(--borda);
+  background: var(--fundo-cartao);
+  cursor: pointer;
+  line-height: 1;
+  flex: none;
+}
+.botao-icone:active { transform: scale(.93); }
+.botao-discreto {
+  background: none;
+  border: none;
+  font-size: 26px;
+  opacity: .35;
+  cursor: pointer;
+  padding: 10px;
+}
+.botao-discreto:hover { opacity: .8; }
+
+/* ─── enunciado visível ─────────────────────────────────────────
+   A criança não lê, mas quem está do lado dela lê — e sem o enunciado na
+   tela não dá para saber se a atividade pede o MAIOR ou o MENOR quando o
+   som está desligado. A palavra-chave vem destacada. */
+
+.faixa-enunciado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 22px 10px;
+  flex: none;
+}
+.chip-eixo {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--tinta-suave);
+  border-radius: 999px;
+  padding: 5px 15px;
+  letter-spacing: .03em;
+}
+.enunciado {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(19px, 2.9vw, 29px);
+  font-weight: 700;
+  line-height: 1.3;
+  max-width: 30ch;
+  color: var(--tinta);
+}
+.enunciado b {
+  font-weight: 900;
+  color: var(--destaque, #d1620a);
+  background: var(--destaque-fundo, #fdeacd);
+  border-radius: 8px;
+  padding: 0 7px;
+  white-space: nowrap;
+}
+
+/* ─── barra da atividade ────────────────────────────────────────── */
+
+.barra-jogo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px;
+}
+.progresso-pontos { display: flex; gap: 10px; flex: 1; justify-content: center; }
+.progresso-pontos span {
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: var(--borda);
+  transition: background .2s, transform .2s;
+}
+.progresso-pontos span.feito { background: var(--acerto); }
+.progresso-pontos span.atual { background: var(--tenta); transform: scale(1.45); }
+
+/* ─── estímulo ──────────────────────────────────────────────────── */
+
+.area-estimulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 0 22px;
+  flex: none;
+  max-height: 32vh;
+}
+.area-estimulo:empty { display: none; }
+/* precisa da dupla classe: `.figura` é declarada depois e venceria por ordem */
+.figura.estimulo-figura {
+  width: clamp(110px, 17vw, 170px);
+  max-height: 24vh;
+  flex: none;
+}
+.botao-som {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--fundo-cartao);
+  border: 3px solid var(--borda);
+  border-radius: 999px;
+  padding: 16px 30px;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+}
+.botao-som:active { transform: translateY(3px); }
+.aviso-placeholder {
+  font-size: 13px;
+  color: var(--tinta-suave);
+  background: var(--tenta-claro);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+
+/* ─── área de interação ─────────────────────────────────────────── */
+
+.area-interacao {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 22px;
+  min-height: 0;
+}
+.area-acao {
+  display: flex;
+  justify-content: center;
+  padding: 0 22px 28px;
+  min-height: 0;
+}
+.area-acao:empty { display: none; }
+
+/* opções em grade */
+.grade-opcoes {
+  display: grid;
+  gap: clamp(14px, 2.5vw, 26px);
+  width: 100%;
+  max-width: 1000px;
+  justify-content: center;
+}
+.grade-opcoes.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grade-opcoes.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grade-opcoes.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) { .grade-opcoes.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.opcao {
+  background: var(--fundo-cartao);
+  border: 4px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+  transition: transform .13s ease, border-color .13s, box-shadow .13s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 150px;
+  font-family: inherit;
+}
+.opcao:active { transform: scale(.96); }
+.opcao.certa { border-color: var(--acerto); background: var(--acerto-claro); animation: pulo .45s ease; }
+.opcao.errada { border-color: var(--tenta); background: var(--tenta-claro); animation: tremida .4s ease; }
+.opcao.escolhida { border-color: #2d9cdb; background: #e8f4fc; }
+.opcao.apagada { opacity: .35; }
+.opcao .rotulo {
+  font-size: clamp(13px, 1.7vw, 16px);
+  color: var(--tinta-suave);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.25;
+}
+
+@keyframes pulo {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.09); }
+}
+@keyframes tremida {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-9px); }
+  50% { transform: translateX(9px); }
+  80% { transform: translateX(-5px); }
+}
+
+/* ─── figuras / placeholders ────────────────────────────────────── */
+
+.figura {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background: #f6f1e8;
+}
+.figura img { width: 100%; height: 100%; object-fit: contain; }
+.figura .emoji { line-height: 1; filter: drop-shadow(0 3px 3px rgba(0,0,0,.12)); }
+.figura .conjunto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3%;
+  width: 92%;
+  height: 92%;
+}
+.figura .glifo {
+  font-weight: 900;
+  font-size: clamp(46px, 9vw, 92px);
+  letter-spacing: .02em;
+}
+.figura .cena { position: relative; width: 92%; height: 92%; }
+.figura .cena > span { position: absolute; line-height: 1; }
+
+/* texto puro (letras, numerais, sílabas) */
+.opcao.texto .figura { background: transparent; }
+
+/* ─── arrastar ──────────────────────────────────────────────────── */
+
+.faixa-alvos { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; width: 100%; }
+.alvo {
+  border: 5px dashed var(--borda);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  padding: 12px;
+  min-width: 150px;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+.alvo.sobre { border-color: var(--acerto); background: var(--acerto-claro); transform: scale(1.04); }
+.alvo .figura { width: 78px; }
+.alvo .rotulo { font-size: 14px; font-weight: 800; color: var(--tinta-suave); text-align: center; }
+.alvo .recebidos { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; min-height: 42px; }
+.alvo .recebidos .figura { width: 40px; }
+
+.faixa-arrastaveis { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.arrastavel {
+  width: clamp(84px, 13vw, 116px);
+  background: var(--fundo-cartao);
+  border: 4px solid var(--borda);
+  border-radius: 20px;
+  padding: 8px;
+  cursor: grab;
+  box-shadow: var(--sombra);
+  touch-action: none;
+}
+.arrastavel.movendo {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  box-shadow: var(--sombra-alta);
+  transform: scale(1.12) rotate(-3deg);
+  cursor: grabbing;
+}
+.arrastavel.colocado { opacity: 0; pointer-events: none; }
+
+/* ─── ordenar ───────────────────────────────────────────────────── */
+
+.trilha-slots { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.slot {
+  width: clamp(72px, 11vw, 104px);
+  aspect-ratio: 1;
+  border-radius: 20px;
+  border: 4px dashed var(--borda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--borda);
+  background: var(--fundo-cartao);
+}
+/* NÃO devolver `color: transparent` aqui: escondia também o emoji/glifo que a JS
+   insere no slot, e a criança terminava de ordenar sem ver o que organizou.
+   O número do slot já é removido no JS (`s.textContent = ""`). */
+.slot.cheio {
+  border-style: solid; border-color: var(--acerto); padding: 6px;
+  color: var(--tinta);   /* o slot vazio usa a cor pálida da borda no número;
+                            o preenchido precisa da tinta normal, senão o
+                            conteúdo aparece em bege sobre quase-branco */
+}
+.slot .figura { border-radius: 12px; }
+
+/* ─── parear ────────────────────────────────────────────────────── */
+
+.tabuleiro-pares { display: flex; gap: clamp(24px, 6vw, 72px); justify-content: center; width: 100%; }
+.coluna-pares { display: flex; flex-direction: column; gap: 14px; flex: 1; max-width: 260px; }
+.item-par {
+  background: var(--fundo-cartao);
+  border: 4px solid var(--borda);
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--sombra);
+  font-family: inherit;
+}
+.item-par .figura { width: 62px; flex: none; }
+.item-par .rotulo { font-size: 15px; font-weight: 700; color: var(--tinta-suave); text-align: left; }
+.item-par.selecionado { border-color: #2d9cdb; background: #e8f4fc; transform: scale(1.03); }
+.item-par.ligado { border-color: var(--acerto); background: var(--acerto-claro); cursor: default; }
+
+/* ─── contar toques ─────────────────────────────────────────────── */
+
+.alvo-toque {
+  width: clamp(180px, 32vw, 260px);
+  background: var(--fundo-cartao);
+  border: 6px solid var(--borda);
+  border-radius: 36px;
+  padding: 20px;
+  cursor: pointer;
+  box-shadow: var(--sombra-alta);
+}
+.alvo-toque:active { transform: scale(.94); }
+.contador-toques { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; min-height: 34px; }
+.contador-toques i {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--tenta);
+  animation: pulo .3s ease;
+}
+
+/* ─── camada de retorno ─────────────────────────────────────────── */
+
+.camada-feedback {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+  padding: 24px;
+  pointer-events: none;
+}
+.camada-feedback.visivel { display: flex; }
+.balao-feedback {
+  background: var(--fundo-cartao);
+  border-radius: 34px;
+  padding: 34px 44px;
+  text-align: center;
+  box-shadow: var(--sombra-alta);
+  max-width: 620px;
+  animation: entrada .28s ease;
+  border: 6px solid var(--acerto);
+}
+.balao-feedback.tenta { border-color: var(--tenta); }
+.balao-feedback .rosto { font-size: 68px; line-height: 1; }
+.balao-feedback p {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 800;
+  margin: 14px 0 0;
+  line-height: 1.35;
+}
+@keyframes entrada {
+  from { transform: scale(.8) translateY(18px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* ─── painel do professor ───────────────────────────────────────── */
+
+.painel { padding: 8px 24px 48px; max-width: 820px; }
+.painel h3 { font-size: 19px; margin: 30px 0 12px; }
+.painel-controles { display: flex; flex-direction: column; gap: 14px; }
+.controle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--fundo-cartao);
+  border: 2px solid var(--borda);
+  border-radius: 16px;
+  padding: 14px 18px;
+}
+.controle input[type="number"] { width: 74px; }
+.controle input[type="range"] { flex: 1; min-width: 120px; }
+.controle output { font-variant-numeric: tabular-nums; font-weight: 800; min-width: 3.2em; text-align: right; }
+.controle select {
+  flex: 1; min-width: 0;             /* sem isto o texto longo estoura no celular */
+  font-family: inherit; font-size: 15px; padding: 6px;
+}
+.controle input, .controle select { accent-color: var(--acerto); }
+
+.linha-desempenho { margin-bottom: 12px; }
+.linha-desempenho .cabeca {
+  display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; margin-bottom: 5px;
+}
+.linha-desempenho .barra { height: 15px; border-radius: 999px; background: var(--borda); overflow: hidden; }
+.linha-desempenho .barra i { display: block; height: 100%; border-radius: 999px; }
+
+.painel-atencao ul { margin: 0; padding-left: 22px; line-height: 1.7; font-size: 15px; }
+.painel-atencao .vazio, .painel-desempenho .vazio { color: var(--tinta-suave); font-size: 15px; }
+.painel-nota { color: var(--tinta-suave); font-size: 14px; line-height: 1.6; margin-top: 20px; }
+
+/* ─── acessibilidade e telas pequenas ───────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+@media (max-width: 520px) {
+  .enunciado { font-size: 18px; }
+  .faixa-enunciado { padding: 2px 14px 8px; gap: 6px; }
+  .area-interacao { padding: 12px; gap: 14px; }
+  .tabuleiro-pares { gap: 14px; }
+}
+
+/* amostra de cor pura — placeholder das atividades de mistura e de tom */
+.figura .amostra-cor {
+  width: 68%;
+  aspect-ratio: 1;
+  border-radius: 20px;
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, .14), 0 3px 8px rgba(0, 0, 0, .14);
+}
+
+/* moldura neutra de "ilustração ainda não existe" */
+.figura .figura-ausente { font-size: min(38cqw, 76px); opacity: .3; }
+
+/* segundo toque da confirmação de apagar */
+.botao-secundario.perigo.armado {
+  background: #c0392b; color: #fff; border-color: #c0392b; box-shadow: 0 4px 0 #8e2b20;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fdf6ec">
+<title>Jogo da Pré-escola</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8E%88%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<!-- ── abertura: precisa de um toque para liberar o áudio no navegador ── -->
+<section id="tela-abertura" class="tela ativa">
+  <div class="abertura-conteudo">
+    <div class="abertura-emoji">🎈</div>
+    <h1>Vamos brincar!</h1>
+    <button id="btn-comecar" class="botao-grande">Começar</button>
+    <p class="abertura-nota">Toque para começar e ligar o som.</p>
+    <button id="btn-professor" class="botao-discreto" title="Área do professor" aria-label="Área do professor">⚙️</button>
+  </div>
+</section>
+
+<!-- ── atividade em andamento ── -->
+<section id="tela-jogo" class="tela">
+  <header class="barra-jogo">
+    <button id="btn-sair" class="botao-icone" aria-label="Voltar">←</button>
+    <div id="progresso-pontos" class="progresso-pontos"></div>
+    <button id="btn-repetir" class="botao-icone" aria-label="Ouvir de novo">🔊</button>
+  </header>
+  <div class="faixa-enunciado">
+    <span id="chip-eixo" class="chip-eixo"></span>
+    <p id="enunciado" class="enunciado"></p>
+  </div>
+  <div id="area-estimulo" class="area-estimulo"></div>
+  <main id="area-interacao" class="area-interacao"></main>
+  <footer id="area-acao" class="area-acao"></footer>
+</section>
+
+<!-- ── fim da sessão ── -->
+<section id="tela-fim" class="tela">
+  <div class="fim-conteudo">
+    <div id="fim-emoji" class="abertura-emoji">🌟</div>
+    <h1 id="fim-titulo">Muito bem!</h1>
+    <div id="fim-estrelas" class="fim-estrelas"></div>
+    <p id="fim-resumo" class="fim-resumo"></p>
+    <div class="fim-botoes">
+      <button id="btn-de-novo" class="botao-grande">Jogar de novo</button>
+      <button id="btn-voltar-eixos" class="botao-secundario">Voltar ao início</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── área do professor ── -->
+<section id="tela-professor" class="tela">
+  <header class="topo">
+    <h2>Área do professor</h2>
+    <button id="btn-fechar-professor" class="botao-discreto" aria-label="Fechar">✕</button>
+  </header>
+  <div class="painel">
+    <div class="painel-controles">
+      <label class="controle">
+        <input type="checkbox" id="opt-todos"> Usar o banco completo (120) em vez do piloto (20)
+      </label>
+      <label class="controle">
+        Atividades por sessão
+        <input type="number" id="opt-tamanho" min="2" max="12" value="6">
+      </label>
+      <label class="controle">
+        Voz
+        <select id="opt-voz"></select>
+      </label>
+      <label class="controle">
+        Velocidade da fala
+        <input type="range" id="opt-velocidade" min="0.6" max="1.2" step="0.05" value="0.9">
+        <output id="saida-velocidade" for="opt-velocidade">0.90×</output>
+      </label>
+    </div>
+    <h3>Desempenho por eixo</h3>
+    <div id="painel-desempenho" class="painel-desempenho"></div>
+    <h3>Habilidades que precisam de atenção</h3>
+    <div id="painel-atencao" class="painel-atencao"></div>
+    <button id="btn-limpar" class="botao-secundario perigo">Apagar todo o histórico</button>
+    <p class="painel-nota">
+      O histórico fica salvo apenas neste navegador, nesta máquina. Nada é enviado para fora.
+    </p>
+  </div>
+</section>
+
+<!-- ── camada de retorno (acerto/erro) ── -->
+<div id="camada-feedback" class="camada-feedback" aria-live="polite"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

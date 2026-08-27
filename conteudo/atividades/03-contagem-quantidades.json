@@ -1,0 +1,158 @@
+{
+  "eixo": "contagem_quantidades",
+  "atividades": [
+    {
+      "id": "CQ-001", "nivel": 1, "subhabilidade": "contar_ate_3", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Conte as maçãs e toque no número certo.",
+      "nota_professor": "Relaciona quantidade e numeral dentro do subitizing (até 3 a criança percebe sem contar).",
+      "estimulo": { "tipo": "imagem", "asset": "img/quantidades/3-macas.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "3", "rotulo": "três", "correta": true },
+        { "texto": "1", "rotulo": "um", "correta": false },
+        { "texto": "5", "rotulo": "cinco", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! São três maçãs.", "erro": "Aponte cada maçã e conte junto comigo: um, dois..." }
+    },
+    {
+      "id": "CQ-002", "nivel": 1, "subhabilidade": "contar_ate_5", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Quantos peixinhos tem no aquário? Toque no número.",
+      "nota_professor": "Peixes espalhados, não enfileirados — força a contagem um a um em vez do reconhecimento de padrão.",
+      "estimulo": { "tipo": "imagem", "asset": "img/quantidades/5-peixes.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "5", "rotulo": "cinco", "correta": true },
+        { "texto": "4", "rotulo": "quatro", "correta": false },
+        { "texto": "6", "rotulo": "seis", "correta": false }
+      ]},
+      "feedback": { "acerto": "Muito bem! Cinco peixinhos.", "erro": "Conte devagar, tocando em cada peixinho uma vez só." }
+    },
+    {
+      "id": "CQ-003", "nivel": 2, "subhabilidade": "contar_ate_10", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Conte as estrelas e toque no número certo.",
+      "nota_professor": "Oito elementos: aqui aparece o erro clássico de contar o mesmo item duas vezes. Observe se a criança usa o dedo.",
+      "estimulo": { "tipo": "imagem", "asset": "img/quantidades/8-estrelas.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "8", "rotulo": "oito", "correta": true },
+        { "texto": "7", "rotulo": "sete", "correta": false },
+        { "texto": "9", "rotulo": "nove", "correta": false },
+        { "texto": "10", "rotulo": "dez", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Oito estrelas.", "erro": "Vá tocando em cada estrela uma vez, sem repetir." }
+    },
+    {
+      "id": "CQ-004", "nivel": 2, "subhabilidade": "mais_menos", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Toque no prato que tem MAIS biscoitos.",
+      "nota_professor": "Comparação de quantidades. Os biscoitos devem ter o mesmo tamanho nos dois pratos, para não comparar área.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/quantidades/prato-6-biscoitos.png", "rotulo": "prato com seis biscoitos", "correta": true },
+        { "imagem": "img/quantidades/prato-3-biscoitos.png", "rotulo": "prato com três biscoitos", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Esse prato tem mais.", "erro": "Conte os biscoitos de cada prato e compare." }
+    },
+    {
+      "id": "CQ-005", "nivel": 2, "subhabilidade": "mesma_quantidade", "bncc_sugerido": ["EI03ET07", "EI03ET05"],
+      "tipo": "parear",
+      "comando": "Ligue os grupos que têm a MESMA quantidade.",
+      "nota_professor": "Correspondência um a um entre coleções de objetos diferentes — a quantidade se mantém mesmo mudando o objeto.",
+      "interacao": { "pares": [
+        { "a": { "imagem": "img/quantidades/2-flores.png", "rotulo": "duas flores" }, "b": { "imagem": "img/quantidades/2-borboletas.png", "rotulo": "duas borboletas" } },
+        { "a": { "imagem": "img/quantidades/4-bolas.png", "rotulo": "quatro bolas" }, "b": { "imagem": "img/quantidades/4-patos.png", "rotulo": "quatro patos" } },
+        { "a": { "imagem": "img/quantidades/6-folhas.png", "rotulo": "seis folhas" }, "b": { "imagem": "img/quantidades/6-formigas.png", "rotulo": "seis formigas" } }
+      ]},
+      "feedback": { "acerto": "Perfeito! As quantidades combinam.", "erro": "Conte um grupo, depois conte o outro, e veja se dá o mesmo número." }
+    },
+    {
+      "id": "CQ-006", "nivel": 2, "subhabilidade": "numeral_para_quantidade", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Toque no grupo que tem QUATRO patinhos.",
+      "nota_professor": "Caminho inverso da CQ-001: parte do numeral falado e chega na quantidade.",
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "imagem": "img/quantidades/4-patos.png", "rotulo": "quatro patinhos", "correta": true },
+        { "imagem": "img/quantidades/3-patos.png", "rotulo": "três patinhos", "correta": false },
+        { "imagem": "img/quantidades/5-patos.png", "rotulo": "cinco patinhos", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Quatro patinhos.", "erro": "Conte quantos tem em cada grupo até achar o que tem quatro." }
+    },
+    {
+      "id": "CQ-007", "nivel": 2, "subhabilidade": "produzir_quantidade", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "arrastar_para_alvo",
+      "comando": "Coloque TRÊS flores no vaso.",
+      "nota_professor": "Produzir uma quantidade é mais difícil que reconhecê-la. Há mais flores disponíveis do que o pedido, de propósito.",
+      "interacao": {
+        "alvos": [ { "id": "vaso", "imagem": "img/objetos/vaso.png", "rotulo": "vaso" } ],
+        "arrastaveis": [
+          { "imagem": "img/natureza/flor-1.png", "rotulo": "flor", "alvo": "vaso" },
+          { "imagem": "img/natureza/flor-2.png", "rotulo": "flor", "alvo": "vaso" },
+          { "imagem": "img/natureza/flor-3.png", "rotulo": "flor", "alvo": "vaso" },
+          { "imagem": "img/natureza/flor-4.png", "rotulo": "flor", "alvo": null },
+          { "imagem": "img/natureza/flor-5.png", "rotulo": "flor", "alvo": null }
+        ]
+      },
+      "feedback": { "acerto": "Muito bem! Exatamente três flores.", "erro": "Conte enquanto coloca: uma, duas, três. Depois pare." }
+    },
+    {
+      "id": "CQ-008", "nivel": 3, "subhabilidade": "sucessor", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Qual número vem DEPOIS do cinco?",
+      "nota_professor": "Sequência numérica oral. Mostre a fita numérica de 1 a 10 na parede se a criança travar.",
+      "estimulo": { "tipo": "imagem", "asset": "img/numeros/fita-1-a-10.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "6", "rotulo": "seis", "correta": true },
+        { "texto": "4", "rotulo": "quatro", "correta": false },
+        { "texto": "7", "rotulo": "sete", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Depois do cinco vem o seis.", "erro": "Conte alto: um, dois, três, quatro, cinco... e o próximo?" }
+    },
+    {
+      "id": "CQ-009", "nivel": 3, "subhabilidade": "entre_numerico", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "Qual número fica ENTRE o três e o cinco?",
+      "nota_professor": "Junta a noção espacial de 'entre' com a sequência numérica.",
+      "estimulo": { "tipo": "imagem", "asset": "img/numeros/fita-1-a-10.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "4", "rotulo": "quatro", "correta": true },
+        { "texto": "2", "rotulo": "dois", "correta": false },
+        { "texto": "6", "rotulo": "seis", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! O quatro fica no meio.", "erro": "Ache o três e o cinco na fita: quem está no meio deles?" }
+    },
+    {
+      "id": "CQ-010", "nivel": 3, "subhabilidade": "ordenar_numerais", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "ordenar_sequencia",
+      "comando": "Coloque os números em ordem, do menor para o maior.",
+      "nota_professor": "Cinco numerais embaralhados. Verifica se a sequência numérica está estável fora da recitação decorada.",
+      "interacao": { "itens": [
+        { "texto": "1", "rotulo": "um", "ordem": 1 },
+        { "texto": "2", "rotulo": "dois", "ordem": 2 },
+        { "texto": "3", "rotulo": "três", "ordem": 3 },
+        { "texto": "4", "rotulo": "quatro", "ordem": 4 },
+        { "texto": "5", "rotulo": "cinco", "ordem": 5 }
+      ]},
+      "feedback": { "acerto": "Perfeito! Um, dois, três, quatro, cinco.", "erro": "Comece pelo menor de todos e vá contando." }
+    },
+    {
+      "id": "CQ-011", "nivel": 3, "subhabilidade": "contar_acoes", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "contar_toques",
+      "comando": "Bata SEIS vezes no tambor.",
+      "nota_professor": "Contar ações no tempo é diferente de contar objetos parados. O jogo deve dar um retorno sonoro a cada toque.",
+      "interacao": { "alvo": { "imagem": "img/instrumentos/tambor.png", "rotulo": "tambor" }, "quantidade": 6 },
+      "feedback": { "acerto": "Isso! Seis batidas certinhas.", "erro": "Conte em voz alta a cada batida e pare no seis." }
+    },
+    {
+      "id": "CQ-012", "nivel": 3, "subhabilidade": "adicao_concreta", "bncc_sugerido": ["EI03ET07"],
+      "tipo": "escolha_imagem",
+      "comando": "No lago tinha dois patinhos. Chegou mais um. Quantos patinhos ficaram no lago?",
+      "nota_professor": "Primeira ideia de juntar quantidades, sempre em contexto de história e com apoio da figura. Não é conta armada.",
+      "estimulo": { "tipo": "imagem", "asset": "img/cenas/lago-2-mais-1-pato.png" },
+      "interacao": { "embaralhar": true, "opcoes": [
+        { "texto": "3", "rotulo": "três", "correta": true },
+        { "texto": "2", "rotulo": "dois", "correta": false },
+        { "texto": "4", "rotulo": "quatro", "correta": false }
+      ]},
+      "feedback": { "acerto": "Isso! Dois mais um dá três.", "erro": "Conte todos os patinhos que estão no lago agora." }
+    }
+  ]
+}

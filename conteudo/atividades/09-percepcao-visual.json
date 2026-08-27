@@ -1,0 +1,480 @@
+{
+  "eixo": "percepcao_visual",
+  "atividades": [
+    {
+      "id": "PV-001",
+      "nivel": 1,
+      "subhabilidade": "igual_ao_modelo",
+      "bncc_sugerido": [
+        "EI03ET05",
+        "EI03TS02"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Olhe o desenho de cima. Toque na figura IGUAL a ele.",
+      "nota_professor": "Discriminação visual básica com modelo visível o tempo todo.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/formas/modelo-estrela-amarela.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/formas/estrela-amarela.png",
+            "rotulo": "estrela amarela",
+            "correta": true
+          },
+          {
+            "imagem": "img/formas/estrela-azul.png",
+            "rotulo": "estrela azul",
+            "correta": false
+          },
+          {
+            "imagem": "img/formas/coracao-amarelo.png",
+            "rotulo": "coração amarelo",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! Essa é igualzinha.",
+        "erro": "Compare a forma e a cor com o desenho de cima."
+      }
+    },
+    {
+      "id": "PV-002",
+      "nivel": 1,
+      "subhabilidade": "achar_o_diferente",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Toque na figura que é DIFERENTE das outras.",
+      "nota_professor": "Sem modelo: a criança precisa comparar os elementos entre si. Três opções bastam nesta faixa; quatro já cansa a varredura visual.",
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/formas/quadrado-vermelho.png",
+            "rotulo": "quadrado vermelho",
+            "correta": true
+          },
+          {
+            "imagem": "img/formas/circulo-vermelho-1.png",
+            "rotulo": "círculo vermelho",
+            "correta": false
+          },
+          {
+            "imagem": "img/formas/circulo-vermelho-2.png",
+            "rotulo": "círculo vermelho",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! Só ele não é redondo.",
+        "erro": "Três são iguais e um é diferente. Ache o diferente."
+      }
+    },
+    {
+      "id": "PV-003",
+      "nivel": 2,
+      "subhabilidade": "formas_geometricas",
+      "bncc_sugerido": [
+        "EI03ET05",
+        "EI03TS02"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Toque no TRIÂNGULO.",
+      "nota_professor": "Nomear formas geométricas. Use um triângulo em posição não canônica (girado) numa segunda rodada.",
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/formas/triangulo.png",
+            "rotulo": "triângulo",
+            "correta": true
+          },
+          {
+            "imagem": "img/formas/quadrado.png",
+            "rotulo": "quadrado",
+            "correta": false
+          },
+          {
+            "imagem": "img/formas/circulo.png",
+            "rotulo": "círculo",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! O triângulo tem três pontas.",
+        "erro": "O triângulo é o que tem três lados e três pontas."
+      }
+    },
+    {
+      "id": "PV-004",
+      "nivel": 2,
+      "subhabilidade": "forma_no_objeto",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Toque no objeto que tem forma de CÍRCULO.",
+      "nota_professor": "Transfere a forma geométrica para objetos do mundo real.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/formas/circulo.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/objetos/relogio-parede.png",
+            "rotulo": "relógio redondo",
+            "correta": true
+          },
+          {
+            "imagem": "img/escola/livro.png",
+            "rotulo": "livro",
+            "correta": false
+          },
+          {
+            "imagem": "img/alimentos/fatia-pizza.png",
+            "rotulo": "fatia de pizza",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! O relógio é redondo como o círculo.",
+        "erro": "Procure o objeto que é todo redondinho."
+      }
+    },
+    {
+      "id": "PV-005",
+      "nivel": 2,
+      "subhabilidade": "sombra",
+      "bncc_sugerido": [
+        "EI03ET05",
+        "EI03ET02"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Qual sombra é a do coelho?",
+      "nota_professor": "Reconhecimento pela silhueta, sem cor nem detalhe interno. Faça teatro de sombras antes se for a primeira vez.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/animais/coelho.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/sombras/sombra-coelho.png",
+            "rotulo": "sombra de orelhas compridas",
+            "correta": true
+          },
+          {
+            "imagem": "img/sombras/sombra-gato.png",
+            "rotulo": "sombra de gato",
+            "correta": false
+          },
+          {
+            "imagem": "img/sombras/sombra-passaro.png",
+            "rotulo": "sombra de passarinho",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! Olhe as orelhas compridas.",
+        "erro": "Compare o contorno: o que mais parece com o coelho?"
+      }
+    },
+    {
+      "id": "PV-006",
+      "nivel": 2,
+      "subhabilidade": "parte_todo",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Qual pedaço completa o quebra-cabeça?",
+      "nota_professor": "Relação parte-todo. O buraco deve estar numa região com detalhe visual claro, não num fundo liso.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/quebracabeca/cena-com-buraco.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/quebracabeca/peca-certa.png",
+            "rotulo": "peça certa",
+            "correta": true
+          },
+          {
+            "imagem": "img/quebracabeca/peca-errada-1.png",
+            "rotulo": "outra peça",
+            "correta": false
+          },
+          {
+            "imagem": "img/quebracabeca/peca-errada-2.png",
+            "rotulo": "outra peça",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! Encaixou direitinho.",
+        "erro": "Olhe o que falta no desenho e procure essa parte."
+      }
+    },
+    {
+      "id": "PV-007",
+      "nivel": 2,
+      "subhabilidade": "memoria_visual",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "parear",
+      "comando": "Ligue as figuras iguais.",
+      "nota_professor": "Pareamento simples de idênticos. Se quiser aumentar a dificuldade, vire as cartas para virar jogo da memória.",
+      "interacao": {
+        "pares": [
+          {
+            "a": {
+              "imagem": "img/formas/estrela-amarela.png",
+              "rotulo": "estrela amarela"
+            },
+            "b": {
+              "imagem": "img/formas/estrela-amarela.png",
+              "rotulo": "estrela amarela"
+            }
+          },
+          {
+            "a": {
+              "imagem": "img/formas/coracao-vermelho.png",
+              "rotulo": "coração vermelho"
+            },
+            "b": {
+              "imagem": "img/formas/coracao-vermelho.png",
+              "rotulo": "coração vermelho"
+            }
+          },
+          {
+            "a": {
+              "imagem": "img/formas/lua-azul.png",
+              "rotulo": "lua azul"
+            },
+            "b": {
+              "imagem": "img/formas/lua-azul.png",
+              "rotulo": "lua azul"
+            }
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Perfeito! Todos os pares certinhos.",
+        "erro": "Procure duas figuras exatamente iguais."
+      }
+    },
+    {
+      "id": "PV-008",
+      "nivel": 3,
+      "subhabilidade": "padrao_ab",
+      "bncc_sugerido": [
+        "EI03ET05",
+        "EI03ET07"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Olhe a fileira. O que vem AGORA?",
+      "nota_professor": "Padrão AB (bola-cubo-bola-cubo...). Peça para a criança falar a sequência em voz alta antes de escolher.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/padroes/padrao-ab.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/cores/cubo-vermelho.png",
+            "rotulo": "cubo vermelho",
+            "correta": true
+          },
+          {
+            "imagem": "img/cores/bola-azul.png",
+            "rotulo": "bola azul",
+            "correta": false
+          },
+          {
+            "imagem": "img/formas/estrela-amarela.png",
+            "rotulo": "estrela amarela",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! O padrão continua.",
+        "erro": "Fale a fileira em voz alta e veja o que se repete."
+      }
+    },
+    {
+      "id": "PV-009",
+      "nivel": 3,
+      "subhabilidade": "padrao_abb",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Olhe a fileira. O que vem AGORA?",
+      "nota_professor": "Padrão ABB, bem mais difícil que AB. Se a turma não consolidou o AB, pule este item.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/padroes/padrao-abb.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/formas/triangulo-verde.png",
+            "rotulo": "triângulo verde",
+            "correta": true
+          },
+          {
+            "imagem": "img/formas/circulo-vermelho-1.png",
+            "rotulo": "círculo vermelho",
+            "correta": false
+          },
+          {
+            "imagem": "img/formas/quadrado.png",
+            "rotulo": "quadrado",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Muito bem! Você pegou o ritmo.",
+        "erro": "Um, depois dois iguais, um, depois dois iguais..."
+      }
+    },
+    {
+      "id": "PV-010",
+      "nivel": 3,
+      "subhabilidade": "constancia_de_forma",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Toque na figura igual ao modelo, mesmo que esteja VIRADA.",
+      "nota_professor": "Constância de forma sob rotação. Habilidade importante para depois não confundir b/d e p/q na alfabetização.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/formas/modelo-seta.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/formas/seta-girada.png",
+            "rotulo": "a mesma seta, girada",
+            "correta": true
+          },
+          {
+            "imagem": "img/formas/seta-espelhada.png",
+            "rotulo": "seta espelhada",
+            "correta": false
+          },
+          {
+            "imagem": "img/formas/seta-diferente.png",
+            "rotulo": "outra seta",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! É a mesma figura, só girou.",
+        "erro": "Imagine girar a figura com a mão até encaixar no modelo."
+      }
+    },
+    {
+      "id": "PV-011",
+      "nivel": 3,
+      "subhabilidade": "figura_fundo",
+      "bncc_sugerido": [
+        "EI03ET05"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Tem um gato escondido no desenho. Onde ele está?",
+      "nota_professor": "Separar figura de fundo em cena poluída. Dê tempo: este item não deve ter cronômetro.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/cenas/quintal-com-gato-escondido.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/cenas/recorte-arbusto.png",
+            "rotulo": "atrás do arbusto",
+            "correta": true
+          },
+          {
+            "imagem": "img/cenas/recorte-varal.png",
+            "rotulo": "no varal",
+            "correta": false
+          },
+          {
+            "imagem": "img/cenas/recorte-portao.png",
+            "rotulo": "no portão",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Achou! Ele estava bem escondidinho.",
+        "erro": "Olhe devagar, pedaço por pedaço do desenho."
+      }
+    },
+    {
+      "id": "PV-012",
+      "nivel": 3,
+      "subhabilidade": "detectar_mudanca",
+      "bncc_sugerido": [
+        "EI03ET05",
+        "EI03ET02"
+      ],
+      "tipo": "escolha_imagem",
+      "comando": "Compare os dois desenhos. O que MUDOU?",
+      "nota_professor": "Comparação de duas cenas quase idênticas. Item de fechamento; exige atenção sustentada.",
+      "estimulo": {
+        "tipo": "imagem",
+        "asset": "img/cenas/comparar-antes-depois.png"
+      },
+      "interacao": {
+        "embaralhar": true,
+        "opcoes": [
+          {
+            "imagem": "img/cenas/detalhe-chapeu.png",
+            "rotulo": "o chapéu do menino",
+            "correta": true
+          },
+          {
+            "imagem": "img/cenas/detalhe-arvore.png",
+            "rotulo": "a árvore",
+            "correta": false
+          },
+          {
+            "imagem": "img/cenas/detalhe-cachorro.png",
+            "rotulo": "o cachorro",
+            "correta": false
+          }
+        ]
+      },
+      "feedback": {
+        "acerto": "Isso! O chapéu mudou de cor.",
+        "erro": "Olhe uma parte de cada vez nos dois desenhos."
+      }
+    }
+  ]
+}
