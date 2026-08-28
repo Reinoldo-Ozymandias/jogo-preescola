@@ -277,36 +277,36 @@
   {
    "id": "GC-006",
    "nivel": 2,
-   "subhabilidade": "cheio_vazio",
+   "subhabilidade": "maior_menor",
    "bncc_sugerido": [
     "EI03ET01"
    ],
    "tipo": "escolha_imagem",
-   "comando": "Toque no copo CHEIO.",
-   "nota_professor": "Noção de capacidade. Os três copos são iguais; muda só o nível do suco.",
+   "comando": "Toque no copo MAIOR.",
+   "nota_professor": "Três copos iguais, só o tamanho muda. Substituiu a versão de cheio/vazio: aquela dependia de o desenho mostrar o nível do suco, e sem ilustração os três copos saíam idênticos.",
    "interacao": {
     "embaralhar": true,
     "opcoes": [
      {
-      "imagem": "img/objetos/copo-cheio.png",
-      "rotulo": "copo cheio",
+      "imagem": "img/objetos/copo-grande.png",
+      "rotulo": "copo grande",
       "correta": true
      },
      {
-      "imagem": "img/objetos/copo-meio.png",
-      "rotulo": "copo pela metade",
+      "imagem": "img/objetos/copo-medio.png",
+      "rotulo": "copo médio",
       "correta": false
      },
      {
-      "imagem": "img/objetos/copo-vazio.png",
-      "rotulo": "copo vazio",
+      "imagem": "img/objetos/copo-pequeno.png",
+      "rotulo": "copo pequeno",
       "correta": false
      }
     ]
    },
    "feedback": {
-    "acerto": "Muito bem! Esse está cheinho.",
-    "erro": "Procure o copo em que o suco chega até em cima."
+    "acerto": "Muito bem! Esse copo é o maior de todos.",
+    "erro": "Olhe de novo: qual copo é mais alto que os outros dois?"
    },
    "eixo": "grandezas_comparacoes"
   },

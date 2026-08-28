@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Gera a folha de revisão pedagógica a partir do banco.
+"""Gera a folha de revisão pedagógica EM BRANCO, a partir do banco.
 
 A Secretaria não vai ler JSON. Este script vira o mesmo conteúdo em Markdown
 legível, agrupado por eixo, com espaço para o parecer de quem revisa.
+
+O caminho principal hoje é a tela de revisão dentro do jogo (`?revisao=1`), que
+mostra a mesma folha, abre cada atividade no jogo de verdade e exporta o
+Markdown já PREENCHIDO. Este script continua aqui para quem revisa no papel.
 
 Uso:
     python3 ferramentas/revisao.py           > dist/revisao-pedagogica.md

@@ -4,9 +4,10 @@ import { criarFigura, descreverArquivo } from "./midia.js";
 import * as som from "./audio.js";
 import { montarAtividade } from "./atividades.js";
 import * as prog from "./progresso.js";
+import * as revisao from "./revisao.js";
 
 const $ = (id) => document.getElementById(id);
-const TELAS = ["tela-abertura", "tela-jogo", "tela-fim", "tela-professor"];
+const TELAS = ["tela-abertura", "tela-jogo", "tela-fim", "tela-professor", "tela-revisao"];
 
 const estado = {
   banco: null,
@@ -23,95 +24,78 @@ function mostrar(id) {
 
 /* ─── carga do banco ─────────────────────────────────────────────────── */
 
+/* O jogo roda o corte fixo, não o banco inteiro: são as 20 verificadas como
+ * jogáveis hoje (ver conteudo/piloto.json). As outras 100 continuam existindo em
+ * dist/atividades.json e são alcançadas pela tela de revisão e pelo atalho ?id=,
+ * mas ninguém tropeça nelas jogando. */
 async function carregarBanco() {
-  const cfg = prog.config();
-  const arquivo = cfg.bancoCompleto ? "atividades.json" : "piloto.json";
-  const resp = await fetch(`../dist/${arquivo}`, { cache: "no-store" });
-  if (!resp.ok) throw new Error(`${arquivo}: HTTP ${resp.status}`);
+  const resp = await fetch("../dist/piloto.json", { cache: "no-store" });
+  if (!resp.ok) throw new Error(`piloto.json: HTTP ${resp.status}`);
   estado.banco = await resp.json();
 }
 
 /* ─── sessão ─────────────────────────────────────────────────────────── */
 
-const baralhar = (lista) => {
-  const a = lista.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
-
-/* Evita duas atividades seguidas do mesmo eixo: uma sessão que cai três vezes
- * em Cores parece repetitiva mesmo estando sorteada. */
-function espalharPorEixo(lista) {
-  const restantes = lista.slice();
-  const saida = [];
-  while (restantes.length) {
-    let i = restantes.findIndex((a) => a.eixo !== saida.at(-1)?.eixo);
-    if (i === -1) i = 0;                       // só sobrou o mesmo eixo
-    saida.push(restantes.splice(i, 1)[0]);
-  }
-  return saida;
+/** Ordem de leitura: eixo por eixo, na ordem do índice, e dentro do eixo do
+ *  mais fácil para o mais difícil. */
+function porEixoENivel(lista, eixos) {
+  const ordem = new Map(eixos.map((e) => [e.id, e.ordem]));
+  return lista.slice().sort((a, b) =>
+    (ordem.get(a.eixo) ?? 99) - (ordem.get(b.eixo) ?? 99)
+    || a.nivel - b.nivel
+    || a.id.localeCompare(b.id));
 }
 
-/** Sorteia `quantas` atividades revezando entre os eixos, para uma sessão
- *  de 8 não cair quatro vezes no mesmo assunto. */
-function sortearEspalhado(pool, quantas) {
-  const porEixo = {};
-  for (const a of pool) (porEixo[a.eixo] ||= []).push(a);
-  const filas = baralhar(Object.values(porEixo).map(baralhar));
-  const saida = [];
-  let vivas = true;
-  while (saida.length < quantas && vivas) {
-    vivas = false;
-    for (const fila of filas) {
-      if (!fila.length) continue;
-      saida.push(fila.shift());
-      vivas = true;
-      if (saida.length >= quantas) break;
-    }
-  }
-  return saida;
-}
-
-/** Uma sessão só, misturando todos os eixos. */
+/** A sessão é o acervo inteiro, na mesma ordem toda vez.
+ *
+ *  Não há sorteio nem tamanho configurável: são 20 atividades fixas, agrupadas
+ *  por eixo e do fácil para o difícil dentro de cada um. O que sorteava um
+ *  recorte saiu junto com o controle de quantidade — está no histórico do git,
+ *  e volta quando as outras 100 forem conferidas. */
 function iniciarSessao(filtroEixo = null) {
-  const cfg = prog.config();
   const universo = filtroEixo
     ? estado.banco.atividades.filter((a) => a.eixo === filtroEixo.id)
     : estado.banco.atividades;
 
-  const tamanho = Math.max(1, Math.min(cfg.tamanhoSessao, universo.length));
-
-  // Embaralhado, mas subindo de nível ao longo da sessão: a criança entra pelo
-  // fácil. Dentro de cada faixa, reveza os eixos em vez de sortear no monte.
-  const escolhidas = [];
-  for (let nivel = 1; nivel <= 3; nivel++) {
-    const cota = nivel === 3
-      ? tamanho - escolhidas.length
-      : Math.min(Math.ceil(tamanho / 3), tamanho - escolhidas.length);
-    if (cota <= 0) break;
-    escolhidas.push(...sortearEspalhado(universo.filter((a) => a.nivel === nivel), cota));
-  }
-  // algum nível pode não ter itens suficientes: completa com o que sobrou
-  if (escolhidas.length < tamanho) {
-    const jaTem = new Set(escolhidas.map((a) => a.id));
-    escolhidas.push(...sortearEspalhado(
-      universo.filter((a) => !jaTem.has(a.id)), tamanho - escolhidas.length));
-  }
-
   estado.filtroEixo = filtroEixo;
-  estado.sessao = espalharPorEixo(escolhidas.slice(0, tamanho));
+  estado.sessao = porEixoENivel(universo, estado.banco.eixos);
   estado.indice = 0;
   estado.resultados = [];
   mostrar("tela-jogo");
   renderAtividade();
 }
 
+/* A fila de pontos tem de CABER na barra. Com 20 atividades, os 15px de ponto e
+ * 10px de intervalo do desenho original dão 493px: num celular de 390px o fim da
+ * sessão ficava fora da tela, e no monitor a fila parecia o banco inteiro. Então
+ * o ponto encolhe conforme a quantidade — e, se nem no menor tamanho couber,
+ * vira uma barra contínua em vez de transbordar. */
 function pontosDeProgresso() {
   const alvo = $("progresso-pontos");
-  alvo.replaceChildren();
+  alvo.replaceChildren();                 // medir vazio dá a largura disponível
+  const total = estado.sessao.length;
+  // teto próprio: mesmo sobrando tela, uma fila de 490px atravessando o monitor
+  // parece o banco inteiro, não o pedaço de sessão que é
+  const disponivel = Math.min(alvo.clientWidth || 260, 320);
+
+  // maior ponto que ainda cabe; o intervalo acompanha o tamanho
+  let tamanho = 0, intervalo = 0;
+  for (let t = 15; t >= 6; t--) {
+    const g = t >= 12 ? 10 : t >= 9 ? 6 : 3;
+    if (total * t + (total - 1) * g <= disponivel) { tamanho = t; intervalo = g; break; }
+  }
+
+  if (!tamanho) {                         // muitas para desenhar uma a uma
+    alvo.classList.add("em-barra");
+    const trilho = document.createElement("i");
+    trilho.style.width = `${Math.round((estado.indice / total) * 100)}%`;
+    alvo.appendChild(trilho);
+    return;
+  }
+
+  alvo.classList.remove("em-barra");
+  alvo.style.setProperty("--ponto", `${tamanho}px`);
+  alvo.style.setProperty("--intervalo-ponto", `${intervalo}px`);
   estado.sessao.forEach((_, i) => {
     const s = document.createElement("span");
     if (i < estado.indice) s.className = "feito";
@@ -244,20 +228,38 @@ function renderAtividade() {
     acao,
     aoErrar: () => {
       estado.tentativas++;
-      retorno(false, ativ.feedback.erro);
+      retorno(ativ, "erro");
     },
     aoConcluir: () => {
       estado.tentativas++;
       prog.registrar(ativ, estado.tentativas);
       estado.resultados.push({ ativ, tentativas: estado.tentativas });
-      retorno(true, ativ.feedback.acerto, avancar);
+      retorno(ativ, "acerto", avancar);
     },
   });
+
+  // "Toque no sol, depois no peixe e por último na casa" é muita coisa para
+  // guardar de cabeça enquanto se monta a sequência — e, ao contrário da escolha
+  // simples, aqui a criança fica um tempo na tela. O 🔊 do topo já repete, mas é
+  // um ícone pequeno num canto: nestas o botão vem grande, junto da mão.
+  if (ativ.tipo === "ordenar_sequencia") {
+    const repetir = document.createElement("button");
+    repetir.type = "button";
+    repetir.className = "botao-som";
+    repetir.append(
+      Object.assign(document.createElement("span"), { textContent: "🔊" }),
+      Object.assign(document.createElement("span"), { textContent: "Ouvir a pergunta de novo" }),
+    );
+    repetir.addEventListener("click", () => falarComando());
+    acao.appendChild(repetir);
+  }
 
   falarComando();
 }
 
-function retorno(acertou, texto, depois) {
+function retorno(ativ, campo, depois) {
+  const acertou = campo === "acerto";
+  const texto = ativ.feedback[campo];
   const camada = $("camada-feedback");
   camada.replaceChildren();
 
@@ -278,7 +280,7 @@ function retorno(acertou, texto, depois) {
   // Sem esse mínimo, numa máquina sem voz pt-BR instalada a fala falha em 0 ms
   // e o retorno pisca e some antes de a criança registrar o que aconteceu.
   const MINIMO = acertou ? 1500 : 1800;
-  Promise.all([som.falar(texto), som.espera(MINIMO)]).then(() => {
+  Promise.all([som.falarFeedback(ativ.id, campo, texto), som.espera(MINIMO)]).then(() => {
     camada.classList.remove("visivel");
     if (depois) depois();
   });
@@ -313,9 +315,6 @@ function terminar() {
 /* ─── painel do professor ────────────────────────────────────────────── */
 
 function montarPainel() {
-  const cfg = prog.config();
-  $("opt-todos").checked = cfg.bancoCompleto;
-  $("opt-tamanho").value = cfg.tamanhoSessao;
   $("opt-velocidade").value = som.velocidadeAtual();
   $("saida-velocidade").textContent = `${(+som.velocidadeAtual()).toFixed(2)}×`;
 
@@ -368,6 +367,31 @@ function montarPainel() {
   }
 }
 
+/* ─── revisão pedagógica ─────────────────────────────────────────────── */
+
+/* A revisão lê o banco completo por conta própria — não depende de o jogo estar
+ * no piloto ou não. */
+async function abrirRevisao() {
+  mostrar("tela-revisao");
+  try {
+    await revisao.montar({
+      lista: $("rev-lista"),
+      aviso: $("rev-aviso"),
+      andamento: $("rev-andamento"),
+      filtroEixo: $("rev-eixo"),
+      soPendentes: $("rev-pendentes"),
+      baixar: $("btn-rev-baixar"),
+    });
+  } catch (err) {
+    $("rev-lista").replaceChildren();
+    $("rev-lista").append(
+      Object.assign(document.createElement("p"), {
+        className: "vazio",
+        textContent: `Não consegui carregar o banco completo: ${err.message}`,
+      }));
+  }
+}
+
 /* ─── ligações ───────────────────────────────────────────────────────── */
 
 function ligarEventos() {
@@ -386,18 +410,9 @@ function ligarEventos() {
   $("btn-professor").addEventListener("click", () => { montarPainel(); mostrar("tela-professor"); });
   $("btn-fechar-professor").addEventListener("click", () => mostrar("tela-abertura"));
 
-  $("opt-todos").addEventListener("change", async (e) => {
-    prog.salvarConfig({ bancoCompleto: e.target.checked });
-    await carregarBanco();
-    montarPainel();
-  });
-  $("opt-tamanho").addEventListener("change", (e) => {
-    // `|| 6` fazia 0 (que é falsy) virar 6, contrariando o min="2" do campo
-    const bruto = Number.parseInt(e.target.value, 10);
-    const valor = Number.isFinite(bruto) ? Math.max(2, Math.min(12, bruto)) : 6;
-    e.target.value = valor;               // o campo passa a mostrar o valor real usado
-    prog.salvarConfig({ tamanhoSessao: valor });
-  });
+  $("btn-revisao").addEventListener("click", () => abrirRevisao());
+  $("btn-fechar-revisao").addEventListener("click", () => { montarPainel(); mostrar("tela-professor"); });
+
   $("opt-voz").addEventListener("change", (e) => {
     som.definirVoz(e.target.value);
     som.falar("Assim vai ficar a minha voz.");
@@ -434,14 +449,39 @@ function ligarEventos() {
 
 /* ─── partida ────────────────────────────────────────────────────────── */
 
+/* Um atalho que abre uma SESSÃO (?id=, ?eixo=) é consumido: sai da barra de
+ * endereço assim que abre. Sem isso a aba fica presa nele — recarregar caía de
+ * novo na prévia de uma atividade só, que termina no primeiro acerto, e parecia
+ * que o jogo tinha virado uma pergunta. O link continua funcionando ao ser
+ * clicado; só não gruda. ?revisao NÃO é limpo: ali é uma tela onde se fica, e
+ * recarregar deve devolver a mesma tela. */
+function consumirAtalho() {
+  history.replaceState(null, "", location.pathname);
+}
+
 /** ?id=NE-001 abre direto uma atividade; ?eixo=cores abre direto um eixo.
+ *  ?revisao abre a folha de parecer da coordenação.
  *  Serve para depurar um tipo de interação sem jogar até chegar nele, e para
  *  mostrar um item específico numa reunião de revisão. */
-function atalhoDaURL() {
+async function atalhoDaURL() {
   const q = new URLSearchParams(location.search);
   const id = q.get("id");
   if (id) {
-    const ativ = estado.banco.atividades.find((a) => a.id === id.toUpperCase());
+    // O jogo roda os 20 fixos, mas o atalho tem de alcançar as 120: é ele que a
+    // tela de revisão usa no "▶ ver no jogo", e são justamente as outras 100 que
+    // a coordenação precisa ver.
+    let ativ = estado.banco.atividades.find((a) => a.id === id.toUpperCase());
+    if (!ativ) {
+      const resp = await fetch("../dist/atividades.json", { cache: "no-store" });
+      if (resp.ok) {
+        const completo = await resp.json();
+        ativ = completo.atividades.find((a) => a.id === id.toUpperCase());
+        // NÃO trocar estado.banco pelo completo: o atalho mostra UMA atividade,
+        // mas o banco é o que a próxima sessão joga — trocá-lo fazia o "voltar ao
+        // início" abrir uma sessão de 120. O índice de eixos que o chip precisa
+        // já vem no piloto.json, então não falta nada aqui.
+      }
+    }
     if (!ativ) return false;
     estado.filtroEixo = null;
     estado.sessao = [ativ];
@@ -449,12 +489,14 @@ function atalhoDaURL() {
     estado.resultados = [];
     mostrar("tela-jogo");
     renderAtividade();
+    consumirAtalho();
     return true;
   }
+  if (q.has("revisao")) { abrirRevisao(); return true; }
   const eixoId = q.get("eixo");
   if (eixoId) {
     const eixo = estado.banco.eixos.find((e) => e.id === eixoId);
-    if (eixo) { iniciarSessao(eixo); return true; }
+    if (eixo) { iniciarSessao(eixo); consumirAtalho(); return true; }
   }
   return false;
 }
@@ -476,6 +518,6 @@ function atalhoDaURL() {
     return;
   }
   ligarEventos();
-  if (!atalhoDaURL()) return;
+  if (!(await atalhoDaURL())) return;
   som.liberarAudio();
 })();

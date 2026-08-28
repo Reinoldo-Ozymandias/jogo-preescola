@@ -58,14 +58,11 @@
     <button id="btn-fechar-professor" class="botao-discreto" aria-label="Fechar">✕</button>
   </header>
   <div class="painel">
+    <p class="painel-nota" style="margin:0 0 16px">
+      A sessão são as 20 atividades conferidas, sempre as mesmas e na mesma ordem.
+      As outras 100 ficam só na revisão pedagógica, até serem conferidas uma a uma.
+    </p>
     <div class="painel-controles">
-      <label class="controle">
-        <input type="checkbox" id="opt-todos"> Usar o banco completo (120) em vez do piloto (20)
-      </label>
-      <label class="controle">
-        Atividades por sessão
-        <input type="number" id="opt-tamanho" min="2" max="12" value="6">
-      </label>
       <label class="controle">
         Voz
         <select id="opt-voz"></select>
@@ -80,9 +77,42 @@
     <div id="painel-desempenho" class="painel-desempenho"></div>
     <h3>Habilidades que precisam de atenção</h3>
     <div id="painel-atencao" class="painel-atencao"></div>
+    <h3>Revisão pedagógica</h3>
+    <p class="painel-nota" style="margin-top:0">
+      A folha que a coordenação preenche. Todas as 120 atividades, o que cada uma
+      pede, a resposta certa e o código da BNCC proposto — com espaço para o parecer.
+    </p>
+    <button id="btn-revisao" class="botao-secundario">Abrir a revisão pedagógica</button>
     <button id="btn-limpar" class="botao-secundario perigo">Apagar todo o histórico</button>
     <p class="painel-nota">
       O histórico fica salvo apenas neste navegador, nesta máquina. Nada é enviado para fora.
+    </p>
+  </div>
+</section>
+
+<!-- ── revisão pedagógica: a folha da coordenação, dentro do jogo ── -->
+<section id="tela-revisao" class="tela">
+  <header class="topo">
+    <h2>Revisão pedagógica</h2>
+    <button id="btn-fechar-revisao" class="botao-discreto" aria-label="Fechar">✕</button>
+  </header>
+  <div class="painel painel-revisao">
+    <p id="rev-aviso" class="rev-aviso"></p>
+    <div id="rev-andamento" class="rev-andamento"></div>
+    <div class="rev-controles">
+      <label class="controle">
+        Eixo
+        <select id="rev-eixo"></select>
+      </label>
+      <label class="controle">
+        <input type="checkbox" id="rev-pendentes"> Mostrar só o que ainda falta revisar
+      </label>
+      <button id="btn-rev-baixar" class="botao-secundario" disabled>Baixar o parecer (.md)</button>
+    </div>
+    <div id="rev-lista" class="rev-lista"></div>
+    <p class="painel-nota">
+      O parecer fica salvo apenas neste navegador, nesta máquina. Para entregar,
+      baixe o arquivo acima.
     </p>
   </div>
 </section>

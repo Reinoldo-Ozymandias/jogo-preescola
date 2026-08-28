@@ -180,15 +180,34 @@ body {
   gap: 16px;
   padding: 16px 22px;
 }
-.progresso-pontos { display: flex; gap: 10px; flex: 1; justify-content: center; }
+/* min-width:0 é o que impede a fila de empurrar os botões da barra para fora */
+.progresso-pontos {
+  display: flex;
+  gap: var(--intervalo-ponto, 10px);
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+  align-items: center;
+}
 .progresso-pontos span {
-  width: 15px; height: 15px;
+  width: var(--ponto, 15px); height: var(--ponto, 15px);
+  flex: none;
   border-radius: 50%;
   background: var(--borda);
   transition: background .2s, transform .2s;
 }
 .progresso-pontos span.feito { background: var(--acerto); }
 .progresso-pontos span.atual { background: var(--tenta); transform: scale(1.45); }
+
+/* sessão longa demais para uma bolinha por atividade */
+.progresso-pontos.em-barra {
+  height: 12px; max-width: 320px; border-radius: 999px;
+  background: var(--borda); overflow: hidden; display: block;
+}
+.progresso-pontos.em-barra i {
+  display: block; height: 100%; border-radius: 999px;
+  background: var(--acerto); transition: width .25s ease;
+}
 
 /* ─── estímulo ──────────────────────────────────────────────────── */
 
@@ -503,6 +522,8 @@ body {
   padding: 14px 18px;
 }
 .controle input[type="number"] { width: 74px; }
+/* o teto muda com o acervo; a dica evita o adulto descobrir digitando */
+.dica-controle { font-size: 13px; font-weight: 600; color: var(--tinta-suave); }
 .controle input[type="range"] { flex: 1; min-width: 120px; }
 .controle output { font-variant-numeric: tabular-nums; font-weight: 800; min-width: 3.2em; text-align: right; }
 .controle select {
@@ -548,4 +569,121 @@ body {
 /* segundo toque da confirmação de apagar */
 .botao-secundario.perigo.armado {
   background: #c0392b; color: #fff; border-color: #c0392b; box-shadow: 0 4px 0 #8e2b20;
+}
+
+/* ─── revisão pedagógica ────────────────────────────────────────── */
+
+/* Aqui quem lê é adulto: texto menor, denso e — ao contrário do resto do
+   jogo — selecionável, porque o parecer costuma ser copiado para o e-mail. */
+.painel-revisao { max-width: 900px; user-select: text; }
+
+.rev-aviso {
+  background: var(--tenta-claro);
+  border: 2px solid var(--tenta);
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.rev-andamento { margin-bottom: 18px; }
+.rev-contagem { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.rev-andamento .barra { height: 12px; border-radius: 999px; background: var(--borda); overflow: hidden; }
+.rev-andamento .barra i { display: block; height: 100%; border-radius: 999px; transition: width .3s ease; }
+
+.rev-controles { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; margin-bottom: 26px; }
+/* nowrap: sem isto o rótulo longo joga a caixinha para a linha de cima */
+.rev-controles .controle { flex: 1 1 260px; flex-wrap: nowrap; }
+.rev-controles .controle input[type="checkbox"] { width: 22px; height: 22px; flex: none; }
+.rev-controles .botao-secundario { font-size: 16px; padding: 12px 22px; white-space: nowrap; }
+
+.rev-eixo h3 {
+  border-left: 8px solid var(--borda);
+  padding-left: 12px;
+  margin-bottom: 4px;
+}
+.rev-eixo-desc { margin: 0 0 2px 20px; font-size: 15px; color: var(--tinta-suave); font-style: italic; }
+.rev-eixo-campo { margin: 0 0 16px 20px; font-size: 14px; color: var(--tinta-suave); }
+
+.rev-item {
+  background: var(--fundo-cartao);
+  border: 2px solid var(--borda);
+  border-left-width: 8px;
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+/* a cor da borda esquerda é o parecer — dá para varrer a lista de longe */
+.rev-item[data-parecer="ok"]      { border-left-color: var(--acerto); }
+.rev-item[data-parecer="ajustar"] { border-left-color: var(--tenta); }
+.rev-item[data-parecer="remover"] { border-left-color: #c0392b; }
+
+.rev-cabeca { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.rev-id { font-weight: 800; font-size: 15px; letter-spacing: .5px; }
+.rev-meta { font-size: 13px; color: var(--tinta-suave); flex: 1; }
+.rev-selo { font-size: 18px; }
+
+.rev-comando { margin: 0 0 10px; font-size: 18px; font-weight: 700; line-height: 1.4; }
+.rev-linha { margin: 0 0 5px; font-size: 15px; line-height: 1.5; }
+.rev-linha b { color: var(--tinta-suave); font-weight: 700; }
+
+.rev-alerta {
+  margin: 8px 0 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--tenta-claro);
+  border-left: 4px solid var(--tenta);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.rev-alerta b { color: var(--tenta); }
+
+.rev-parecer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+.rev-botao {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 9px 16px;
+  border: 2px solid var(--borda);
+  border-radius: 999px;
+  background: var(--fundo);
+  color: var(--tinta-suave);
+  cursor: pointer;
+}
+.rev-botao[aria-pressed="true"] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.rev-botao:active { transform: scale(.96); }
+
+.rev-abrir {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2d9cdb;
+  text-decoration: none;
+  padding: 9px 4px;
+}
+.rev-abrir:hover { text-decoration: underline; }
+
+.rev-nota {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  min-height: 62px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border: 2px solid var(--borda);
+  border-radius: 12px;
+  background: var(--fundo);
+  color: var(--tinta);
+  resize: vertical;
+}
+.rev-nota[hidden] { display: none; }
+
+.rev-lista .vazio { color: var(--tinta-suave); font-size: 15px; }
+
+@media (max-width: 520px) {
+  .rev-abrir { margin-left: 0; }
+  .rev-comando { font-size: 16px; }
 }

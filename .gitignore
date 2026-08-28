@@ -13,3 +13,6 @@ dist/revisao-piloto.md
 
 __pycache__/
 *.pyc
+
+# venv do Piper, recriado sob demanda (ver vozes/README.md).
+.venv/

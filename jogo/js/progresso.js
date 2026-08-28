@@ -70,17 +70,3 @@ export function precisamAtencao(minimoVezes = 2, limite = 0.5) {
 export function limpar() {
   try { localStorage.removeItem(CHAVE); } catch {}
 }
-
-/* ─── preferências ────────────────────────────────────────────────────── */
-
-const PREF = "jogo.config.v1";
-
-export function config() {
-  let c = {};
-  try { c = JSON.parse(localStorage.getItem(PREF)) || {}; } catch {}
-  return { bancoCompleto: false, tamanhoSessao: 6, ...c };
-}
-
-export function salvarConfig(novo) {
-  try { localStorage.setItem(PREF, JSON.stringify({ ...config(), ...novo })); } catch {}
-}

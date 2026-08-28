@@ -108,7 +108,7 @@
   "3": "Avançado. 3 a 4 opções, exige raciocínio relacional, negação ou memória."
  },
  "corte": "Piloto",
- "corte_descricao": "Corte de 20 atividades — 2 por eixo, uma de nível 1 e uma de nível 2. Todas do tipo escolha_imagem, para que um único componente rode o piloto inteiro. Os 4 tipos de estímulo (nenhum, imagem, áudio, narrativa) aparecem pelo menos uma vez, então o piloto valida o formato de dados por completo.",
+ "corte_descricao": "Corte fixo de 20 atividades — 2 por eixo, todas do tipo escolha_imagem. É o conjunto que FUNCIONA HOJE, sem nenhuma ilustração: cada opção desenha diferente das outras pelo placeholder, e nenhuma depende de som que ainda precise de voz humana. Ficaram de fora, medidas: CO-001/002/003 (os três balões saem idênticos), PV-001 (estrela amarela e azul saem idênticas) e CF-005 (o fonema /f/ alongado sai como o nome da letra). Saiu também CA-006: a história da Ana, lida pelo sintetizador, sai robótica — narrativa longa é justamente onde a voz humana faz falta. Com isso o corte cobre 3 dos 4 tipos de estímulo (nenhum, imagem, áudio); narrativa volta quando alguém gravar.",
  "atividades": [
   {
    "id": "GC-001",
@@ -144,36 +144,36 @@
   {
    "id": "GC-006",
    "nivel": 2,
-   "subhabilidade": "cheio_vazio",
+   "subhabilidade": "maior_menor",
    "bncc_sugerido": [
     "EI03ET01"
    ],
    "tipo": "escolha_imagem",
-   "comando": "Toque no copo CHEIO.",
-   "nota_professor": "Noção de capacidade. Os três copos são iguais; muda só o nível do suco.",
+   "comando": "Toque no copo MAIOR.",
+   "nota_professor": "Três copos iguais, só o tamanho muda. Substituiu a versão de cheio/vazio: aquela dependia de o desenho mostrar o nível do suco, e sem ilustração os três copos saíam idênticos.",
    "interacao": {
     "embaralhar": true,
     "opcoes": [
      {
-      "imagem": "img/objetos/copo-cheio.png",
-      "rotulo": "copo cheio",
+      "imagem": "img/objetos/copo-grande.png",
+      "rotulo": "copo grande",
       "correta": true
      },
      {
-      "imagem": "img/objetos/copo-meio.png",
-      "rotulo": "copo pela metade",
+      "imagem": "img/objetos/copo-medio.png",
+      "rotulo": "copo médio",
       "correta": false
      },
      {
-      "imagem": "img/objetos/copo-vazio.png",
-      "rotulo": "copo vazio",
+      "imagem": "img/objetos/copo-pequeno.png",
+      "rotulo": "copo pequeno",
       "correta": false
      }
     ]
    },
    "feedback": {
-    "acerto": "Muito bem! Esse está cheinho.",
-    "erro": "Procure o copo em que o suco chega até em cima."
+    "acerto": "Muito bem! Esse copo é o maior de todos.",
+    "erro": "Olhe de novo: qual copo é mais alto que os outros dois?"
    },
    "eixo": "grandezas_comparacoes"
   },
@@ -318,39 +318,43 @@
    "eixo": "contagem_quantidades"
   },
   {
-   "id": "CO-001",
-   "nivel": 1,
-   "subhabilidade": "cor_primaria",
+   "id": "CO-004",
+   "nivel": 2,
+   "subhabilidade": "cor_secundaria",
    "bncc_sugerido": [
-    "EI03TS02",
-    "EI03ET05"
+    "EI03TS02"
    ],
    "tipo": "escolha_imagem",
-   "comando": "Toque no balão VERMELHO.",
-   "nota_professor": "Mesma forma (balão) em cores diferentes: isola a cor como único critério.",
+   "comando": "Toque no que é da cor ROXA.",
+   "nota_professor": "Cores secundárias costumam ser as últimas a serem nomeadas. Roxo e laranja podem exigir mais repetições.",
    "interacao": {
     "embaralhar": true,
     "opcoes": [
      {
-      "imagem": "img/cores/balao-vermelho.png",
-      "rotulo": "balão vermelho",
+      "imagem": "img/frutas/uva.png",
+      "rotulo": "uva roxa",
       "correta": true
      },
      {
-      "imagem": "img/cores/balao-azul.png",
-      "rotulo": "balão azul",
+      "imagem": "img/frutas/laranja.png",
+      "rotulo": "laranja",
       "correta": false
      },
      {
-      "imagem": "img/cores/balao-amarelo.png",
-      "rotulo": "balão amarelo",
+      "imagem": "img/frutas/limao.png",
+      "rotulo": "limão verde",
+      "correta": false
+     },
+     {
+      "imagem": "img/frutas/morango.png",
+      "rotulo": "morango vermelho",
       "correta": false
      }
     ]
    },
    "feedback": {
-    "acerto": "Isso! Esse é o vermelho.",
-    "erro": "O vermelho é a cor do morango. Procure de novo."
+    "acerto": "Isso! A uva é roxinha.",
+    "erro": "Roxo é uma cor parecida com o azul misturado com vermelho."
    },
    "eixo": "cores"
   },
@@ -517,43 +521,42 @@
    "eixo": "consciencia_fonologica"
   },
   {
-   "id": "CF-005",
+   "id": "CF-003",
    "nivel": 2,
-   "subhabilidade": "som_inicial",
+   "subhabilidade": "rima",
    "bncc_sugerido": [
-    "EI03EF02",
-    "EI03EF09"
+    "EI03EF02"
    ],
    "tipo": "escolha_imagem",
-   "comando": "FACA começa com o som /f/. Toque na figura que também começa com /f/.",
-   "nota_professor": "Fonema inicial, não a letra. Pronuncie o som alongado (fffff), nunca 'efe'.",
+   "comando": "Escute: MALA. Toque na figura que rima com MALA.",
+   "nota_professor": "O distrator 'bola' tem a mesma estrutura silábica mas não rima — pega quem responde por semelhança geral.",
    "estimulo": {
     "tipo": "audio",
-    "asset": "audio/palavras/faca.mp3"
+    "asset": "audio/palavras/mala.mp3"
    },
    "interacao": {
     "embaralhar": true,
     "opcoes": [
      {
-      "imagem": "img/animais/foca.png",
-      "rotulo": "foca",
+      "imagem": "img/alimentos/bala.png",
+      "rotulo": "bala",
       "correta": true
      },
      {
-      "imagem": "img/objetos/mesa.png",
-      "rotulo": "mesa",
+      "imagem": "img/objetos/bola.png",
+      "rotulo": "bola",
       "correta": false
      },
      {
-      "imagem": "img/animais/urso.png",
-      "rotulo": "urso",
+      "imagem": "img/animais/sapo.png",
+      "rotulo": "sapo",
       "correta": false
      }
     ]
    },
    "feedback": {
-    "acerto": "Isso! Ffffaca, ffffoca.",
-    "erro": "Escute só o comecinho da palavra: fff..."
+    "acerto": "Isso! MALA e BALA terminam igual.",
+    "erro": "Bola termina em -OLA. Procure a que termina em -ALA."
    },
    "eixo": "consciencia_fonologica"
   },
@@ -717,43 +720,38 @@
    "eixo": "letras_palavras"
   },
   {
-   "id": "PV-001",
+   "id": "PV-002",
    "nivel": 1,
-   "subhabilidade": "igual_ao_modelo",
+   "subhabilidade": "achar_o_diferente",
    "bncc_sugerido": [
-    "EI03ET05",
-    "EI03TS02"
+    "EI03ET05"
    ],
    "tipo": "escolha_imagem",
-   "comando": "Olhe o desenho de cima. Toque na figura IGUAL a ele.",
-   "nota_professor": "Discriminação visual básica com modelo visível o tempo todo.",
-   "estimulo": {
-    "tipo": "imagem",
-    "asset": "img/formas/modelo-estrela-amarela.png"
-   },
+   "comando": "Toque na figura que é DIFERENTE das outras.",
+   "nota_professor": "Sem modelo: a criança precisa comparar os elementos entre si. Três opções bastam nesta faixa; quatro já cansa a varredura visual.",
    "interacao": {
     "embaralhar": true,
     "opcoes": [
      {
-      "imagem": "img/formas/estrela-amarela.png",
-      "rotulo": "estrela amarela",
+      "imagem": "img/formas/quadrado-vermelho.png",
+      "rotulo": "quadrado vermelho",
       "correta": true
      },
      {
-      "imagem": "img/formas/estrela-azul.png",
-      "rotulo": "estrela azul",
+      "imagem": "img/formas/circulo-vermelho-1.png",
+      "rotulo": "círculo vermelho",
       "correta": false
      },
      {
-      "imagem": "img/formas/coracao-amarelo.png",
-      "rotulo": "coração amarelo",
+      "imagem": "img/formas/circulo-vermelho-2.png",
+      "rotulo": "círculo vermelho",
       "correta": false
      }
     ]
    },
    "feedback": {
-    "acerto": "Isso! Essa é igualzinha.",
-    "erro": "Compare a forma e a cor com o desenho de cima."
+    "acerto": "Isso! Só ele não é redondo.",
+    "erro": "Três são iguais e um é diferente. Ache o diferente."
    },
    "eixo": "percepcao_visual"
   },
@@ -836,44 +834,43 @@
    "eixo": "compreensao_auditiva"
   },
   {
-   "id": "CA-006",
+   "id": "CA-004",
    "nivel": 2,
-   "subhabilidade": "compreender_historia",
+   "subhabilidade": "timbre",
    "bncc_sugerido": [
-    "EI03EF04",
-    "EI03EF01"
+    "EI03TS01",
+    "EI03TS03"
    ],
    "tipo": "escolha_imagem",
-   "comando": "Escute a história e responda: o que a Ana levou para a escola?",
-   "nota_professor": "Compreensão literal de história curta. Conte a história duas vezes antes de mostrar as opções.",
+   "comando": "Escute. Qual instrumento está tocando?",
+   "nota_professor": "Qualidade do som: timbre. Se a escola tiver os instrumentos, toque ao vivo antes.",
    "estimulo": {
-    "tipo": "narrativa",
-    "asset": "audio/historias/ana-chuva.mp3",
-    "texto": "A Ana acordou e olhou pela janela. Estava chovendo forte. Então ela pegou o guarda-chuva e foi para a escola."
+    "tipo": "audio",
+    "asset": "audio/instrumentos/violao.mp3"
    },
    "interacao": {
     "embaralhar": true,
     "opcoes": [
      {
-      "imagem": "img/objetos/guarda-chuva.png",
-      "rotulo": "guarda-chuva",
+      "imagem": "img/instrumentos/violao.png",
+      "rotulo": "violão",
       "correta": true
      },
      {
-      "imagem": "img/objetos/bola.png",
-      "rotulo": "bola",
+      "imagem": "img/instrumentos/tambor.png",
+      "rotulo": "tambor",
       "correta": false
      },
      {
-      "imagem": "img/roupas/bone.png",
-      "rotulo": "boné",
+      "imagem": "img/instrumentos/flauta.png",
+      "rotulo": "flauta",
       "correta": false
      }
     ]
    },
    "feedback": {
-    "acerto": "Isso! Ela levou o guarda-chuva.",
-    "erro": "Escute a história de novo e preste atenção no que ela pegou."
+    "acerto": "Isso! É o violão, de cordas.",
+    "erro": "Escute de novo: esse som vem de cordas sendo tocadas."
    },
    "eixo": "compreensao_auditiva"
   }

@@ -1,16 +1,26 @@
 {
-  "nome": "Piloto",
-  "descricao": "Corte de 20 atividades — 2 por eixo, uma de nível 1 e uma de nível 2. Todas do tipo escolha_imagem, para que um único componente rode o piloto inteiro. Os 4 tipos de estímulo (nenhum, imagem, áudio, narrativa) aparecem pelo menos uma vez, então o piloto valida o formato de dados por completo.",
-  "ids": [
-    "GC-001", "GC-006",
-    "NE-001", "NE-006",
-    "CQ-002", "CQ-004",
-    "CO-001", "CO-007",
-    "AH-002", "AH-004",
-    "CF-001", "CF-005",
-    "CS-001", "CS-005",
-    "LP-001", "LP-004",
-    "PV-001", "PV-003",
-    "CA-001", "CA-006"
-  ]
+ "nome": "Piloto",
+ "descricao": "Corte fixo de 20 atividades — 2 por eixo, todas do tipo escolha_imagem. É o conjunto que FUNCIONA HOJE, sem nenhuma ilustração: cada opção desenha diferente das outras pelo placeholder, e nenhuma depende de som que ainda precise de voz humana. Ficaram de fora, medidas: CO-001/002/003 (os três balões saem idênticos), PV-001 (estrela amarela e azul saem idênticas) e CF-005 (o fonema /f/ alongado sai como o nome da letra). Saiu também CA-006: a história da Ana, lida pelo sintetizador, sai robótica — narrativa longa é justamente onde a voz humana faz falta. Com isso o corte cobre 3 dos 4 tipos de estímulo (nenhum, imagem, áudio); narrativa volta quando alguém gravar.",
+ "ids": [
+  "GC-001",
+  "GC-006",
+  "NE-001",
+  "NE-006",
+  "CQ-002",
+  "CQ-004",
+  "CO-004",
+  "CO-007",
+  "AH-002",
+  "AH-004",
+  "CF-001",
+  "CF-003",
+  "CS-001",
+  "CS-005",
+  "LP-001",
+  "LP-004",
+  "PV-002",
+  "PV-003",
+  "CA-001",
+  "CA-004"
+ ]
 }

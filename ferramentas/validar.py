@@ -215,8 +215,11 @@ def main():
         }
         (DIST / "atividades.json").write_text(
             json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
-        # comandos falados: um arquivo de áudio por atividade, quando sair do TTS
+        # locuções: o enunciado e os dois retornos de cada atividade. Os retornos
+        # entraram na lista quando deixaram de depender da voz do navegador.
         locucoes = [f"audio/comandos/{a['id']}.mp3" for a in banco]
+        locucoes += [f"audio/feedback/{a['id']}-{c}.mp3"
+                     for a in banco for c in ("acerto", "erro")]
         (DIST / "assets.txt").write_text(
             "\n".join(sorted(assets) + sorted(locucoes)) + "\n", encoding="utf-8")
         kb = (DIST / "atividades.json").stat().st_size / 1024
@@ -232,6 +235,8 @@ def main():
         sel = [por_id[i] for i in piloto_cfg["ids"]]
         p_assets = {x for a in sel for x in coletar_assets(a)}
         p_loc = [f"audio/comandos/{a['id']}.mp3" for a in sel]
+        p_loc += [f"audio/feedback/{a['id']}-{c}.mp3"
+                  for a in sel for c in ("acerto", "erro")]
         (DIST / "piloto.json").write_text(json.dumps(
             {**{k: v for k, v in saida.items() if k != "atividades"},
              "corte": piloto_cfg["nome"],

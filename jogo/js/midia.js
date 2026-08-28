@@ -43,6 +43,10 @@ const EMOJI = {
   boneca: "🪆", carrinho: "🚗", cubo: "🧊", bau: "🧰", armario: "🗄️",
   luz: "💡", chapeu: "🎩", bone: "🧢", sapato: "👟", camiseta: "👕",
   calca: "👖", balao: "🎈", coracao: "❤️", tambor: "🥁", flauta: "🪈",
+  // "cor" saía como moldura vazia em CF-010 ("qual NÃO rima com FLOR"): a
+  // criança via sol, nada e tambor. A busca casa palavra inteira, então isto
+  // não pega "coracao" nem "cortina".
+  cor: "🎨",
   violao: "🎸", chocalho: "🪇", telhado: "🏠", casa: "🏠", portao: "🚪",
   varal: "🧺", moto: "🏍️", ambulancia: "🚑", barco: "⛵", caminhao: "🚚",
   prato: "🍽️", pote: "🫙", tronco: "🪵", caminho: "🛣️", som: "🔊",

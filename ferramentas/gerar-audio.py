@@ -20,13 +20,30 @@ Uso:
     python3 ferramentas/gerar-audio.py --so fala  # fala | sons
 """
 import json
+import math
+import re
+import struct
 import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fala import para_fala
+
 RAIZ = Path(__file__).resolve().parent.parent
 SAIDA = RAIZ / "jogo" / "audio"
 VOZ = RAIZ / "vozes" / "pt_BR-faber-medium.onnx"
+
+# A faber não articula a consoante inicial de palavra ISOLADA: medindo o
+# murmúrio antes da vogal, "mala" sai com 10 ms de /m/ (contra 100 ms na
+# edresson) e o ouvinte escuta "ala"/"nala". Testado e descartado: length-scale
+# até 2.0, noise-w, consoante dobrada, ponto de exclamação, e pôr a palavra como
+# 2ª frase depois de uma pausa — nenhum passa de 20 ms.
+#
+# Por isso as PALAVRAS e SÍLABAS soltas — as que o botão "Ouvir" repete, e que
+# SÃO o exercício nos eixos de consciência fonológica e silábica — usam a outra
+# voz. Frase corrida continua na faber, que é melhor.
+VOZ_PALAVRA = RAIZ / "vozes" / "pt_BR-edresson-low.onnx"
 PIPER = Path(sys.argv[0]).parent  # sobrescrito abaixo se vier por env
 
 # o piper vive num venv fora do projeto; deixa configurável
@@ -62,9 +79,11 @@ SONS = {
     "ambiente/sirene": (
         "aevalsrc='0.35*sin(2*PI*t*(760+260*sin(2*PI*t*0.9)))':d=3.5,"
         "afade=t=in:d=0.2,afade=t=out:st=3.1:d=0.4"),
+    # 0.95 de seno + 0.3 de ruído chega a 1.10: estourava o fundo de escala e
+    # a batida saía com estalo. Medido: max_volume -0.1 dB, 107 amostras no teto.
     "instrumentos/tambor": (
-        "aevalsrc='0.95*exp(-13*t)*sin(2*PI*92*t)"
-        "+0.3*exp(-42*t)*(random(0)-0.5)':d=0.7"),
+        "aevalsrc='0.74*exp(-13*t)*sin(2*PI*92*t)"
+        "+0.234*exp(-42*t)*(random(0)-0.5)':d=0.7"),
     "instrumentos/flauta": (
         "aevalsrc='0.45*(1-exp(-14*t))*exp(-0.7*t)"
         "*sin(2*PI*(880+7*sin(2*PI*5.5*t))*t)"
@@ -76,12 +95,14 @@ SONS = {
     "instrumentos/chocalho": (
         "aevalsrc='1.1*(random(0)-0.5)*pow(max(0,sin(2*PI*9*t)),6)"
         "*exp(-0.35*t)':d=1.6,highpass=f=2500,lowpass=f=11000"),
+    # mesma correção; forte e fraco descem pelo MESMO fator (0.78), senão o
+    # contraste de intensidade — que é a resposta de CA-005 — encolhe junto
     "intensidade/tambor-forte": (
-        "aevalsrc='1.0*exp(-13*t)*sin(2*PI*92*t)"
-        "+0.3*exp(-42*t)*(random(0)-0.5)':d=0.8"),
+        "aevalsrc='0.78*exp(-13*t)*sin(2*PI*92*t)"
+        "+0.234*exp(-42*t)*(random(0)-0.5)':d=0.8"),
     "intensidade/tambor-fraco": (
-        "aevalsrc='0.16*exp(-13*t)*sin(2*PI*92*t)"
-        "+0.05*exp(-42*t)*(random(0)-0.5)':d=0.8"),
+        "aevalsrc='0.125*exp(-13*t)*sin(2*PI*92*t)"
+        "+0.039*exp(-42*t)*(random(0)-0.5)':d=0.8"),
 }
 # melodia lenta: notas emendadas (dó ré mi ré dó), 0.9 s cada
 MELODIA_LENTA = [(262, 0.9), (294, 0.9), (330, 0.9), (294, 0.9), (262, 1.1)]
@@ -102,16 +123,48 @@ def roda(cmd):
     return True
 
 
-def precisa(destino):
-    return FORCE or not destino.exists()
+# O que cada mp3 falado FOI GERADO A PARTIR DE. Sem isto, mudar o texto (ou a
+# normalização de fala) deixa o arquivo velho no lugar para sempre, e ninguém
+# percebe — foi o que aconteceu com "BO-LA", gravado soletrando "bê-ó-la".
+MANIFESTO = SAIDA / "textos-falados.json"
 
 
-def falar(texto, destino):
-    """Piper → wav → mp3 normalizado."""
+def _manifesto():
+    try:
+        return json.loads(MANIFESTO.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def receita(voz, falado):
+    """Como o arquivo foi feito: a voz importa tanto quanto o texto."""
+    return f"{voz.stem}::{falado}"
+
+
+def precisa(destino, falado=None, voz=None):
+    """Falta o arquivo, ou mudou o texto/a voz que o gerou."""
+    if FORCE or not destino.exists():
+        return True
+    if falado is None:
+        return False
+    return _manifesto().get(str(destino.relative_to(SAIDA))) != receita(voz or VOZ, falado)
+
+
+def anotar(destino, falado):
+    m = _manifesto()
+    m[str(destino.relative_to(SAIDA))] = falado
+    MANIFESTO.write_text(json.dumps(m, ensure_ascii=False, indent=1, sort_keys=True),
+                         encoding="utf-8")
+
+
+def falar(texto, destino, voz=None):
+    """Piper → wav → mp3 normalizado. `texto` vem do banco, cru."""
+    voz = voz or VOZ
+    falado = para_fala(texto)
     destino.parent.mkdir(parents=True, exist_ok=True)
     tmp = destino.with_suffix(".tmp.wav")
-    p = subprocess.run([PIPER_BIN, "-m", str(VOZ), "-f", str(tmp)],
-                       input=texto, capture_output=True, text=True)
+    p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(tmp)],
+                       input=falado, capture_output=True, text=True)
     if p.returncode != 0 or not tmp.exists():
         print(f"    ERRO no piper: {p.stderr.strip()[:200]}")
         return False
@@ -120,18 +173,87 @@ def falar(texto, destino):
                "-codec:a", "libmp3lame", "-b:a", "96k", "-ar", "44100",
                str(destino)])
     tmp.unlink(missing_ok=True)
+    if ok:
+        anotar(destino, receita(voz, falado))
     return ok
 
 
-def falar_silabado(silabas, destino, pausa=0.35):
+def ataque_ms(wav):
+    """Quantos ms de consoante se ouvem antes da vogal.
+
+    Proxy medível para "dá para entender o /m/ de mala": o modelo é estocástico
+    e de vez em quando engole a consoante inicial — foi assim que "mala" virou
+    "nala". Janelas de 10 ms; conta as que estão acima do silêncio (-55 dB) e
+    abaixo do patamar de vogal (-28 dB), antes da primeira janela de vogal.
+    """
+    bruto = subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav),
+                            "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+                           capture_output=True).stdout
+    n = len(bruto) // 2
+    if not n:
+        return 0
+    amostras = struct.unpack(f"<{n}h", bruto[:n * 2])
+    janelas = []
+    for i in range(0, len(amostras), 160):
+        b = amostras[i:i + 160]
+        if not b:
+            break
+        r = math.sqrt(sum(x * x for x in b) / len(b))
+        janelas.append(20 * math.log10(r / 32768) if r > 0 else -99)
+    vogal = next((i for i, d in enumerate(janelas) if d > -28), None)
+    if vogal is None:
+        return 0
+    return sum(1 for d in janelas[:vogal] if d > -55) * 10
+
+
+def melhor_tomada(texto, voz, tmp, tomadas=4):
+    """Sintetiza algumas vezes e guarda a de ataque mais claro em `tmp`."""
+    melhor = -1
+    candidato = tmp.with_suffix(".cand.wav")
+    for i in range(tomadas):
+        p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(candidato)],
+                           input=texto, capture_output=True, text=True)
+        if p.returncode != 0 or not candidato.exists():
+            continue
+        nota = ataque_ms(candidato)
+        if nota > melhor:
+            melhor = nota
+            candidato.replace(tmp)
+        if nota >= 80:            # já está claro, não precisa sortear mais
+            break
+    candidato.unlink(missing_ok=True)
+    return melhor
+
+
+def falar_solto(texto, destino, voz):
+    """Palavra ou sílaba ISOLADA: escolhe a melhor tomada antes de gravar."""
+    falado = para_fala(texto)
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    tmp = destino.with_suffix(".tmp.wav")
+    nota = melhor_tomada(falado, voz, tmp)
+    if nota < 0:
+        print(f"    ERRO no piper para '{falado}'")
+        return False
+    if nota < 30:
+        print(f"    AVISO: '{falado}' saiu com só {nota} ms de consoante inicial — "
+              f"pode soar sem o começo")
+    ok = roda(["ffmpeg", "-y", "-v", "error", "-i", str(tmp),
+               "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
+               "-codec:a", "libmp3lame", "-b:a", "96k", "-ar", "44100",
+               str(destino)])
+    tmp.unlink(missing_ok=True)
+    if ok:
+        anotar(destino, receita(voz, falado))
+    return ok
+
+
+def falar_silabado(silabas, destino, pausa=0.35, voz=None):
     """Cada sílaba num arquivo, emendadas com silêncio no meio."""
     destino.parent.mkdir(parents=True, exist_ok=True)
     partes = []
     for i, s in enumerate(silabas):
         w = destino.with_suffix(f".s{i}.wav")
-        p = subprocess.run([PIPER_BIN, "-m", str(VOZ), "-f", str(w)],
-                           input=s, capture_output=True, text=True)
-        if p.returncode != 0:
+        if melhor_tomada(para_fala(s), voz or VOZ, w) < 0:
             print(f"    ERRO no piper para '{s}'")
             return False
         partes.append(w)
@@ -148,18 +270,37 @@ def falar_silabado(silabas, destino, pausa=0.35):
     cadeia = f"{sil_src}{''.join(filtros)}concat=n={len(partes)+n_sil}:v=0:a=1[out]"
     ok = roda(["ffmpeg", "-y", "-v", "error", *entradas,
                "-filter_complex", cadeia, "-map", "[out]",
-               "-af" if False else "-codec:a", "libmp3lame", "-b:a", "96k",
+               "-codec:a", "libmp3lame", "-b:a", "96k",
                str(destino)])
     for w in partes:
         w.unlink(missing_ok=True)
+    if ok:
+        anotar(destino, receita(voz or VOZ, " ".join(para_fala(x) for x in silabas)))
     return ok
+
+
+def pico(arquivo):
+    """max_volume em dBFS, ou None se não der para medir."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(arquivo),
+                        "-af", "volumedetect", "-f", "null", "/dev/null"],
+                       capture_output=True, text=True)
+    m = re.search(r"max_volume:\s*(-?[\d.]+) dB", r.stderr)
+    return float(m.group(1)) if m else None
 
 
 def sintetizar(filtro, destino):
     destino.parent.mkdir(parents=True, exist_ok=True)
-    return roda(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", filtro,
-                 "-ac", "1", "-ar", "44100",
-                 "-codec:a", "libmp3lame", "-b:a", "96k", str(destino)])
+    ok = roda(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", filtro,
+               "-ac", "1", "-ar", "44100",
+               "-codec:a", "libmp3lame", "-b:a", "96k", str(destino)])
+    # Uma expressão do aevalsrc pode passar de 1.0 sem avisar: o ffmpeg corta no
+    # teto e a batida ganha um estalo que ninguém vê no código.
+    if ok:
+        p = pico(destino)
+        if p is not None and p > -0.5:
+            print(f"    AVISO: {destino.name} encosta no teto ({p:+.1f} dBFS) — "
+                  f"provável clipping, baixe a amplitude da expressão")
+    return ok
 
 
 def melodia(notas, destino):
@@ -185,6 +326,11 @@ def melodia(notas, destino):
 
 
 def main():
+    for v in (VOZ, VOZ_PALAVRA):
+        if not v.exists():
+            print(f"Voz não encontrada: {v}")
+            print("Baixe de https://huggingface.co/rhasspy/piper-voices (pt/pt_BR)")
+            return 1
     if not VOZ.exists():
         print(f"Voz não encontrada: {VOZ}")
         print("Baixe de https://huggingface.co/rhasspy/piper-voices (pt/pt_BR/faber/medium)")
@@ -202,25 +348,44 @@ def main():
         print("── enunciados ──")
         for a in banco["atividades"]:
             d = SAIDA / "comandos" / f"{a['id']}.mp3"
-            if not precisa(d):
+            if not precisa(d, para_fala(a["comando"])):
                 pulados += 1
                 continue
             registrar(falar(a["comando"], d))
             print(f"  {a['id']}", end="\r")
         print(" " * 30, end="\r")
 
+        # O retorno de acerto e erro é falado tanto quanto o enunciado. Sem estes
+        # arquivos, ele caía na voz do navegador — que, sem voz pt-BR instalada,
+        # é silêncio, e com espeak lê a notação do banco soletrando.
+        print("── retornos de acerto e erro ──")
+        for a in banco["atividades"]:
+            for campo in ("acerto", "erro"):
+                texto = a["feedback"][campo]
+                d = SAIDA / "feedback" / f"{a['id']}-{campo}.mp3"
+                if not precisa(d, para_fala(texto)):
+                    pulados += 1
+                    continue
+                registrar(falar(texto, d))
+                print(f"  {a['id']} {campo}   ", end="\r")
+        print(" " * 30, end="\r")
+
+        # palavra e sílaba SOLTAS vão na outra voz — ver o comentário em VOZ_PALAVRA
         print("── palavras e sílabas ──")
         for nome, texto in {**PALAVRAS}.items():
             d = SAIDA / "palavras" / f"{nome}.mp3"
-            if precisa(d): registrar(falar(texto, d))
+            if precisa(d, para_fala(texto), VOZ_PALAVRA):
+                registrar(falar_solto(texto, d, VOZ_PALAVRA))
             else: pulados += 1
         for nome, silabas in SILABADO.items():
             d = SAIDA / "palavras" / f"{nome}.mp3"
-            if precisa(d): registrar(falar_silabado(silabas, d))
+            if precisa(d, " ".join(para_fala(x) for x in silabas), VOZ_PALAVRA):
+                registrar(falar_silabado(silabas, d, voz=VOZ_PALAVRA))
             else: pulados += 1
         for nome, texto in SILABAS.items():
             d = SAIDA / "silabas" / f"{nome}.mp3"
-            if precisa(d): registrar(falar(texto, d))
+            if precisa(d, para_fala(texto), VOZ_PALAVRA):
+                registrar(falar_solto(texto, d, VOZ_PALAVRA))
             else: pulados += 1
 
         print("── histórias ──")
@@ -232,7 +397,7 @@ def main():
                 if nome in vistas: continue
                 vistas.add(nome)
                 d = SAIDA / "historias" / f"{nome}.mp3"
-                if precisa(d): registrar(falar(est["texto"], d))
+                if precisa(d, para_fala(est["texto"])): registrar(falar(est["texto"], d))
                 else: pulados += 1
 
     if SO in (None, "sons"):

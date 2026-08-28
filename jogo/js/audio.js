@@ -92,12 +92,64 @@ export function calar() {
   if (tocando) { try { tocando.pause(); } catch {} tocando = null; }
 }
 
+/* ─── notação do banco → texto falado ────────────────────────────────── */
+
+/* Espelho de ferramentas/fala.py — leia o porquê lá. Em resumo: o banco escreve
+ * "BO-LA", "SapaTO" e "CA + SA = CASA" para o OLHO, e o sintetizador lê isso ao
+ * pé da letra ("bê-ó-la", "sapa tê-ó", "cá mais sá igual casa"). Aqui só entra
+ * em ação quando o mp3 gravado falta e sobra a voz do navegador.
+ * Mudou lá, mude aqui. */
+
+const SILABA_FALADA = {
+  bo: "bô", ba: "bá", pa: "pá", to: "tô", lo: "lô", ne: "nê", le: "lê",
+};
+const MAIUSCULA = "A-ZÁÀÂÃÉÊÍÓÔÕÚÜÇ";
+const MINUSCULA = "a-zà-ÿ";
+const TEM_CAIXA_ALTA = new RegExp(`(?:^|-)[${MAIUSCULA}]+(?:-|$)`);
+const COLADA = new RegExp(`[${MINUSCULA}][${MAIUSCULA}]`);
+const SO_MAIUSCULA = new RegExp(`^[${MAIUSCULA}]{2,}$`);
+const PONTUACAO = /^[.,!?:;…()"']+|[.,!?:;…()"']+$/g;
+
+function pedaco(p) {
+  const baixa = p.toLowerCase();
+  if (SILABA_FALADA[baixa]) return SILABA_FALADA[baixa];
+  // CAIXA ALTA de 2+ letras vira acrônimo soletrado; a ênfase é visual
+  return SO_MAIUSCULA.test(p) ? baixa : p;
+}
+
+function token(t) {
+  const nucleo = t.replace(PONTUACAO, "");
+  if (!nucleo) return t;
+  const i = t.indexOf(nucleo);
+  const antes = t.slice(0, i);
+  const depois = t.slice(i + nucleo.length);
+  let novo;
+  if (nucleo.includes("-") && TEM_CAIXA_ALTA.test(nucleo)) {
+    novo = nucleo.split("-").filter(Boolean).map(pedaco).join(", ");
+  } else if (COLADA.test(nucleo)) {
+    novo = nucleo.toLowerCase();
+  } else {
+    novo = pedaco(nucleo);
+  }
+  return antes + novo + depois;
+}
+
+export function paraFala(texto) {
+  return texto
+    // "Ffffaca" → "Faca", "pããão" → "pão". Classe explícita: o \w do JS não
+    // inclui acentuada, e "pããão" passava batido (o \w do Python inclui).
+    .replace(/([A-Za-zÀ-ÿ])\1{2,}/gi, "$1")
+    .replace(/\s*[+=]\s*/g, ", ")         // o sinal é conta para o olho
+    .replace(/(^|[\s(])-(?=\w)/g, "$1")   // "-OLA" faz soletrar
+    .split(" ").map(token).join(" ");
+}
+
 /** Fala um texto. Resolve quando termina (ou logo, se não houver suporte). */
 export function falar(texto, { interromper = true } = {}) {
   return new Promise((resolve) => {
     if (!sintese || !texto) return resolve();
     if (interromper) sintese.cancel();
-    const f = new SpeechSynthesisUtterance(texto);
+    const f = new SpeechSynthesisUtterance(paraFala(texto));
     f.lang = "pt-BR";
     f.rate = velocidade;
     f.pitch = 1.05;
@@ -124,6 +176,18 @@ export async function falarComando(idAtividade, texto) {
   // devolve sucesso falso quando o arquivo trava
   const tocou = await tocarArquivo(`audio/comandos/${idAtividade}.mp3`);
   if (!tocou) await falar(texto);
+}
+
+/**
+ * Fala o retorno de acerto ou erro. Mesma regra do enunciado: o mp3 gravado
+ * primeiro. Antes estes textos iam SEMPRE para a voz do navegador — que é
+ * silêncio em máquina sem voz pt-BR, e no espeak soletrava a notação do banco.
+ */
+export async function falarFeedback(idAtividade, campo, texto) {
+  // o enunciado pode ainda estar tocando quando a criança responde
+  calar();
+  const tocou = await tocarArquivo(`audio/feedback/${idAtividade}-${campo}.mp3`);
+  if (!tocou) await falar(texto, { interromper: false });
 }
 
 /* ─── sons curtos sintetizados (sem arquivos) ────────────────────────── */
