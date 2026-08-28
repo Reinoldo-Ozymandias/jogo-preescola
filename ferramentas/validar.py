@@ -156,6 +156,20 @@ def validar_atividade(ativ, eixo_id):
             erro(aid, "mídia sem 'rotulo' (usado na leitura em voz alta e na revisão pedagógica)")
 
 
+def escrever_js(destino, nome, dados):
+    """O mesmo banco como .js.
+
+    O jogo abre com um duplo clique no index.html, sem servidor — e o navegador
+    bloqueia `fetch` em `file://`. Então o banco entra por <script>, como
+    variável, em vez de ser buscado. O .json continua sendo gerado: é o formato
+    de quem lê os dados de fora do jogo.
+    """
+    destino.write_text(
+        f"/* Gerado por ferramentas/validar.py --build. Não edite à mão. */\n"
+        f"window.{nome} = " + json.dumps(dados, ensure_ascii=False, indent=1) + ";\n",
+        encoding="utf-8")
+
+
 def main():
     build = "--build" in sys.argv
 
@@ -215,6 +229,7 @@ def main():
         }
         (DIST / "atividades.json").write_text(
             json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
+        escrever_js(DIST / "atividades.js", "BANCO_COMPLETO", saida)
         # locuções: o enunciado e os dois retornos de cada atividade. Os retornos
         # entraram na lista quando deixaram de depender da voz do navegador.
         locucoes = [f"audio/comandos/{a['id']}.mp3" for a in banco]
@@ -237,12 +252,14 @@ def main():
         p_loc = [f"audio/comandos/{a['id']}.mp3" for a in sel]
         p_loc += [f"audio/feedback/{a['id']}-{c}.mp3"
                   for a in sel for c in ("acerto", "erro")]
-        (DIST / "piloto.json").write_text(json.dumps(
+        corte = (
             {**{k: v for k, v in saida.items() if k != "atividades"},
              "corte": piloto_cfg["nome"],
              "corte_descricao": piloto_cfg["descricao"],
-             "atividades": sel},
-            ensure_ascii=False, indent=1), encoding="utf-8")
+             "atividades": sel})
+        (DIST / "piloto.json").write_text(
+            json.dumps(corte, ensure_ascii=False, indent=1), encoding="utf-8")
+        escrever_js(DIST / "piloto.js", "BANCO_PILOTO", corte)
         (DIST / "assets-piloto.txt").write_text(
             "\n".join(sorted(p_assets) + sorted(p_loc)) + "\n", encoding="utf-8")
         tipos_p = sorted({a["tipo"] for a in sel})

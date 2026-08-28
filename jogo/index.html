@@ -120,6 +120,16 @@
 <!-- ── camada de retorno (acerto/erro) ── -->
 <div id="camada-feedback" class="camada-feedback" aria-live="polite"></div>
 
-<script type="module" src="js/app.js"></script>
+<!-- Ordem importa: cada arquivo publica um nome que o seguinte usa.
+     Sem `type="module"` de propósito — assim o jogo abre com um duplo clique,
+     sem servidor nenhum. O banco entra como variável, não por fetch. -->
+<script src="../dist/piloto.js"></script>
+<script src="../dist/atividades.js"></script>
+<script src="js/midia.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/progresso.js"></script>
+<script src="js/atividades.js"></script>
+<script src="js/revisao.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

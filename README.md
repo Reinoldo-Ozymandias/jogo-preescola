@@ -8,21 +8,32 @@ Brusque** (projeto de curricularização da extensão).
 
 ## Rodar
 
+**Dê um duplo clique em `jogo/index.html`.** É só isso — não precisa de servidor,
+nem de Python, nem de instalar nada. HTML, CSS e JS puros.
+
+Para isso funcionar o jogo não usa `type="module"` nem `fetch`: o navegador recusa os
+dois em `file://`. Cada arquivo de `jogo/js/` se fecha numa função e publica um nome
+(`Midia`, `Som`, `Progresso`, `Atividades`, `Revisao`), e o banco de atividades entra
+por `<script>` como variável — `dist/piloto.js` e `dist/atividades.js`, gerados pelo
+`validar.py --build` ao lado dos `.json`. **A ordem dos `<script>` no `index.html`
+importa**: cada um usa o nome que o anterior publicou.
+
+Para desenvolver, servir por HTTP continua sendo melhor:
+
 ```bash
 ./servir.py          # http://localhost:8000/jogo/
 ```
 
-Precisa ser por HTTP: com `file://` o navegador bloqueia o `fetch` do banco.
-Não use `python3 -m http.server` — ele não manda `Cache-Control` e o Chrome serve
-módulos ES em cache, fazendo você editar um `.js` e continuar vendo o código velho.
+Ele manda `Cache-Control`; o `python3 -m http.server` não, e aí você edita um `.js`,
+recarrega e continua vendo o código velho.
 
 ## Estrutura
 
 ```
-conteudo/        as atividades (fonte) + schema + corte de piloto
+conteudo/        as atividades (fonte) + schema + corte fixo de 20
 jogo/            a aplicação: index.html, css/, js/, audio/
-ferramentas/     validar.py · revisao.py · gerar-audio.py
-dist/            gerado — é o que o jogo consome em runtime
+ferramentas/     validar.py · revisao.py · gerar-audio.py · fala.py
+dist/            gerado — os .js são o que o jogo consome em runtime
 ```
 
 Depois de editar qualquer atividade:
@@ -30,6 +41,9 @@ Depois de editar qualquer atividade:
 ```bash
 python3 ferramentas/validar.py --build
 ```
+
+É ele que regera `dist/*.json` **e** os `dist/*.js` que o jogo carrega. Editar o
+conteúdo sem rodar isso não muda nada na tela.
 
 O validador pega ID repetido, atividade sem resposta certa, ordem quebrada em
 sequência e arrastável apontando para alvo inexistente.

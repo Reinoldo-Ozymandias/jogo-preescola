@@ -1,0 +1,879 @@
+/* Gerado por ferramentas/validar.py --build. Não edite à mão. */
+window.BANCO_PILOTO = {
+ "versao": "0.1.0",
+ "publico": "Educação Infantil — Pré-escola II (5 a 6 anos)",
+ "aviso_bncc": "Os códigos em 'bncc_sugerido' são um MAPEAMENTO PROPOSTO pelo desenvolvedor, não uma validação pedagógica. Devem ser conferidos com a coordenação pedagógica da Secretaria Municipal de Educação de Brusque antes da entrega final.",
+ "eixos": [
+  {
+   "id": "grandezas_comparacoes",
+   "ordem": 1,
+   "nome": "Grandezas e Comparações",
+   "descricao": "Comparar objetos por tamanho, altura, comprimento, peso, espessura e capacidade; ordenar por grandeza.",
+   "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+   "cor": "#F2994A",
+   "icone": "balanca"
+  },
+  {
+   "id": "nocoes_espaciais",
+   "ordem": 2,
+   "nome": "Noções Espaciais",
+   "descricao": "Localizar-se e localizar objetos: em cima/embaixo, dentro/fora, frente/atrás, perto/longe, entre, esquerda/direita.",
+   "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+   "cor": "#2D9CDB",
+   "icone": "bussola"
+  },
+  {
+   "id": "contagem_quantidades",
+   "ordem": 3,
+   "nome": "Contagem e Quantidades",
+   "descricao": "Contar até 10, relacionar numeral e quantidade, comparar quantidades, sequência numérica (antes/depois/entre).",
+   "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+   "cor": "#27AE60",
+   "icone": "contador"
+  },
+  {
+   "id": "cores",
+   "ordem": 4,
+   "nome": "Cores",
+   "descricao": "Reconhecer e nomear cores primárias e secundárias, agrupar por cor, noção de mistura e de tom claro/escuro.",
+   "campo_experiencia": "Traços, sons, cores e formas",
+   "cor": "#EB5757",
+   "icone": "paleta"
+  },
+  {
+   "id": "animais_habitats",
+   "ordem": 5,
+   "nome": "Animais e seus Habitats",
+   "descricao": "Identificar animais, seus sons, onde vivem, o que comem e como se deslocam; fauna da Mata Atlântica catarinense.",
+   "campo_experiencia": "Espaços, tempos, quantidades, relações e transformações",
+   "cor": "#6FCF97",
+   "icone": "pegada"
+  },
+  {
+   "id": "consciencia_fonologica",
+   "ordem": 6,
+   "nome": "Consciência Fonológica",
+   "descricao": "Perceber rimas, aliterações, som inicial e som final das palavras — sempre pela escuta, nunca pela leitura.",
+   "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+   "cor": "#BB6BD9",
+   "icone": "onda_som"
+  },
+  {
+   "id": "consciencia_silabica",
+   "ordem": 7,
+   "nome": "Consciência Silábica",
+   "descricao": "Segmentar palavras em sílabas, contar sílabas, identificar sílaba inicial, juntar sílabas para formar palavras.",
+   "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+   "cor": "#9B51E0",
+   "icone": "palmas"
+  },
+  {
+   "id": "letras_palavras",
+   "ordem": 8,
+   "nome": "Letras e Palavras",
+   "descricao": "Reconhecer letras do alfabeto, vogais, letra inicial e final, relacionar palavra escrita e imagem, escrever o próprio nome.",
+   "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+   "cor": "#F2C94C",
+   "icone": "abc"
+  },
+  {
+   "id": "percepcao_visual",
+   "ordem": 9,
+   "nome": "Percepção Visual",
+   "descricao": "Discriminar igual/diferente, sombras, parte-todo, padrões, formas geométricas e constância de forma.",
+   "campo_experiencia": "Traços, sons, cores e formas",
+   "cor": "#56CCF2",
+   "icone": "olho"
+  },
+  {
+   "id": "compreensao_auditiva",
+   "ordem": 10,
+   "nome": "Compreensão Auditiva",
+   "descricao": "Seguir instruções faladas, identificar sons do cotidiano, qualidades do som e compreender histórias curtas ouvidas.",
+   "campo_experiencia": "Escuta, fala, pensamento e imaginação",
+   "cor": "#F2994A",
+   "icone": "orelha"
+  }
+ ],
+ "tipos_interacao": {
+  "escolha_imagem": "Uma resposta certa entre 2 e 4 opções. Criança toca na opção. Cobre a maior parte do banco — implemente este primeiro.",
+  "selecao_multipla": "Várias respostas certas; criança toca em todas e confirma. Variação pequena do escolha_imagem.",
+  "arrastar_para_alvo": "Arrastar um ou mais itens até uma ou mais áreas de destino.",
+  "ordenar_sequencia": "Colocar itens em ordem (tamanho, número, etapas de uma história).",
+  "parear": "Ligar itens da coluna A aos correspondentes da coluna B.",
+  "contar_toques": "Tocar N vezes em um objeto — resposta é a contagem de toques."
+ },
+ "niveis": {
+  "1": "Entrada. 2 opções, contraste máximo, vocabulário do dia a dia.",
+  "2": "Intermediário. 3 opções, distratores plausíveis.",
+  "3": "Avançado. 3 a 4 opções, exige raciocínio relacional, negação ou memória."
+ },
+ "corte": "Piloto",
+ "corte_descricao": "Corte fixo de 20 atividades — 2 por eixo, todas do tipo escolha_imagem. É o conjunto que FUNCIONA HOJE, sem nenhuma ilustração: cada opção desenha diferente das outras pelo placeholder, e nenhuma depende de som que ainda precise de voz humana. Ficaram de fora, medidas: CO-001/002/003 (os três balões saem idênticos), PV-001 (estrela amarela e azul saem idênticas) e CF-005 (o fonema /f/ alongado sai como o nome da letra). Saiu também CA-006: a história da Ana, lida pelo sintetizador, sai robótica — narrativa longa é justamente onde a voz humana faz falta. Com isso o corte cobre 3 dos 4 tipos de estímulo (nenhum, imagem, áudio); narrativa volta quando alguém gravar.",
+ "atividades": [
+  {
+   "id": "GC-001",
+   "nivel": 1,
+   "subhabilidade": "maior_menor",
+   "bncc_sugerido": [
+    "EI03ET01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no animal MAIOR.",
+   "nota_professor": "Contraste extremo de tamanho entre dois animais muito conhecidos. Item de entrada do eixo.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/animais/elefante.png",
+      "rotulo": "elefante",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/formiga.png",
+      "rotulo": "formiga",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! O elefante é bem maior.",
+    "erro": "Olhe de novo: qual deles ocupa mais espaço na tela?"
+   },
+   "eixo": "grandezas_comparacoes"
+  },
+  {
+   "id": "GC-006",
+   "nivel": 2,
+   "subhabilidade": "maior_menor",
+   "bncc_sugerido": [
+    "EI03ET01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no copo MAIOR.",
+   "nota_professor": "Três copos iguais, só o tamanho muda. Substituiu a versão de cheio/vazio: aquela dependia de o desenho mostrar o nível do suco, e sem ilustração os três copos saíam idênticos.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/objetos/copo-grande.png",
+      "rotulo": "copo grande",
+      "correta": true
+     },
+     {
+      "imagem": "img/objetos/copo-medio.png",
+      "rotulo": "copo médio",
+      "correta": false
+     },
+     {
+      "imagem": "img/objetos/copo-pequeno.png",
+      "rotulo": "copo pequeno",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Muito bem! Esse copo é o maior de todos.",
+    "erro": "Olhe de novo: qual copo é mais alto que os outros dois?"
+   },
+   "eixo": "grandezas_comparacoes"
+  },
+  {
+   "id": "NE-001",
+   "nivel": 1,
+   "subhabilidade": "em_cima_embaixo",
+   "bncc_sugerido": [
+    "EI03ET01",
+    "EI03CG01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no gato que está EM CIMA da mesa.",
+   "nota_professor": "Mesma cena repetida com o gato em posições diferentes — assim só a posição distingue as opções.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/cenas/gato-em-cima-mesa.png",
+      "rotulo": "gato em cima da mesa",
+      "correta": true
+     },
+     {
+      "imagem": "img/cenas/gato-embaixo-mesa.png",
+      "rotulo": "gato embaixo da mesa",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! Esse subiu na mesa.",
+    "erro": "Procure o gato que está sobre a mesa, lá em cima."
+   },
+   "eixo": "nocoes_espaciais"
+  },
+  {
+   "id": "NE-006",
+   "nivel": 2,
+   "subhabilidade": "entre",
+   "bncc_sugerido": [
+    "EI03ET01",
+    "EI03ET07"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no animal que está ENTRE o cachorro e o gato.",
+   "nota_professor": "A noção de 'entre' precisa de dois pontos de referência. Manter os três animais em fila, sem embaralhar.",
+   "interacao": {
+    "embaralhar": false,
+    "opcoes": [
+     {
+      "imagem": "img/animais/cachorro.png",
+      "rotulo": "cachorro, na ponta",
+      "correta": false
+     },
+     {
+      "imagem": "img/animais/coelho.png",
+      "rotulo": "coelho, no meio",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/gato.png",
+      "rotulo": "gato, na outra ponta",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! O coelho está no meio dos dois.",
+    "erro": "Quem está no meio, com o cachorro de um lado e o gato do outro?"
+   },
+   "eixo": "nocoes_espaciais"
+  },
+  {
+   "id": "CQ-002",
+   "nivel": 1,
+   "subhabilidade": "contar_ate_5",
+   "bncc_sugerido": [
+    "EI03ET07"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Quantos peixinhos tem no aquário? Toque no número.",
+   "nota_professor": "Peixes espalhados, não enfileirados — força a contagem um a um em vez do reconhecimento de padrão.",
+   "estimulo": {
+    "tipo": "imagem",
+    "asset": "img/quantidades/5-peixes.png"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "texto": "5",
+      "rotulo": "cinco",
+      "correta": true
+     },
+     {
+      "texto": "4",
+      "rotulo": "quatro",
+      "correta": false
+     },
+     {
+      "texto": "6",
+      "rotulo": "seis",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Muito bem! Cinco peixinhos.",
+    "erro": "Conte devagar, tocando em cada peixinho uma vez só."
+   },
+   "eixo": "contagem_quantidades"
+  },
+  {
+   "id": "CQ-004",
+   "nivel": 2,
+   "subhabilidade": "mais_menos",
+   "bncc_sugerido": [
+    "EI03ET07"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no prato que tem MAIS biscoitos.",
+   "nota_professor": "Comparação de quantidades. Os biscoitos devem ter o mesmo tamanho nos dois pratos, para não comparar área.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/quantidades/prato-6-biscoitos.png",
+      "rotulo": "prato com seis biscoitos",
+      "correta": true
+     },
+     {
+      "imagem": "img/quantidades/prato-3-biscoitos.png",
+      "rotulo": "prato com três biscoitos",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! Esse prato tem mais.",
+    "erro": "Conte os biscoitos de cada prato e compare."
+   },
+   "eixo": "contagem_quantidades"
+  },
+  {
+   "id": "CO-004",
+   "nivel": 2,
+   "subhabilidade": "cor_secundaria",
+   "bncc_sugerido": [
+    "EI03TS02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no que é da cor ROXA.",
+   "nota_professor": "Cores secundárias costumam ser as últimas a serem nomeadas. Roxo e laranja podem exigir mais repetições.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/frutas/uva.png",
+      "rotulo": "uva roxa",
+      "correta": true
+     },
+     {
+      "imagem": "img/frutas/laranja.png",
+      "rotulo": "laranja",
+      "correta": false
+     },
+     {
+      "imagem": "img/frutas/limao.png",
+      "rotulo": "limão verde",
+      "correta": false
+     },
+     {
+      "imagem": "img/frutas/morango.png",
+      "rotulo": "morango vermelho",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! A uva é roxinha.",
+    "erro": "Roxo é uma cor parecida com o azul misturado com vermelho."
+   },
+   "eixo": "cores"
+  },
+  {
+   "id": "CO-007",
+   "nivel": 2,
+   "subhabilidade": "mesma_cor",
+   "bncc_sugerido": [
+    "EI03ET05"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no objeto que tem a MESMA cor da bola.",
+   "nota_professor": "Comparação de cor entre objetos diferentes, sem precisar nomear a cor.",
+   "estimulo": {
+    "tipo": "imagem",
+    "asset": "img/cores/bola-verde-modelo.png"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/cores/folha-verde.png",
+      "rotulo": "folha verde",
+      "correta": true
+     },
+     {
+      "imagem": "img/cores/chapeu-vermelho.png",
+      "rotulo": "chapéu vermelho",
+      "correta": false
+     },
+     {
+      "imagem": "img/cores/copo-azul.png",
+      "rotulo": "copo azul",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! As duas são verdes.",
+    "erro": "Olhe a cor da bola de novo e procure a mesma cor."
+   },
+   "eixo": "cores"
+  },
+  {
+   "id": "AH-002",
+   "nivel": 1,
+   "subhabilidade": "som_do_animal",
+   "bncc_sugerido": [
+    "EI03TS03",
+    "EI03EF01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute o som. Que animal fez esse barulho?",
+   "nota_professor": "Escuta antes da imagem. Toque o áudio inteiro uma vez antes de liberar as opções.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/animais/vaca.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/animais/vaca.png",
+      "rotulo": "vaca",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/cavalo.png",
+      "rotulo": "cavalo",
+      "correta": false
+     },
+     {
+      "imagem": "img/animais/ovelha.png",
+      "rotulo": "ovelha",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! A vaca faz muuu.",
+    "erro": "Escute de novo com atenção e pense em quem faz esse som."
+   },
+   "eixo": "animais_habitats"
+  },
+  {
+   "id": "AH-004",
+   "nivel": 2,
+   "subhabilidade": "habitat",
+   "bncc_sugerido": [
+    "EI03ET01",
+    "EI03ET05"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Onde o peixe vive?",
+   "nota_professor": "Relação animal-habitat mais direta possível. Bom para abrir a conversa sobre o rio Itajaí-Mirim.",
+   "estimulo": {
+    "tipo": "imagem",
+    "asset": "img/animais/peixe-m.png"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/habitats/rio.png",
+      "rotulo": "no rio",
+      "correta": true
+     },
+     {
+      "imagem": "img/habitats/floresta.png",
+      "rotulo": "na floresta",
+      "correta": false
+     },
+     {
+      "imagem": "img/habitats/deserto.png",
+      "rotulo": "no deserto",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! O peixe vive na água.",
+    "erro": "O peixe precisa de água para respirar. Onde tem água?"
+   },
+   "eixo": "animais_habitats"
+  },
+  {
+   "id": "CF-001",
+   "nivel": 1,
+   "subhabilidade": "rima",
+   "bncc_sugerido": [
+    "EI03EF02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute: PATO. Toque na figura cujo nome rima com PATO.",
+   "nota_professor": "TODAS as opções deste eixo devem ser faladas em voz alta pelo jogo; a criança não lê. Rima é a habilidade fonológica mais precoce.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/pato.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/animais/gato.png",
+      "rotulo": "gato",
+      "correta": true
+     },
+     {
+      "imagem": "img/objetos/bola.png",
+      "rotulo": "bola",
+      "correta": false
+     },
+     {
+      "imagem": "img/objetos/casa.png",
+      "rotulo": "casa",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! PA-TO, GA-TO. Termina igual!",
+    "erro": "Fale devagar: pato... gato... bola... Qual termina com o mesmo som?"
+   },
+   "eixo": "consciencia_fonologica"
+  },
+  {
+   "id": "CF-003",
+   "nivel": 2,
+   "subhabilidade": "rima",
+   "bncc_sugerido": [
+    "EI03EF02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute: MALA. Toque na figura que rima com MALA.",
+   "nota_professor": "O distrator 'bola' tem a mesma estrutura silábica mas não rima — pega quem responde por semelhança geral.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/mala.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/alimentos/bala.png",
+      "rotulo": "bala",
+      "correta": true
+     },
+     {
+      "imagem": "img/objetos/bola.png",
+      "rotulo": "bola",
+      "correta": false
+     },
+     {
+      "imagem": "img/animais/sapo.png",
+      "rotulo": "sapo",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! MALA e BALA terminam igual.",
+    "erro": "Bola termina em -OLA. Procure a que termina em -ALA."
+   },
+   "eixo": "consciencia_fonologica"
+  },
+  {
+   "id": "CS-001",
+   "nivel": 1,
+   "subhabilidade": "contar_silabas",
+   "bncc_sugerido": [
+    "EI03EF02",
+    "EI03EF09"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Bata palmas falando BO-LA. Quantas palmas você bateu?",
+   "nota_professor": "Sempre com o corpo primeiro: a criança bate palmas de verdade, só depois toca no número.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/bola-silabado.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "texto": "2",
+      "rotulo": "duas",
+      "correta": true
+     },
+     {
+      "texto": "1",
+      "rotulo": "uma",
+      "correta": false
+     },
+     {
+      "texto": "3",
+      "rotulo": "três",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! BO-LA, duas palmas.",
+    "erro": "Bata junto comigo: BO (palma) LA (palma)."
+   },
+   "eixo": "consciencia_silabica"
+  },
+  {
+   "id": "CS-005",
+   "nivel": 2,
+   "subhabilidade": "silaba_inicial",
+   "bncc_sugerido": [
+    "EI03EF02",
+    "EI03EF09"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "BANANA começa com BA. Toque na figura que também começa com BA.",
+   "nota_professor": "Sílaba inicial é intermediária entre rima e fonema — bom degrau antes do som isolado.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/banana.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/transporte/barco.png",
+      "rotulo": "barco",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/pato.png",
+      "rotulo": "pato",
+      "correta": false
+     },
+     {
+      "imagem": "img/objetos/vela.png",
+      "rotulo": "vela",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! BA-nana, BAR-co.",
+    "erro": "Escute o primeiro pedacinho: BA..."
+   },
+   "eixo": "consciencia_silabica"
+  },
+  {
+   "id": "LP-001",
+   "nivel": 1,
+   "subhabilidade": "reconhecer_letra",
+   "bncc_sugerido": [
+    "EI03EF09"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque na letra A.",
+   "nota_professor": "Sempre em caixa alta: é a forma que a criança de pré-escola reconhece e produz primeiro.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "texto": "A",
+      "rotulo": "letra A",
+      "correta": true
+     },
+     {
+      "texto": "M",
+      "rotulo": "letra M",
+      "correta": false
+     },
+     {
+      "texto": "S",
+      "rotulo": "letra S",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! Essa é o A.",
+    "erro": "O A é a primeira letra do alfabeto, parece uma casinha."
+   },
+   "eixo": "letras_palavras"
+  },
+  {
+   "id": "LP-004",
+   "nivel": 2,
+   "subhabilidade": "letra_inicial",
+   "bncc_sugerido": [
+    "EI03EF09",
+    "EI03EF02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Com que letra começa CASA?",
+   "nota_professor": "Ponte entre som e letra. Fale a palavra, alongue o som inicial e só então mostre as letras.",
+   "estimulo": {
+    "tipo": "imagem",
+    "asset": "img/objetos/casa.png"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "texto": "C",
+      "rotulo": "letra C",
+      "correta": true
+     },
+     {
+      "texto": "D",
+      "rotulo": "letra D",
+      "correta": false
+     },
+     {
+      "texto": "P",
+      "rotulo": "letra P",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! CASA começa com C.",
+    "erro": "Fale devagar: Cccasa. Qual letra faz esse som?"
+   },
+   "eixo": "letras_palavras"
+  },
+  {
+   "id": "PV-002",
+   "nivel": 1,
+   "subhabilidade": "achar_o_diferente",
+   "bncc_sugerido": [
+    "EI03ET05"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque na figura que é DIFERENTE das outras.",
+   "nota_professor": "Sem modelo: a criança precisa comparar os elementos entre si. Três opções bastam nesta faixa; quatro já cansa a varredura visual.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/formas/quadrado-vermelho.png",
+      "rotulo": "quadrado vermelho",
+      "correta": true
+     },
+     {
+      "imagem": "img/formas/circulo-vermelho-1.png",
+      "rotulo": "círculo vermelho",
+      "correta": false
+     },
+     {
+      "imagem": "img/formas/circulo-vermelho-2.png",
+      "rotulo": "círculo vermelho",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! Só ele não é redondo.",
+    "erro": "Três são iguais e um é diferente. Ache o diferente."
+   },
+   "eixo": "percepcao_visual"
+  },
+  {
+   "id": "PV-003",
+   "nivel": 2,
+   "subhabilidade": "formas_geometricas",
+   "bncc_sugerido": [
+    "EI03ET05",
+    "EI03TS02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no TRIÂNGULO.",
+   "nota_professor": "Nomear formas geométricas. Use um triângulo em posição não canônica (girado) numa segunda rodada.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/formas/triangulo.png",
+      "rotulo": "triângulo",
+      "correta": true
+     },
+     {
+      "imagem": "img/formas/quadrado.png",
+      "rotulo": "quadrado",
+      "correta": false
+     },
+     {
+      "imagem": "img/formas/circulo.png",
+      "rotulo": "círculo",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! O triângulo tem três pontas.",
+    "erro": "O triângulo é o que tem três lados e três pontas."
+   },
+   "eixo": "percepcao_visual"
+  },
+  {
+   "id": "CA-001",
+   "nivel": 1,
+   "subhabilidade": "som_do_cotidiano",
+   "bncc_sugerido": [
+    "EI03TS03",
+    "EI03EF01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute. Que som é esse?",
+   "nota_professor": "Som ambiente familiar. Verifique o volume da sala antes; fone de ouvido ajuda muito neste eixo.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/ambiente/chuva.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/natureza/chuva.png",
+      "rotulo": "chuva",
+      "correta": true
+     },
+     {
+      "imagem": "img/natureza/fogo.png",
+      "rotulo": "fogo",
+      "correta": false
+     },
+     {
+      "imagem": "img/natureza/vento.png",
+      "rotulo": "vento",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! É som de chuva caindo.",
+    "erro": "Escute de novo e feche os olhos para imaginar o lugar."
+   },
+   "eixo": "compreensao_auditiva"
+  },
+  {
+   "id": "CA-004",
+   "nivel": 2,
+   "subhabilidade": "timbre",
+   "bncc_sugerido": [
+    "EI03TS01",
+    "EI03TS03"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute. Qual instrumento está tocando?",
+   "nota_professor": "Qualidade do som: timbre. Se a escola tiver os instrumentos, toque ao vivo antes.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/instrumentos/violao.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/instrumentos/violao.png",
+      "rotulo": "violão",
+      "correta": true
+     },
+     {
+      "imagem": "img/instrumentos/tambor.png",
+      "rotulo": "tambor",
+      "correta": false
+     },
+     {
+      "imagem": "img/instrumentos/flauta.png",
+      "rotulo": "flauta",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! É o violão, de cordas.",
+    "erro": "Escute de novo: esse som vem de cordas sendo tocadas."
+   },
+   "eixo": "compreensao_auditiva"
+  }
+ ]
+};

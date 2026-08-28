@@ -4,8 +4,8 @@ vozes/*.onnx
 vozes/*.onnx.json
 
 # Gerados por ferramentas/validar.py e revisao.py.
-# dist/atividades.json e dist/piloto.json ficam versionados de propósito:
-# o jogo faz fetch deles em tempo de execução e não há etapa de build.
+# dist/*.json e dist/*.js ficam versionados de propósito: o jogo carrega os .js
+# em tempo de execução (é o que faz ele abrir sem servidor) e não há build.
 dist/assets.txt
 dist/assets-piloto.txt
 dist/revisao-pedagogica.md
