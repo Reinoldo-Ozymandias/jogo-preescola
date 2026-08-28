@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Servidor de desenvolvimento do jogo.
+"""Servidor de desenvolvimento do jogo. OPCIONAL.
 
     ./servir.py          → http://localhost:8000/jogo/
     ./servir.py 8001     → outra porta
 
-Precisa ser por HTTP: com `file://` o navegador bloqueia o fetch do banco e não
-carrega os módulos ES.
+Para jogar não é preciso: o `jogo/index.html` abre com um duplo clique, sem
+servidor nenhum. Isto serve para desenvolver, e dá duas coisas que o `file://`
+não dá — recarregar sempre pegando o .js recém-editado (manda `Cache-Control`,
+o que `python3 -m http.server` não faz) e um log sem as centenas de 404 das
+ilustrações que ainda não existem.
 
-Não use `python3 -m http.server`: ele não manda Cache-Control, o Chrome guarda os
-módulos em cache e você edita um .js, recarrega e continua vendo o código velho.
+Também é o jeito de conferir o caminho HTTP antes de hospedar em algum lugar.
 """
 import socket
 import sys

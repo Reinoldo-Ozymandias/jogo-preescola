@@ -4,7 +4,7 @@
  * Não é teste de interface — é teste da LÓGICA dos seis renderizadores, que é
  * onde os erros de verdade moram. Roda em ~2 segundos sobre as 120 atividades.
  *
- * Abrir em http://localhost:8000/jogo/teste.html
+ * Abrir jogo/teste.html — com duplo clique, ou pelo ./servir.py
  */
 
 (function () {

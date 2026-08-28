@@ -18,14 +18,17 @@ nome (`Midia`, `Som`, `Progresso`, `Atividades`, `Revisao`); o banco entra por
 `<script>` como variável, de `dist/piloto.js` e `dist/atividades.js`. **A ordem dos
 `<script>` no `index.html` importa**: cada um usa o nome que o anterior publicou.
 
-Para desenvolver, servir por HTTP é melhor:
+O `./servir.py` continua aí, **opcional**, para desenvolver: ele manda
+`Cache-Control` — sem isso você edita um `.js`, recarrega e continua vendo o código
+velho — e some com as centenas de 404 das ilustrações no log. Também serve para
+conferir o caminho HTTP antes de hospedar em algum lugar.
 
 ```bash
 ./servir.py          # http://localhost:8000/jogo/
 ```
 
-Ele manda `Cache-Control`; o `python3 -m http.server` não, e aí você edita um `.js`,
-recarrega e continua vendo o código velho.
+Python continua sendo necessário para as **ferramentas** (`validar.py`,
+`gerar-audio.py`, `revisao.py`), nunca para jogar.
 
 ## Estrutura
 
