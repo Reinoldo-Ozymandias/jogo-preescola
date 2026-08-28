@@ -30,6 +30,20 @@ conferir o caminho HTTP antes de hospedar em algum lugar.
 Python continua sendo necessário para as **ferramentas** (`validar.py`,
 `gerar-audio.py`, `revisao.py`), nunca para jogar.
 
+### Publicar na web
+
+Serve como está no GitHub Pages — é site estático, sem caminho absoluto nenhum e
+com 18 MB versionados, longe do limite. Em *Settings → Pages*, aponte para a
+branch `main`, pasta `/` (raiz).
+
+O `index.html` da raiz existe só para isso: o Pages não lista diretório, então sem
+ele o endereço do projeto daria 404 em vez de abrir o jogo — ele redireciona para
+`jogo/`. O `.nojekyll` desliga um processamento que não temos o que fazer com ele.
+
+⚠️ Publicado, o `?revisao=1` fica aberto a quem tiver o link: a folha de parecer
+mostra a resposta certa de todas as 120. Não é segredo — as respostas estão no JS
+de qualquer jeito — mas convém saber antes de divulgar o endereço.
+
 ## Estrutura
 
 ```
