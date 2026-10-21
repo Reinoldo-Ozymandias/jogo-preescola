@@ -196,32 +196,32 @@ instalar nada.**
 
 **O texto falado não é o texto da tela.** O banco escreve para o olho — `BO-LA` mostra
 a divisão silábica, `SapaTO` destaca a terminação, `CA + SA = CASA` mostra a soma. O
-espeak-ng, que o Piper usa por baixo, lê essa notação ao pé da letra: "bê-ó-la",
+espeak-ng, que o sintetizador usa por baixo, lê essa notação ao pé da letra: "bê-ó-la",
 "sapa tê-ó", "cá mais sá igual casa". `ferramentas/fala.py` traduz a notação antes da
 síntese, e `paraFala()` em `jogo/js/audio.js` faz o mesmo quando falta o MP3 —
 **mudou num, mude no outro.** Hífen legítimo (`quebra-cabeça`, `guarda-chuva`,
 `au-au`) fica intacto de propósito: esse o espeak já lê certo.
 
-**Duas vozes, de propósito.** Frase corrida sai na `faber`; palavra e sílaba isoladas
-— as que o botão "Ouvir" repete nos eixos de consciência — saem na `edresson`, porque
-a faber engole a consoante inicial de palavra solta ("mala" virava "ala"). Como o
-modelo é estocástico, essas gerações fazem algumas tomadas e ficam com a de ataque
-mais claro. Medição em [`vozes/README.md`](vozes/README.md).
+**Uma voz: Kokoro-82M.** Até 2026-10-21 a locução era do Piper (`faber` em frase,
+`edresson` em palavra solta). A faber tinha melhor prosódia, mas lia **"lh" como "l"**:
+"coelho" saía "coelo". O Kokoro acerta o lh, é natural em 24 kHz e é **Apache 2.0** —
+licença que permite distribuir os MP3 no site público. Detalhe e download em
+[`vozes/README.md`](vozes/README.md).
 
-**O ritmo é parte do conteúdo, não estética.** No padrão do Piper a fala sai a ~55 ms
-por caractere (medido nos 120 enunciados) — ritmo de adulto lendo, rápido demais para
-5–6 anos. A locução é gerada com `length-scale` **1.25** (`1.3` em palavra e sílaba
-isoladas) e 0,35 s de pausa entre frases, o que dá ~15 caracteres por segundo. O
-controle "Ritmo da fala" da área do professor aplica `playbackRate` no MP3 preservando
-o tom — é ajuste fino em cima da gravação, não a gravação em si.
+**O ritmo é parte do conteúdo, não estética.** O Kokoro em `speed` 1.0 fala a
+~17 caracteres/s — ritmo de adulto lendo, rápido demais para 5–6 anos. A locução usa
+**0.85** (0.8 em palavra e sílaba isoladas), o que dá ~15 caracteres por segundo, o
+mesmo alvo que a versão anterior tinha. O controle "Ritmo da fala" da área do
+professor aplica `playbackRate` no MP3 preservando o tom — é ajuste fino em cima da
+gravação, não a gravação em si.
 
 `jogo/audio/textos-falados.json` guarda o texto, **a voz e o ritmo** que geraram cada
 MP3. É o que faz o gerador perceber quando um arquivo fica para trás — sem isso um
 `BO-LA` gravado errado fica no lugar para sempre.
 
 Para regerar, veja [`vozes/README.md`](vozes/README.md) e rode
-`ferramentas/gerar-audio.py`. A fala sai do **Piper**, que roda local: nenhum texto do
-projeto sai da máquina. Os sons de ambiente e instrumento são sintetizados com ffmpeg
+`ferramentas/gerar-audio.py`. A fala sai do **Kokoro**, que roda local: nenhum texto
+do projeto sai da máquina. Os sons de ambiente e instrumento são sintetizados com ffmpeg
 e acertam o caráter, não o timbre real. Origem e licença de cada som de terceiro em
 [`jogo/audio/CREDITOS.md`](jogo/audio/CREDITOS.md).
 

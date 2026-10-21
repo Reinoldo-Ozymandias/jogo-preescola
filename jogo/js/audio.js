@@ -16,11 +16,11 @@ window.Som = (function () {
 
   const sintese = window.speechSynthesis;
 
-  /* O mp3 é gravado com length-scale 1.25 no Piper (ver ferramentas/gerar-audio.py)
-   * — 25% mais devagar que o padrão, porque o público tem 5–6 anos. O número se
+  /* O mp3 é gravado com `speed` 0.85 no Kokoro (ver ferramentas/gerar-audio.py)
+   * — 15% mais devagar que o natural, porque o público tem 5–6 anos. O número se
    * repete aqui só para a voz do navegador (fallback) andar no MESMO ritmo da
-   * locução gravada: 1/1.25 = 0.8. Mudou lá, mude aqui. */
-  const RITMO_GRAVACAO = 1.25;
+   * locução gravada. Mudou lá, mude aqui. */
+  const RITMO_GRAVACAO = 0.85;
 
   let vozes = [];
   let vozEscolhida = null;
@@ -172,7 +172,7 @@ window.Som = (function () {
       if (interromper) sintese.cancel();
       const f = new SpeechSynthesisUtterance(paraFala(texto));
       f.lang = "pt-BR";
-      f.rate = velocidadeAtual() / RITMO_GRAVACAO;
+      f.rate = velocidadeAtual() * RITMO_GRAVACAO;
       f.pitch = 1.05;
       if (vozEscolhida) f.voice = vozEscolhida;
       f.addEventListener("end", resolve, { once: true });

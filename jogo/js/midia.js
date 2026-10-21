@@ -177,21 +177,55 @@ window.Midia = (function () {
       const objeto = txt.slice(0, i).trim();
       const refer = txt.slice(i + marca.length).replace(/^[ao]s?\s+/, "").trim();
       const a = acharEmoji(objeto), b = acharEmoji(refer);
-      if (a && b) return { tipo, a, b };
+      if (a && b) return { tipo, a, b, palavraB: refer };
     }
     return null;
   }
 
-  /* posição relativa dos dois emoji, em % da caixa */
+  /* Posição relativa dos dois emoji, em % da caixa.
+   *
+   * "Em cima" e "embaixo" ficam COLADOS no objeto de referência, não na borda do
+   * cartão. Antes a bola ficava a 70% e a cadeira a 24%: lia-se "duas figuras na
+   * mesma tela", não "bola embaixo da cadeira". 15% de distância é o suficiente
+   * para as duas não se encostarem com os emoji de ~19cqw. */
   const POSES = {
-    cima:   { a: { left: "50%", top: "8%",  z: 2, esc: .8 }, b: { left: "50%", top: "62%", z: 1, esc: 1 } },
-    baixo:  { a: { left: "50%", top: "70%", z: 2, esc: .8 }, b: { left: "50%", top: "24%", z: 1, esc: 1 } },
+    cima:   { a: { left: "50%", top: "47%", z: 2, esc: .8 }, b: { left: "50%", top: "62%", z: 1, esc: 1 } },
+    baixo:  { a: { left: "50%", top: "53%", z: 2, esc: .8 }, b: { left: "50%", top: "38%", z: 1, esc: 1 } },
     dentro: { a: { left: "50%", top: "52%", z: 2, esc: .5 }, b: { left: "50%", top: "50%", z: 1, esc: 1.2 } },
     fora:   { a: { left: "78%", top: "58%", z: 2, esc: .7 }, b: { left: "30%", top: "50%", z: 1, esc: 1.1 } },
     atras:  { a: { left: "62%", top: "30%", z: 1, esc: .75 }, b: { left: "42%", top: "55%", z: 2, esc: 1.1 } },
     frente: { a: { left: "58%", top: "62%", z: 3, esc: .9 }, b: { left: "42%", top: "40%", z: 1, esc: 1.1 } },
     lado:   { a: { left: "72%", top: "50%", z: 2, esc: .9 }, b: { left: "28%", top: "50%", z: 1, esc: .9 } },
   };
+
+  /* "Mesa" não tem emoji — 🍽️ é um PRATO. Em NE-001 o gato aparecia flutuando
+   * sobre um prato, e "em cima" e "embaixo" ficavam sem referência: a criança não
+   * tem onde apoiar o olho para ler a posição. Aqui a mesa é desenhada (tampo e
+   * dois pés) e o animal ENCOSTA nela — em cima senta no tampo, embaixo fica
+   * entre os pés. Vale só para mesa; cadeira e caixa têm emoji que se sustenta. */
+  function cenaMesa(cena, rel) {
+    const tampo = document.createElement("span");
+    tampo.style.cssText =
+      "left:50%;top:54%;width:76%;height:11%;transform:translate(-50%,-50%);" +
+      "background:#b07b4f;border-radius:8px;" +
+      "box-shadow:inset 0 -0.5cqw 0 rgba(0,0,0,.18)";
+    cena.appendChild(tampo);
+
+    for (const x of ["26%", "74%"]) {
+      const pe = document.createElement("span");
+      pe.style.cssText =
+        `left:${x};top:59.5%;width:8%;height:31%;transform:translateX(-50%);` +
+        "background:#8d5f39;border-radius:4px";
+      cena.appendChild(pe);
+    }
+
+    const bicho = document.createElement("span");
+    bicho.textContent = rel.a;
+    bicho.style.cssText =
+      `left:50%;top:${rel.tipo === "cima" ? "41%" : "72%"};z-index:2;` +
+      "transform:translate(-50%,-50%) scale(.85);font-size:min(19cqw,58px)";
+    cena.appendChild(bicho);
+  }
 
   /* clareia ou escurece um hex misturando com branco/preto */
   function tom(hex, fator) {
@@ -220,6 +254,11 @@ window.Midia = (function () {
     if (rel) {
       const cena = document.createElement("div");
       cena.className = "cena";
+      if (/^mesa\b/.test(rel.palavraB) && (rel.tipo === "cima" || rel.tipo === "baixo")) {
+        cenaMesa(cena, rel);
+        caixa.appendChild(cena);
+        return;
+      }
       const pose = POSES[rel.tipo];
       for (const [lado, emo] of [["a", rel.a], ["b", rel.b]]) {
         const p = pose[lado];

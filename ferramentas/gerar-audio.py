@@ -4,8 +4,8 @@
 Três categorias, com honestidade sobre o que dá e o que não dá:
 
 1. FALA — os 120 enunciados, as palavras dos eixos de consciência fonológica e
-   silábica, as sílabas isoladas e as duas histórias. Gerados com o Piper (TTS
-   neural que roda LOCAL: nenhum texto sai da máquina).
+   silábica, as sílabas isoladas e as duas histórias. Gerados com o Kokoro-82M
+   (TTS neural Apache 2.0 que roda LOCAL: nenhum texto sai da máquina).
 
 2. SONS SINTETIZADOS — chuva, sirene, tambor, flauta, violão, chocalho, andamento
    e intensidade. Feitos com ffmpeg. São APROXIMAÇÕES: acertam o caráter (percussivo,
@@ -20,11 +20,10 @@ Uso:
     python3 ferramentas/gerar-audio.py --so fala  # fala | sons
 """
 import json
-import math
 import re
-import struct
 import subprocess
 import sys
+import wave
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -32,42 +31,27 @@ from fala import para_fala
 
 RAIZ = Path(__file__).resolve().parent.parent
 SAIDA = RAIZ / "jogo" / "audio"
-VOZ = RAIZ / "vozes" / "pt_BR-faber-medium.onnx"
 
-# A faber não articula a consoante inicial de palavra ISOLADA: medindo o
-# murmúrio antes da vogal, "mala" sai com 10 ms de /m/ (contra 100 ms na
-# edresson) e o ouvinte escuta "ala"/"nala". Testado e descartado: length-scale
-# até 2.0, noise-w, consoante dobrada, ponto de exclamação, e pôr a palavra como
-# 2ª frase depois de uma pausa — nenhum passa de 20 ms.
+# ─── motor de fala: Kokoro-82M ───────────────────────────────────────────
+# O Piper foi aposentado em 2026-10-21: a voz faber lia o "lh" como "l" —
+# "coelho" saía "coelo", e o mesmo valia para telhado, folhinhas, colher. A
+# edresson acertava o lh mas soava travada em frase. Kokoro-82M (Apache 2.0,
+# 24 kHz, roda local) acerta o lh e é natural na mesma velocidade.
 #
-# Por isso as PALAVRAS e SÍLABAS soltas — as que o botão "Ouvir" repete, e que
-# SÃO o exercício nos eixos de consciência fonológica e silábica — usam a outra
-# voz. Frase corrida continua na faber, que é melhor.
-VOZ_PALAVRA = RAIZ / "vozes" / "pt_BR-edresson-low.onnx"
-PIPER = Path(sys.argv[0]).parent  # sobrescrito abaixo se vier por env
-
-# o piper vive num venv fora do projeto; deixa configurável
-import os
-PIPER_BIN = os.environ.get("PIPER_BIN", "piper")
+# Uma voz só, ao contrário do Piper: a faber engolia consoante inicial de
+# palavra isolada (motivo da segunda voz), e o Kokoro não tem esse defeito.
+KOKORO_MODELO = RAIZ / "vozes" / "kokoro-v1.0.onnx"
+KOKORO_VOZES = RAIZ / "vozes" / "voices-v1.0.bin"
+VOZ = "pf_dora"        # feminina pt-BR do pacote. pm_alex e pm_santa também servem
 
 # ─── ritmo da fala ───────────────────────────────────────────────────────
-# O Piper, no ritmo padrão (length-scale 1.0), fala a ~55 ms por caractere —
-# medido nos 120 enunciados, ~18 caracteres por segundo. É ritmo de adulto
-# lendo: para 5–6 anos, que ainda estão montando o vocabulário, fica rápido e
-# a criança perde o fim da instrução.
-#
-# 1.25 leva a ~15 caracteres por segundo. Foi medido: frase de 44 caracteres
-# passa de 2,18 s para 2,53 s, e o ataque das palavras isoladas não piora
-# (150 ms, contra 110 ms na edresson em 1.0). 1.35 em diante começa a soar
-# arrastado no modelo "medium" e some a entonação de pergunta.
-#
-# Esta é a alavanca certa para "falar mais devagar": muda o ritmo SEM mudar o
-# timbre. O controle do professor no jogo (playbackRate do mp3) serve de ajuste
-# fino em cima disto, mas acima de ~1,3× no navegador embola.
-RITMO = 1.25          # enunciados, retornos e histórias
-RITMO_PALAVRA = 1.3   # palavra/sílaba isolada: é o próprio exercício, devagar
-PAUSA_FRASE = 0.35    # silêncio entre frases (padrão do Piper: 0.2)
-PAUSA_SILABA = 0.5    # entre as sílabas batidas com palma (era 0.35)
+# Kokoro usa `speed`: 1.0 é o natural (~17 caracteres/s), que ainda é ritmo de
+# adulto lendo. 0.85 leva a ~15 caracteres/s, o mesmo alvo que a locução tinha
+# no Piper. Palavra/sílaba isolada vai um pouco mais devagar: é o próprio
+# exercício nos eixos de consciência fonológica e silábica.
+RITMO = 0.85
+RITMO_PALAVRA = 0.8
+PAUSA_SILABA = 0.5    # entre as sílabas batidas com palma
 
 FORCE = "--force" in sys.argv
 SO = None
@@ -82,8 +66,11 @@ PALAVRAS = {
 }
 # silabado = cada sílaba gerada separada e emendada com silêncio, do jeito que
 # a professora bate palmas. Ler "BO-LA" corrido não serve para o exercício.
+# O item pode ser (o que a tela mostra, o que o sintetizador fala): em "bola" o
+# o é ABERTO (/bɔ/), e o espeak lê "bo" como "bê-ó" e "bô" fechado — só "bó"
+# sai certo. Nas outras palavras o o é fechado e o "ô" do dicionário vale.
 SILABADO = {
-    "bola-silabado": ["bo", "la"],
+    "bola-silabado": [("bo", "bó"), "la"],
     "pe-silabado": ["pé"],
     "boneca-silabado": ["bo", "ne", "ca"],
     "borboleta-silabado": ["bor", "bo", "le", "ta"],
@@ -165,17 +152,17 @@ def _manifesto():
 
 
 def receita(voz, falado, ritmo=RITMO):
-    """Como o arquivo foi feito: a voz e o ritmo importam tanto quanto o texto."""
-    return f"{voz.stem}::{ritmo}::{falado}"
+    """Como o arquivo foi feito: motor, voz e ritmo importam tanto quanto o texto."""
+    return f"kokoro:{voz}:{ritmo}::{falado}"
 
 
-def precisa(destino, falado=None, voz=None, ritmo=RITMO):
+def precisa(destino, falado=None, voz=VOZ, ritmo=RITMO):
     """Falta o arquivo, ou mudou o texto/a voz/o ritmo que o gerou."""
     if FORCE or not destino.exists():
         return True
     if falado is None:
         return False
-    return _manifesto().get(str(destino.relative_to(SAIDA))) != receita(voz or VOZ, falado, ritmo)
+    return _manifesto().get(str(destino.relative_to(SAIDA))) != receita(voz, falado, ritmo)
 
 
 def anotar(destino, falado):
@@ -185,18 +172,41 @@ def anotar(destino, falado):
                          encoding="utf-8")
 
 
-def falar(texto, destino, voz=None, ritmo=RITMO):
-    """Piper → wav → mp3 normalizado. `texto` vem do banco, cru."""
-    voz = voz or VOZ
+_MOTOR = None
+
+
+def motor():
+    """Carrega o Kokoro uma vez só: são ~340 MB de modelo por voz."""
+    global _MOTOR
+    if _MOTOR is None:
+        from kokoro_onnx import Kokoro
+        _MOTOR = Kokoro(str(KOKORO_MODELO), str(KOKORO_VOZES))
+    return _MOTOR
+
+
+def falar_wav(falado, wav, voz=VOZ, ritmo=RITMO):
+    """Texto JÁ convertido para fala → wav mono. False se o motor reclamar."""
+    import numpy as np
+    try:
+        amostras, taxa = motor().create(falado, voice=voz, speed=ritmo, lang="pt-br")
+    except Exception as e:                      # noqa: BLE001 — o motor é caixa-preta
+        print(f"    ERRO no kokoro: {type(e).__name__}: {e}")
+        return False
+    pcm = (np.clip(amostras, -1, 1) * 32767).astype("<i2")
+    with wave.open(str(wav), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(taxa)
+        w.writeframes(pcm.tobytes())
+    return True
+
+
+def falar(texto, destino, voz=VOZ, ritmo=RITMO):
+    """Kokoro → wav → mp3 normalizado. `texto` vem do banco, cru."""
     falado = para_fala(texto)
     destino.parent.mkdir(parents=True, exist_ok=True)
     tmp = destino.with_suffix(".tmp.wav")
-    p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(tmp),
-                        "--length-scale", str(ritmo),
-                        "--sentence-silence", str(PAUSA_FRASE)],
-                       input=falado, capture_output=True, text=True)
-    if p.returncode != 0 or not tmp.exists():
-        print(f"    ERRO no piper: {p.stderr.strip()[:200]}")
+    if not falar_wav(falado, tmp, voz, ritmo):
         return False
     ok = roda(["ffmpeg", "-y", "-v", "error", "-i", str(tmp),
                "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
@@ -208,86 +218,31 @@ def falar(texto, destino, voz=None, ritmo=RITMO):
     return ok
 
 
-def ataque_ms(wav):
-    """Quantos ms de consoante se ouvem antes da vogal.
+def falar_solto(texto, destino, voz=VOZ, ritmo=RITMO_PALAVRA):
+    """Palavra ou sílaba ISOLADA: mais devagar, que é o próprio exercício.
 
-    Proxy medível para "dá para entender o /m/ de mala": o modelo é estocástico
-    e de vez em quando engole a consoante inicial — foi assim que "mala" virou
-    "nala". Janelas de 10 ms; conta as que estão acima do silêncio (-55 dB) e
-    abaixo do patamar de vogal (-28 dB), antes da primeira janela de vogal.
+    No Piper isto escolhia entre tomadas porque a faber engolia a consoante
+    inicial. O Kokoro não tem esse defeito, então aqui é só o mesmo caminho,
+    com o ritmo de palavra.
     """
-    bruto = subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav),
-                            "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
-                           capture_output=True).stdout
-    n = len(bruto) // 2
-    if not n:
-        return 0
-    amostras = struct.unpack(f"<{n}h", bruto[:n * 2])
-    janelas = []
-    for i in range(0, len(amostras), 160):
-        b = amostras[i:i + 160]
-        if not b:
-            break
-        r = math.sqrt(sum(x * x for x in b) / len(b))
-        janelas.append(20 * math.log10(r / 32768) if r > 0 else -99)
-    vogal = next((i for i, d in enumerate(janelas) if d > -28), None)
-    if vogal is None:
-        return 0
-    return sum(1 for d in janelas[:vogal] if d > -55) * 10
+    return falar(texto, destino, voz, ritmo)
 
 
-def melhor_tomada(texto, voz, tmp, tomadas=4, ritmo=RITMO_PALAVRA):
-    """Sintetiza algumas vezes e guarda a de ataque mais claro em `tmp`."""
-    melhor = -1
-    candidato = tmp.with_suffix(".cand.wav")
-    for i in range(tomadas):
-        p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(candidato),
-                            "--length-scale", str(ritmo)],
-                           input=texto, capture_output=True, text=True)
-        if p.returncode != 0 or not candidato.exists():
-            continue
-        nota = ataque_ms(candidato)
-        if nota > melhor:
-            melhor = nota
-            candidato.replace(tmp)
-        if nota >= 80:            # já está claro, não precisa sortear mais
-            break
-    candidato.unlink(missing_ok=True)
-    return melhor
+def falar_silabado(silabas, destino, voz=VOZ, ritmo=RITMO_PALAVRA):
+    """Cada sílaba num arquivo, emendadas com silêncio no meio.
 
-
-def falar_solto(texto, destino, voz, ritmo=RITMO_PALAVRA):
-    """Palavra ou sílaba ISOLADA: escolhe a melhor tomada antes de gravar."""
-    falado = para_fala(texto)
-    destino.parent.mkdir(parents=True, exist_ok=True)
-    tmp = destino.with_suffix(".tmp.wav")
-    nota = melhor_tomada(falado, voz, tmp, ritmo=ritmo)
-    if nota < 0:
-        print(f"    ERRO no piper para '{falado}'")
-        return False
-    if nota < 30:
-        print(f"    AVISO: '{falado}' saiu com só {nota} ms de consoante inicial — "
-              f"pode soar sem o começo")
-    ok = roda(["ffmpeg", "-y", "-v", "error", "-i", str(tmp),
-               "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
-               "-codec:a", "libmp3lame", "-b:a", "96k", "-ar", "44100",
-               str(destino)])
-    tmp.unlink(missing_ok=True)
-    if ok:
-        anotar(destino, receita(voz, falado, ritmo))
-    return ok
-
-
-def falar_silabado(silabas, destino, pausa=PAUSA_SILABA, voz=None, ritmo=RITMO_PALAVRA):
-    """Cada sílaba num arquivo, emendadas com silêncio no meio."""
+    Item pode ser string ou (mostrado, falado) — ver SILABADO.
+    """
     destino.parent.mkdir(parents=True, exist_ok=True)
     partes = []
+    falados = []
     for i, s in enumerate(silabas):
+        mostrado, falado = s if isinstance(s, tuple) else (s, para_fala(s))
         w = destino.with_suffix(f".s{i}.wav")
-        if melhor_tomada(para_fala(s), voz or VOZ, w, ritmo=ritmo) < 0:
-            print(f"    ERRO no piper para '{s}'")
+        if not falar_wav(falado, w, voz, ritmo):
             return False
         partes.append(w)
+        falados.append(falado)
 
     entradas, filtros = [], []
     for i, w in enumerate(partes):
@@ -297,16 +252,16 @@ def falar_silabado(silabas, destino, pausa=PAUSA_SILABA, voz=None, ritmo=RITMO_P
             filtros.append(f"[sil{i}]")
     n_sil = len(partes) - 1
     sil_src = "".join(
-        f"aevalsrc=0:d={pausa}:s=22050[sil{i}];" for i in range(n_sil))
+        f"aevalsrc=0:d={PAUSA_SILABA}:s=24000[sil{i}];" for i in range(n_sil))
     cadeia = f"{sil_src}{''.join(filtros)}concat=n={len(partes)+n_sil}:v=0:a=1[out]"
     ok = roda(["ffmpeg", "-y", "-v", "error", *entradas,
                "-filter_complex", cadeia, "-map", "[out]",
-               "-codec:a", "libmp3lame", "-b:a", "96k",
+               "-codec:a", "libmp3lame", "-b:a", "96k", "-ar", "44100",
                str(destino)])
     for w in partes:
         w.unlink(missing_ok=True)
     if ok:
-        anotar(destino, receita(voz or VOZ, " ".join(para_fala(x) for x in silabas), ritmo))
+        anotar(destino, receita(voz, " ".join(falados), ritmo))
     return ok
 
 
@@ -357,14 +312,16 @@ def melodia(notas, destino):
 
 
 def main():
-    for v in (VOZ, VOZ_PALAVRA):
+    for v in (KOKORO_MODELO, KOKORO_VOZES):
         if not v.exists():
-            print(f"Voz não encontrada: {v}")
-            print("Baixe de https://huggingface.co/rhasspy/piper-voices (pt/pt_BR)")
+            print(f"Modelo não encontrado: {v}")
+            print("Baixe com os comandos de vozes/README.md")
             return 1
-    if not VOZ.exists():
-        print(f"Voz não encontrada: {VOZ}")
-        print("Baixe de https://huggingface.co/rhasspy/piper-voices (pt/pt_BR/faber/medium)")
+    try:
+        motor()
+    except ImportError:
+        print("Falta o pacote kokoro-onnx. Instale no venv do projeto:")
+        print("  .venv/bin/pip install kokoro-onnx")
         return 1
 
     banco = json.loads((RAIZ / "dist" / "atividades.json").read_text(encoding="utf-8"))
@@ -401,22 +358,23 @@ def main():
                 print(f"  {a['id']} {campo}   ", end="\r")
         print(" " * 30, end="\r")
 
-        # palavra e sílaba SOLTAS vão na outra voz — ver o comentário em VOZ_PALAVRA
+        # palavra e sílaba SOLTAS são o próprio exercício: vão mais devagar
         print("── palavras e sílabas ──")
         for nome, texto in {**PALAVRAS}.items():
             d = SAIDA / "palavras" / f"{nome}.mp3"
-            if precisa(d, para_fala(texto), VOZ_PALAVRA, RITMO_PALAVRA):
-                registrar(falar_solto(texto, d, VOZ_PALAVRA))
+            if precisa(d, para_fala(texto), VOZ, RITMO_PALAVRA):
+                registrar(falar_solto(texto, d))
             else: pulados += 1
         for nome, silabas in SILABADO.items():
             d = SAIDA / "palavras" / f"{nome}.mp3"
-            if precisa(d, " ".join(para_fala(x) for x in silabas), VOZ_PALAVRA, RITMO_PALAVRA):
-                registrar(falar_silabado(silabas, d, voz=VOZ_PALAVRA))
+            falados = [s[1] if isinstance(s, tuple) else para_fala(s) for s in silabas]
+            if precisa(d, " ".join(falados), VOZ, RITMO_PALAVRA):
+                registrar(falar_silabado(silabas, d))
             else: pulados += 1
         for nome, texto in SILABAS.items():
             d = SAIDA / "silabas" / f"{nome}.mp3"
-            if precisa(d, para_fala(texto), VOZ_PALAVRA, RITMO_PALAVRA):
-                registrar(falar_solto(texto, d, VOZ_PALAVRA))
+            if precisa(d, para_fala(texto), VOZ, RITMO_PALAVRA):
+                registrar(falar_solto(texto, d))
             else: pulados += 1
 
         print("── frases do código ──")

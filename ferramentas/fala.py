@@ -2,7 +2,7 @@
 
 O banco escreve para o OLHO. "BO-LA" mostra a divisão silábica, "SapaTO" destaca
 a terminação, "CA + SA = CASA" mostra a soma, "Ffffaca" desenha o som arrastado.
-O espeak-ng, que o Piper usa por baixo, lê essa notação ao pé da letra e devolve
+O espeak-ng, que o sintetizador usa por baixo, lê essa notação ao pé da letra e devolve
 lixo — medido com o phonemizer:
 
     BO-LA           → "bê-ó-la"          (soletra a sílaba, que não é palavra)

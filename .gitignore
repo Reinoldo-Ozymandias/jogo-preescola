@@ -1,7 +1,8 @@
-# Modelos de voz do Piper: ~121 MB, baixados sob demanda.
+# Modelos de voz (~338 MB), baixados sob demanda.
 # Ver vozes/README.md para o comando de download.
 vozes/*.onnx
 vozes/*.onnx.json
+vozes/*.bin
 
 # Gerados por ferramentas/validar.py e revisao.py.
 # dist/*.json e dist/*.js ficam versionados de propósito: o jogo carrega os .js
@@ -14,5 +15,5 @@ dist/revisao-piloto.md
 __pycache__/
 *.pyc
 
-# venv do Piper, recriado sob demanda (ver vozes/README.md).
+# venv do gerador (Kokoro), recriado sob demanda (ver vozes/README.md).
 .venv/

@@ -42,9 +42,10 @@ são gravações da **palavra** "vaca" em línguas malgaxes, não do mugido.
 
 | arquivos | como |
 |---|---|
-| `comandos/`, `palavras/`, `silabas/`, `historias/` | Piper TTS, voz `pt_BR-faber-medium`, rodando local. Ver `vozes/`. |
+| `comandos/`, `feedback/`, `palavras/`, `silabas/`, `historias/`, `extras/` | Kokoro-82M, voz `pf_dora`, rodando local. Ver `vozes/`. |
 | `ambiente/`, `instrumentos/`, `intensidade/`, `andamento/` | Sintetizados com ffmpeg por `ferramentas/gerar-audio.py`. |
 
-A voz Piper `pt_BR-faber-medium` é distribuída pelo projeto
-[piper-voices](https://huggingface.co/rhasspy/piper-voices) — confira a licença da voz
-antes de distribuir os MP3s gerados fora do âmbito do projeto.
+O Kokoro-82M ([hexgrad/Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)) e os
+pacotes de voz são **Apache 2.0**, o que permite redistribuir os MP3s gerados — inclusive
+em material público municipal — desde que se mantenha o aviso de licença. O texto que
+virou áudio é do próprio projeto.
