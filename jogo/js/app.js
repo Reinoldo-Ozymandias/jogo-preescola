@@ -140,6 +140,14 @@
     alvo.style.setProperty("--destaque-fundo", eixo ? eixo.cor + "1f" : "");
   }
 
+  /** Frases curtas que o jogo fala e não vêm do banco (fim da sessão, som que
+   *  falta). Têm mp3 como todo o resto: na voz do navegador elas eram silêncio
+   *  em qualquer máquina sem voz pt-BR — inclusive no fim do jogo. */
+  async function falarExtra(nome, texto) {
+    if (await som.tocarArquivo(`audio/extras/${nome}.mp3`)) return;
+    await som.falar(texto);
+  }
+
   function montarEstimulo(ativ) {
     const area = $("area-estimulo");
     area.replaceChildren();
@@ -184,10 +192,12 @@
           marcarPlaceholder(caminhos[i]);
           // Texto NEUTRO de propósito: dizer "aqui tocaria o som de vaca" entrega
           // a resposta justamente na atividade que pergunta qual animal é.
-          await som.falar("Esse som ainda não foi gravado.");
+          await falarExtra("sem-som", "Esse som ainda não foi gravado.");
           return;
         }
-        if (i < caminhos.length - 1) await som.espera(500);
+        // 700 ms: em 5–6 anos, o intervalo entre dois sons da mesma questão é
+        // o que separa "ouvi dois sons" de "ouvi um som comprido"
+        if (i < caminhos.length - 1) await som.espera(700);
       }
     };
 
@@ -314,7 +324,7 @@
 
     mostrar("tela-fim");
     som.somFim();
-    som.falar("Muito bem! Você terminou.");
+    falarExtra("fim", "Muito bem! Você terminou.");
   }
 
   /* ─── painel do professor ────────────────────────────────────────────── */

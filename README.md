@@ -189,7 +189,7 @@ sozinha: `<img>` é sempre tentado primeiro.
 
 ## Áudio
 
-393 arquivos em `jogo/audio/`: o enunciado e os **dois retornos** (acerto e erro) de
+395 arquivos em `jogo/audio/`: o enunciado e os **dois retornos** (acerto e erro) de
 cada atividade, mais palavras, sílabas, histórias e os sons. O jogo toca o MP3 gravado
 e só cai na voz sintética do navegador se o arquivo faltar. **Para jogar não é preciso
 instalar nada.**
@@ -208,9 +208,16 @@ a faber engole a consoante inicial de palavra solta ("mala" virava "ala"). Como 
 modelo é estocástico, essas gerações fazem algumas tomadas e ficam com a de ataque
 mais claro. Medição em [`vozes/README.md`](vozes/README.md).
 
-`jogo/audio/textos-falados.json` guarda o texto **e a voz** que geraram cada MP3. É o
-que faz o gerador perceber quando um arquivo fica para trás — sem isso um `BO-LA`
-gravado errado fica no lugar para sempre.
+**O ritmo é parte do conteúdo, não estética.** No padrão do Piper a fala sai a ~55 ms
+por caractere (medido nos 120 enunciados) — ritmo de adulto lendo, rápido demais para
+5–6 anos. A locução é gerada com `length-scale` **1.25** (`1.3` em palavra e sílaba
+isoladas) e 0,35 s de pausa entre frases, o que dá ~15 caracteres por segundo. O
+controle "Ritmo da fala" da área do professor aplica `playbackRate` no MP3 preservando
+o tom — é ajuste fino em cima da gravação, não a gravação em si.
+
+`jogo/audio/textos-falados.json` guarda o texto, **a voz e o ritmo** que geraram cada
+MP3. É o que faz o gerador perceber quando um arquivo fica para trás — sem isso um
+`BO-LA` gravado errado fica no lugar para sempre.
 
 Para regerar, veja [`vozes/README.md`](vozes/README.md) e rode
 `ferramentas/gerar-audio.py`. A fala sai do **Piper**, que roda local: nenhum texto do

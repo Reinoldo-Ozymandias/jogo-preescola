@@ -16,9 +16,15 @@ window.Som = (function () {
 
   const sintese = window.speechSynthesis;
 
+  /* O mp3 é gravado com length-scale 1.25 no Piper (ver ferramentas/gerar-audio.py)
+   * — 25% mais devagar que o padrão, porque o público tem 5–6 anos. O número se
+   * repete aqui só para a voz do navegador (fallback) andar no MESMO ritmo da
+   * locução gravada: 1/1.25 = 0.8. Mudou lá, mude aqui. */
+  const RITMO_GRAVACAO = 1.25;
+
   let vozes = [];
   let vozEscolhida = null;
-  let velocidade = 0.9;
+  let velocidade = 1.0;
   let liberado = false;
 
   function carregarVozes() {
@@ -46,11 +52,14 @@ window.Som = (function () {
 
   function definirVelocidade(v) {
     velocidade = v;
-    localStorage.setItem("jogo.velocidade", String(v));
+    // chave nova: a antiga (jogo.velocidade, padrão 0.9) somava lentidão sobre a
+    // locução já lenta e deixava a fala arrastada sem ninguém ter pedido
+    localStorage.setItem("jogo.ritmo", String(v));
   }
 
   function velocidadeAtual() {
-    return +(localStorage.getItem("jogo.velocidade") || velocidade);
+    const v = +(localStorage.getItem("jogo.ritmo") || velocidade);
+    return Number.isFinite(v) && v > 0 ? v : 1;
   }
 
   /** Chamar no primeiro toque do usuário: navegadores bloqueiam áudio antes disso. */
@@ -70,6 +79,10 @@ window.Som = (function () {
   function tocarArquivo(src) {
     return new Promise((resolve) => {
       const a = new Audio(src);
+      // o professor ajusta o ritmo aqui; preservesPitch mantém o tom da voz
+      // (sem isso, 0.8× afina e parece desenho animado)
+      a.preservesPitch = true;
+      a.playbackRate = velocidadeAtual();
       tocando = a;
       let respondido = false;
       const fim = (valor) => {
@@ -84,8 +97,10 @@ window.Som = (function () {
       const guarda = setTimeout(() => fim(false), 1500);
       a.addEventListener("loadedmetadata", () => {
         clearTimeout(guarda);
-        // rede de segurança caso o evento `ended` não venha
-        setTimeout(() => fim(true), (a.duration || 3) * 1000 + 1500);
+        // rede de segurança caso o evento `ended` não venha. Divide pelo
+        // playbackRate: em 0.7× o arquivo dura mais, e sem isso a guarda venceria
+        // no meio da fala e a próxima atividade cortaria o áudio.
+        setTimeout(() => fim(true), ((a.duration || 3) * 1000) / a.playbackRate + 1500);
       }, { once: true });
       a.addEventListener("ended", () => { clearTimeout(guarda); fim(true); }, { once: true });
       a.addEventListener("error", () => { clearTimeout(guarda); fim(false); }, { once: true });
@@ -157,7 +172,7 @@ window.Som = (function () {
       if (interromper) sintese.cancel();
       const f = new SpeechSynthesisUtterance(paraFala(texto));
       f.lang = "pt-BR";
-      f.rate = velocidade;
+      f.rate = velocidadeAtual() / RITMO_GRAVACAO;
       f.pitch = 1.05;
       if (vozEscolhida) f.voice = vozEscolhida;
       f.addEventListener("end", resolve, { once: true });

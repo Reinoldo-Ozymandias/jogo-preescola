@@ -50,6 +50,25 @@ PIPER = Path(sys.argv[0]).parent  # sobrescrito abaixo se vier por env
 import os
 PIPER_BIN = os.environ.get("PIPER_BIN", "piper")
 
+# ─── ritmo da fala ───────────────────────────────────────────────────────
+# O Piper, no ritmo padrão (length-scale 1.0), fala a ~55 ms por caractere —
+# medido nos 120 enunciados, ~18 caracteres por segundo. É ritmo de adulto
+# lendo: para 5–6 anos, que ainda estão montando o vocabulário, fica rápido e
+# a criança perde o fim da instrução.
+#
+# 1.25 leva a ~15 caracteres por segundo. Foi medido: frase de 44 caracteres
+# passa de 2,18 s para 2,53 s, e o ataque das palavras isoladas não piora
+# (150 ms, contra 110 ms na edresson em 1.0). 1.35 em diante começa a soar
+# arrastado no modelo "medium" e some a entonação de pergunta.
+#
+# Esta é a alavanca certa para "falar mais devagar": muda o ritmo SEM mudar o
+# timbre. O controle do professor no jogo (playbackRate do mp3) serve de ajuste
+# fino em cima disto, mas acima de ~1,3× no navegador embola.
+RITMO = 1.25          # enunciados, retornos e histórias
+RITMO_PALAVRA = 1.3   # palavra/sílaba isolada: é o próprio exercício, devagar
+PAUSA_FRASE = 0.35    # silêncio entre frases (padrão do Piper: 0.2)
+PAUSA_SILABA = 0.5    # entre as sílabas batidas com palma (era 0.35)
+
 FORCE = "--force" in sys.argv
 SO = None
 if "--so" in sys.argv:
@@ -70,6 +89,15 @@ SILABADO = {
     "borboleta-silabado": ["bor", "bo", "le", "ta"],
 }
 SILABAS = {"bo": "bo", "ca": "ca", "lo": "lo", "sa": "sa"}
+
+# ─── frases curtas que o código fala e não vêm do banco ──────────────────
+# Sem estes arquivos, estas três frases caíam SEMPRE na voz do navegador — que
+# em máquina sem voz pt-BR instalada é silêncio. "Muito bem! Você terminou." é a
+# única fala do fim da sessão; numa sala de aula, o fim do jogo ficava mudo.
+EXTRAS = {
+    "fim": "Muito bem! Você terminou.",
+    "sem-som": "Esse som ainda não foi gravado.",
+}
 
 # ─── sons sintetizados (expressões do ffmpeg aevalsrc/anoisesrc) ─────────
 SONS = {
@@ -136,18 +164,18 @@ def _manifesto():
         return {}
 
 
-def receita(voz, falado):
-    """Como o arquivo foi feito: a voz importa tanto quanto o texto."""
-    return f"{voz.stem}::{falado}"
+def receita(voz, falado, ritmo=RITMO):
+    """Como o arquivo foi feito: a voz e o ritmo importam tanto quanto o texto."""
+    return f"{voz.stem}::{ritmo}::{falado}"
 
 
-def precisa(destino, falado=None, voz=None):
-    """Falta o arquivo, ou mudou o texto/a voz que o gerou."""
+def precisa(destino, falado=None, voz=None, ritmo=RITMO):
+    """Falta o arquivo, ou mudou o texto/a voz/o ritmo que o gerou."""
     if FORCE or not destino.exists():
         return True
     if falado is None:
         return False
-    return _manifesto().get(str(destino.relative_to(SAIDA))) != receita(voz or VOZ, falado)
+    return _manifesto().get(str(destino.relative_to(SAIDA))) != receita(voz or VOZ, falado, ritmo)
 
 
 def anotar(destino, falado):
@@ -157,13 +185,15 @@ def anotar(destino, falado):
                          encoding="utf-8")
 
 
-def falar(texto, destino, voz=None):
+def falar(texto, destino, voz=None, ritmo=RITMO):
     """Piper → wav → mp3 normalizado. `texto` vem do banco, cru."""
     voz = voz or VOZ
     falado = para_fala(texto)
     destino.parent.mkdir(parents=True, exist_ok=True)
     tmp = destino.with_suffix(".tmp.wav")
-    p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(tmp)],
+    p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(tmp),
+                        "--length-scale", str(ritmo),
+                        "--sentence-silence", str(PAUSA_FRASE)],
                        input=falado, capture_output=True, text=True)
     if p.returncode != 0 or not tmp.exists():
         print(f"    ERRO no piper: {p.stderr.strip()[:200]}")
@@ -174,7 +204,7 @@ def falar(texto, destino, voz=None):
                str(destino)])
     tmp.unlink(missing_ok=True)
     if ok:
-        anotar(destino, receita(voz, falado))
+        anotar(destino, receita(voz, falado, ritmo))
     return ok
 
 
@@ -206,12 +236,13 @@ def ataque_ms(wav):
     return sum(1 for d in janelas[:vogal] if d > -55) * 10
 
 
-def melhor_tomada(texto, voz, tmp, tomadas=4):
+def melhor_tomada(texto, voz, tmp, tomadas=4, ritmo=RITMO_PALAVRA):
     """Sintetiza algumas vezes e guarda a de ataque mais claro em `tmp`."""
     melhor = -1
     candidato = tmp.with_suffix(".cand.wav")
     for i in range(tomadas):
-        p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(candidato)],
+        p = subprocess.run([PIPER_BIN, "-m", str(voz), "-f", str(candidato),
+                            "--length-scale", str(ritmo)],
                            input=texto, capture_output=True, text=True)
         if p.returncode != 0 or not candidato.exists():
             continue
@@ -225,12 +256,12 @@ def melhor_tomada(texto, voz, tmp, tomadas=4):
     return melhor
 
 
-def falar_solto(texto, destino, voz):
+def falar_solto(texto, destino, voz, ritmo=RITMO_PALAVRA):
     """Palavra ou sílaba ISOLADA: escolhe a melhor tomada antes de gravar."""
     falado = para_fala(texto)
     destino.parent.mkdir(parents=True, exist_ok=True)
     tmp = destino.with_suffix(".tmp.wav")
-    nota = melhor_tomada(falado, voz, tmp)
+    nota = melhor_tomada(falado, voz, tmp, ritmo=ritmo)
     if nota < 0:
         print(f"    ERRO no piper para '{falado}'")
         return False
@@ -243,17 +274,17 @@ def falar_solto(texto, destino, voz):
                str(destino)])
     tmp.unlink(missing_ok=True)
     if ok:
-        anotar(destino, receita(voz, falado))
+        anotar(destino, receita(voz, falado, ritmo))
     return ok
 
 
-def falar_silabado(silabas, destino, pausa=0.35, voz=None):
+def falar_silabado(silabas, destino, pausa=PAUSA_SILABA, voz=None, ritmo=RITMO_PALAVRA):
     """Cada sílaba num arquivo, emendadas com silêncio no meio."""
     destino.parent.mkdir(parents=True, exist_ok=True)
     partes = []
     for i, s in enumerate(silabas):
         w = destino.with_suffix(f".s{i}.wav")
-        if melhor_tomada(para_fala(s), voz or VOZ, w) < 0:
+        if melhor_tomada(para_fala(s), voz or VOZ, w, ritmo=ritmo) < 0:
             print(f"    ERRO no piper para '{s}'")
             return False
         partes.append(w)
@@ -275,7 +306,7 @@ def falar_silabado(silabas, destino, pausa=0.35, voz=None):
     for w in partes:
         w.unlink(missing_ok=True)
     if ok:
-        anotar(destino, receita(voz or VOZ, " ".join(para_fala(x) for x in silabas)))
+        anotar(destino, receita(voz or VOZ, " ".join(para_fala(x) for x in silabas), ritmo))
     return ok
 
 
@@ -374,18 +405,25 @@ def main():
         print("── palavras e sílabas ──")
         for nome, texto in {**PALAVRAS}.items():
             d = SAIDA / "palavras" / f"{nome}.mp3"
-            if precisa(d, para_fala(texto), VOZ_PALAVRA):
+            if precisa(d, para_fala(texto), VOZ_PALAVRA, RITMO_PALAVRA):
                 registrar(falar_solto(texto, d, VOZ_PALAVRA))
             else: pulados += 1
         for nome, silabas in SILABADO.items():
             d = SAIDA / "palavras" / f"{nome}.mp3"
-            if precisa(d, " ".join(para_fala(x) for x in silabas), VOZ_PALAVRA):
+            if precisa(d, " ".join(para_fala(x) for x in silabas), VOZ_PALAVRA, RITMO_PALAVRA):
                 registrar(falar_silabado(silabas, d, voz=VOZ_PALAVRA))
             else: pulados += 1
         for nome, texto in SILABAS.items():
             d = SAIDA / "silabas" / f"{nome}.mp3"
-            if precisa(d, para_fala(texto), VOZ_PALAVRA):
+            if precisa(d, para_fala(texto), VOZ_PALAVRA, RITMO_PALAVRA):
                 registrar(falar_solto(texto, d, VOZ_PALAVRA))
+            else: pulados += 1
+
+        print("── frases do código ──")
+        for nome, texto in EXTRAS.items():
+            d = SAIDA / "extras" / f"{nome}.mp3"
+            if precisa(d, para_fala(texto)):
+                registrar(falar(texto, d))
             else: pulados += 1
 
         print("── histórias ──")
