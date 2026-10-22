@@ -6,13 +6,6 @@ de terceiro precisa estar registrado aqui, com origem e licença.** Som sem proc
 
 ## Sons de terceiros
 
-### `animais/galo.mp3` — canto de galo
-- **Origem:** Wikimedia Commons, [Medium rooster crowing.ogg](https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg)
-- **Autor:** alys
-- **Licença:** **Domínio público** — não exige atribuição
-- **Alteração:** recortado (2,6 s–6,2 s do original, onde está o canto), fades e
-  normalização para −16 LUFS, convertido para MP3 mono 44,1 kHz
-
 ### `animais/vaca.mp3` — mugido de vaca
 - **Origem:** Wikimedia Commons, [Single Cow Moo.ogg](https://commons.wikimedia.org/wiki/File:Single_Cow_Moo.ogg)
 - **Autor:** MichaeltheFox8621 — gravação própria numa fazenda em Pitlochry, Reino Unido

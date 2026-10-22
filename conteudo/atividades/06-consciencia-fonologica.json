@@ -1,161 +1,83 @@
 {
-  "eixo": "consciencia_fonologica",
-  "atividades": [
-    {
-      "id": "CF-001", "nivel": 1, "subhabilidade": "rima", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute: PATO. Toque na figura cujo nome rima com PATO.",
-      "nota_professor": "TODAS as opções deste eixo devem ser faladas em voz alta pelo jogo; a criança não lê. Rima é a habilidade fonológica mais precoce.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/pato.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": true },
-        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": false },
-        { "imagem": "img/objetos/casa.png", "rotulo": "casa", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! PA-TO, GA-TO. Termina igual!", "erro": "Fale devagar: pato... gato... bola... Qual termina com o mesmo som?" }
-    },
-    {
-      "id": "CF-002", "nivel": 1, "subhabilidade": "rima", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute: PÃO. Toque na figura que rima com PÃO.",
-      "nota_professor": "Rima com som nasal. Exagere a terminação ao falar.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/pao.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/corpo/mao.png", "rotulo": "mão", "correta": true },
-        { "imagem": "img/objetos/casa.png", "rotulo": "casa", "correta": false },
-        { "imagem": "img/corpo/pe.png", "rotulo": "pé", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! PÃO e MÃO rimam.", "erro": "Escute o finalzinho: pããão... mããão..." }
-    },
-    {
-      "id": "CF-003", "nivel": 2, "subhabilidade": "rima", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute: MALA. Toque na figura que rima com MALA.",
-      "nota_professor": "O distrator 'bola' tem a mesma estrutura silábica mas não rima — pega quem responde por semelhança geral.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/mala.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/alimentos/bala.png", "rotulo": "bala", "correta": true },
-        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": false },
-        { "imagem": "img/animais/sapo.png", "rotulo": "sapo", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! MALA e BALA terminam igual.", "erro": "Bola termina em -OLA. Procure a que termina em -ALA." }
-    },
-    {
-      "id": "CF-004", "nivel": 2, "subhabilidade": "rima", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute: CANECA. Toque na figura que rima com CANECA.",
-      "nota_professor": "Palavra de três sílabas: a rima fica mais longe do começo e exige mais memória fonológica.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/caneca.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/objetos/boneca.png", "rotulo": "boneca", "correta": true },
-        { "imagem": "img/objetos/cadeira.png", "rotulo": "cadeira", "correta": false },
-        { "imagem": "img/escola/livro.png", "rotulo": "livro", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! CaNECA, boNECA.", "erro": "Repita comigo: ca-NE-CA... bo-NE-CA..." }
-    },
-    {
-      "id": "CF-005", "nivel": 2, "subhabilidade": "som_inicial", "bncc_sugerido": ["EI03EF02", "EI03EF09"],
-      "tipo": "escolha_imagem",
-      "comando": "FACA começa com o som /f/. Toque na figura que também começa com /f/.",
-      "nota_professor": "Fonema inicial, não a letra. Pronuncie o som alongado (fffff), nunca 'efe'.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/faca.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/foca.png", "rotulo": "foca", "correta": true },
-        { "imagem": "img/objetos/mesa.png", "rotulo": "mesa", "correta": false },
-        { "imagem": "img/animais/urso.png", "rotulo": "urso", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Ffffaca, ffffoca.", "erro": "Escute só o comecinho da palavra: fff..." }
-    },
-    {
-      "id": "CF-006", "nivel": 2, "subhabilidade": "som_inicial", "bncc_sugerido": ["EI03EF02", "EI03EF09"],
-      "tipo": "escolha_imagem",
-      "comando": "BOLA começa com o som /b/. Toque na figura que também começa com /b/.",
-      "nota_professor": "Consoante oclusiva: não dá para alongar. Pronuncie 'b' curtinho, sem o 'ê' no fim.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/bola.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/boi.png", "rotulo": "boi", "correta": true },
-        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false },
-        { "imagem": "img/natureza/sol.png", "rotulo": "sol", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Bola e boi começam igual.", "erro": "Preste atenção só no primeiro somzinho da palavra." }
-    },
-    {
-      "id": "CF-007", "nivel": 2, "subhabilidade": "som_inicial", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "MACACO começa com o som /m/. Toque na figura que também começa com /m/.",
-      "nota_professor": "Nasal alongável (mmmm) — costuma ser das mais fáceis de perceber.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/macaco.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/corpo/mao.png", "rotulo": "mão", "correta": true },
-        { "imagem": "img/animais/pato.png", "rotulo": "pato", "correta": false },
-        { "imagem": "img/animais/urso.png", "rotulo": "urso", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Mmmmacaco, mmmmão.", "erro": "Faça o som com a boca fechada: mmmm..." }
-    },
-    {
-      "id": "CF-008", "nivel": 3, "subhabilidade": "aliteracao_pareamento", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "parear",
-      "comando": "Ligue as figuras cujos nomes começam com o MESMO som.",
-      "nota_professor": "Três pares por aliteração. Fale o nome de todas as seis figuras antes de a criança começar.",
-      "interacao": { "pares": [
-        { "a": { "imagem": "img/animais/sapo.png", "rotulo": "sapo" }, "b": { "imagem": "img/natureza/sol.png", "rotulo": "sol" } },
-        { "a": { "imagem": "img/objetos/panela.png", "rotulo": "panela" }, "b": { "imagem": "img/corpo/pe.png", "rotulo": "pé" } },
-        { "a": { "imagem": "img/animais/tartaruga.png", "rotulo": "tartaruga" }, "b": { "imagem": "img/instrumentos/tambor.png", "rotulo": "tambor" } }
-      ]},
-      "feedback": { "acerto": "Muito bem! Você ouviu os sons iguais.", "erro": "Fale o nome de cada figura em voz alta e escute o comecinho." }
-    },
-    {
-      "id": "CF-009", "nivel": 3, "subhabilidade": "som_final", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute: CAFÉ. Toque na figura que termina com o mesmo som.",
-      "nota_professor": "Som final é mais difícil que rima completa. Se travar, volte para os itens de rima.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/cafe.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/corpo/pe.png", "rotulo": "pé", "correta": true },
-        { "imagem": "img/corpo/mao.png", "rotulo": "mão", "correta": false },
-        { "imagem": "img/objetos/luz.png", "rotulo": "luz", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Café e pé terminam com É.", "erro": "Escute só o último pedacinho: cafÉ... pÉ..." }
-    },
-    {
-      "id": "CF-010", "nivel": 3, "subhabilidade": "rima_negacao", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute: FLOR. Toque na figura que NÃO rima com FLOR.",
-      "nota_professor": "Negação combinada com rima: o item mais exigente do eixo. Enfatize o NÃO.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/flor.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/natureza/sol.png", "rotulo": "sol", "correta": true },
-        { "imagem": "img/cores/mancha-vermelha.png", "rotulo": "cor", "correta": false },
-        { "imagem": "img/objetos/tambor.png", "rotulo": "tambor", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Sol é o único que não rima com flor.", "erro": "Atenção: eu quero o que NÃO rima." }
-    },
-    {
-      "id": "CF-011", "nivel": 3, "subhabilidade": "som_inicial_intruso", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Três figuras começam com /s/ e uma não. Toque na que é DIFERENTE.",
-      "nota_professor": "Detecção do intruso: exige comparar todos os elementos entre si, não com um modelo.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": true },
-        { "imagem": "img/animais/sapo.png", "rotulo": "sapo", "correta": false },
-        { "imagem": "img/objetos/sino.png", "rotulo": "sino", "correta": false },
-        { "imagem": "img/roupas/sapato.png", "rotulo": "sapato", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Bola começa com /b/, as outras com /s/.", "erro": "Fale o nome das quatro e escute qual começa diferente." }
-    },
-    {
-      "id": "CF-012", "nivel": 3, "subhabilidade": "rima_producao", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "selecao_multipla",
-      "comando": "Toque em TODAS as figuras que rimam com JANELA.",
-      "nota_professor": "Mais de uma rima correta. Ótimo item para fechar com uma parlenda inventada pela turma.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/janela.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/objetos/panela.png", "rotulo": "panela", "correta": true },
-        { "imagem": "img/objetos/vela.png", "rotulo": "vela", "correta": true },
-        { "imagem": "img/objetos/cadeira.png", "rotulo": "cadeira", "correta": false },
-        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false }
-      ]},
-      "feedback": { "acerto": "Muito bem! Janela, panela, vela — tudo rimando.", "erro": "Tem mais de uma que rima. Escute todas até o fim." }
-    }
-  ]
+ "eixo": "consciencia_fonologica",
+ "atividades": [
+  {
+   "id": "CF-001",
+   "nivel": 1,
+   "subhabilidade": "rima",
+   "bncc_sugerido": [
+    "EI03EF02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute: PATO. Toque na figura cujo nome rima com PATO.",
+   "nota_professor": "TODAS as opções deste eixo devem ser faladas em voz alta pelo jogo; a criança não lê. Rima é a habilidade fonológica mais precoce.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/pato.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/animais/gato.png",
+      "rotulo": "gato",
+      "correta": true
+     },
+     {
+      "imagem": "img/objetos/bola.png",
+      "rotulo": "bola",
+      "correta": false
+     },
+     {
+      "imagem": "img/objetos/casa.png",
+      "rotulo": "casa",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! PA-TO, GA-TO. Termina igual!",
+    "erro": "Fale devagar: pato... gato... bola... Qual termina com o mesmo som?"
+   }
+  },
+  {
+   "id": "CF-003",
+   "nivel": 2,
+   "subhabilidade": "rima",
+   "bncc_sugerido": [
+    "EI03EF02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute: MALA. Toque na figura que rima com MALA.",
+   "nota_professor": "O distrator 'bola' tem a mesma estrutura silábica mas não rima — pega quem responde por semelhança geral.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/mala.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/alimentos/bala.png",
+      "rotulo": "bala",
+      "correta": true
+     },
+     {
+      "imagem": "img/objetos/bola.png",
+      "rotulo": "bola",
+      "correta": false
+     },
+     {
+      "imagem": "img/animais/sapo.png",
+      "rotulo": "sapo",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! MALA e BALA terminam igual.",
+    "erro": "Bola termina em -OLA. Procure a que termina em -ALA."
+   }
+  }
+ ]
 }

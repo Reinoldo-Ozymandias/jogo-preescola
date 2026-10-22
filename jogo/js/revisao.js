@@ -5,8 +5,8 @@
  * atividade, abre ela no jogo de verdade com um toque e marca o parecer ali
  * mesmo. O Markdown continua existindo — mas agora sai daqui, já preenchido.
  *
- * A revisão SEMPRE usa o banco completo (120), mesmo com o jogo no piloto:
- * revisar 20 e entregar 120 não fecha.
+ * A revisão usa o banco inteiro (20), o mesmo que a criança joga: o que a
+ * coordenação aprova é exatamente o que está no ar.
  */
 
 /* Sem `import`/`export`: o jogo abre com um duplo clique no index.html, e o

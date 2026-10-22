@@ -6,10 +6,9 @@ Uso:
     python3 ferramentas/validar.py --build    # valida e gera dist/
 
 Saídas do --build:
-    dist/atividades.json  banco completo, um único arquivo para o fetch do jogo
+    dist/atividades.json  o banco, um único arquivo para consulta de fora do jogo
+    dist/atividades.js    o mesmo banco como variável, para o jogo abrir sem servidor
     dist/assets.txt       lista de TODAS as imagens e áudios que precisam existir
-    dist/piloto.json      só o corte de piloto (conteudo/piloto.json)
-    dist/assets-piloto.txt  as mídias que o piloto realmente precisa
 """
 import json
 import sys
@@ -241,33 +240,6 @@ def main():
         print(f"\ndist/atividades.json  {kb:.0f} KB")
         print(f"dist/assets.txt       {len(assets)} mídias + {len(locucoes)} locuções")
 
-        piloto_cfg = json.loads((CONTEUDO / "piloto.json").read_text(encoding="utf-8"))
-        por_id = {a["id"]: a for a in banco}
-        faltando = [i for i in piloto_cfg["ids"] if i not in por_id]
-        if faltando:
-            print(f"\nERRO: piloto.json cita ids inexistentes: {faltando}")
-            return 1
-        sel = [por_id[i] for i in piloto_cfg["ids"]]
-        p_assets = {x for a in sel for x in coletar_assets(a)}
-        p_loc = [f"audio/comandos/{a['id']}.mp3" for a in sel]
-        p_loc += [f"audio/feedback/{a['id']}-{c}.mp3"
-                  for a in sel for c in ("acerto", "erro")]
-        corte = (
-            {**{k: v for k, v in saida.items() if k != "atividades"},
-             "corte": piloto_cfg["nome"],
-             "corte_descricao": piloto_cfg["descricao"],
-             "atividades": sel})
-        (DIST / "piloto.json").write_text(
-            json.dumps(corte, ensure_ascii=False, indent=1), encoding="utf-8")
-        escrever_js(DIST / "piloto.js", "BANCO_PILOTO", corte)
-        (DIST / "assets-piloto.txt").write_text(
-            "\n".join(sorted(p_assets) + sorted(p_loc)) + "\n", encoding="utf-8")
-        tipos_p = sorted({a["tipo"] for a in sel})
-        pkb = (DIST / "piloto.json").stat().st_size / 1024
-        print(f"\ndist/piloto.json      {pkb:.0f} KB · {len(sel)} atividades"
-              f" · {len(tipos_p)} tipo(s): {', '.join(tipos_p)}")
-        print(f"dist/assets-piloto.txt {len(p_assets)} mídias + {len(p_loc)} locuções"
-              f"  ({(len(p_assets) + len(p_loc)) * 100 // (len(assets) + len(locucoes))}% do banco completo)")
     return 0
 
 

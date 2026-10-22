@@ -1,7 +1,7 @@
 /* Fala e som.
  *
  * A criança não lê: TODO enunciado chega por áudio. Enquanto não existe locução
- * gravada, usamos a Web Speech API em pt-BR — é o suficiente para o piloto.
+ * gravada, usamos a Web Speech API em pt-BR — é só rede de segurança.
  *
  * ⚠️ Nos eixos de Consciência Fonológica e Silábica o som É o conteúdo, e voz
  * sintética erra a prosódia justamente aí. Esses precisam de gravação humana

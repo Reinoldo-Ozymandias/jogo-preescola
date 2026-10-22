@@ -1,162 +1,84 @@
 {
-  "eixo": "cores",
-  "atividades": [
-    {
-      "id": "CO-001", "nivel": 1, "subhabilidade": "cor_primaria", "bncc_sugerido": ["EI03TS02", "EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no balão VERMELHO.",
-      "nota_professor": "Mesma forma (balão) em cores diferentes: isola a cor como único critério.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/balao-vermelho.png", "rotulo": "balão vermelho", "correta": true },
-        { "imagem": "img/cores/balao-azul.png", "rotulo": "balão azul", "correta": false },
-        { "imagem": "img/cores/balao-amarelo.png", "rotulo": "balão amarelo", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Esse é o vermelho.", "erro": "O vermelho é a cor do morango. Procure de novo." }
-    },
-    {
-      "id": "CO-002", "nivel": 1, "subhabilidade": "cor_primaria", "bncc_sugerido": ["EI03TS02"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no balão AZUL.",
-      "nota_professor": "Repete a estrutura da CO-001 trocando a cor-alvo, para checar se a criança nomeia ou só decorou a posição.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/balao-azul.png", "rotulo": "balão azul", "correta": true },
-        { "imagem": "img/cores/balao-verde.png", "rotulo": "balão verde", "correta": false },
-        { "imagem": "img/cores/balao-vermelho.png", "rotulo": "balão vermelho", "correta": false }
-      ]},
-      "feedback": { "acerto": "Muito bem! Azul, a cor do céu.", "erro": "Pense na cor do céu num dia bonito." }
-    },
-    {
-      "id": "CO-003", "nivel": 1, "subhabilidade": "cor_primaria", "bncc_sugerido": ["EI03TS02"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no balão AMARELO.",
-      "nota_professor": "Fecha o trio de cores primárias.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/balao-amarelo.png", "rotulo": "balão amarelo", "correta": true },
-        { "imagem": "img/cores/balao-laranja.png", "rotulo": "balão laranja", "correta": false },
-        { "imagem": "img/cores/balao-verde.png", "rotulo": "balão verde", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Amarelo como o sol.", "erro": "Amarelo é a cor do sol e da banana madura." }
-    },
-    {
-      "id": "CO-004", "nivel": 2, "subhabilidade": "cor_secundaria", "bncc_sugerido": ["EI03TS02"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no que é da cor ROXA.",
-      "nota_professor": "Cores secundárias costumam ser as últimas a serem nomeadas. Roxo e laranja podem exigir mais repetições.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/frutas/uva.png", "rotulo": "uva roxa", "correta": true },
-        { "imagem": "img/frutas/laranja.png", "rotulo": "laranja", "correta": false },
-        { "imagem": "img/frutas/limao.png", "rotulo": "limão verde", "correta": false },
-        { "imagem": "img/frutas/morango.png", "rotulo": "morango vermelho", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! A uva é roxinha.", "erro": "Roxo é uma cor parecida com o azul misturado com vermelho." }
-    },
-    {
-      "id": "CO-005", "nivel": 2, "subhabilidade": "agrupar_por_cor", "bncc_sugerido": ["EI03ET05", "EI03TS02"],
-      "tipo": "arrastar_para_alvo",
-      "comando": "Guarde cada brinquedo no cesto da mesma cor.",
-      "nota_professor": "Classificação por um único atributo. Os brinquedos devem ter formas variadas para a cor ser mesmo o critério.",
-      "interacao": {
-        "alvos": [
-          { "id": "cesto_vermelho", "imagem": "img/cores/cesto-vermelho.png", "rotulo": "cesto vermelho" },
-          { "id": "cesto_azul", "imagem": "img/cores/cesto-azul.png", "rotulo": "cesto azul" },
-          { "id": "cesto_amarelo", "imagem": "img/cores/cesto-amarelo.png", "rotulo": "cesto amarelo" }
-        ],
-        "arrastaveis": [
-          { "imagem": "img/cores/carrinho-vermelho.png", "rotulo": "carrinho vermelho", "alvo": "cesto_vermelho" },
-          { "imagem": "img/cores/cubo-vermelho.png", "rotulo": "cubo vermelho", "alvo": "cesto_vermelho" },
-          { "imagem": "img/cores/bola-azul.png", "rotulo": "bola azul", "alvo": "cesto_azul" },
-          { "imagem": "img/cores/pato-amarelo.png", "rotulo": "patinho amarelo", "alvo": "cesto_amarelo" }
-        ]
-      },
-      "feedback": { "acerto": "Perfeito! Cada cor no seu cesto.", "erro": "Olhe a cor do brinquedo e ache o cesto igual." }
-    },
-    {
-      "id": "CO-006", "nivel": 2, "subhabilidade": "cor_do_objeto_real", "bncc_sugerido": ["EI03TS02", "EI03ET05"],
-      "tipo": "parear",
-      "comando": "Ligue cada coisa à cor que ela costuma ter.",
-      "nota_professor": "Cor como conhecimento de mundo, não só percepção. Aceite a conversa: 'mas tem maçã verde!' é uma ótima discussão.",
-      "interacao": { "pares": [
-        { "a": { "imagem": "img/natureza/sol.png", "rotulo": "sol" }, "b": { "imagem": "img/cores/mancha-amarela.png", "rotulo": "amarelo" } },
-        { "a": { "imagem": "img/natureza/ceu.png", "rotulo": "céu" }, "b": { "imagem": "img/cores/mancha-azul.png", "rotulo": "azul" } },
-        { "a": { "imagem": "img/natureza/grama.png", "rotulo": "grama" }, "b": { "imagem": "img/cores/mancha-verde.png", "rotulo": "verde" } }
-      ]},
-      "feedback": { "acerto": "Muito bem! Você conhece as cores das coisas.", "erro": "Pense na cor de verdade de cada uma dessas coisas." }
-    },
-    {
-      "id": "CO-007", "nivel": 2, "subhabilidade": "mesma_cor", "bncc_sugerido": ["EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no objeto que tem a MESMA cor da bola.",
-      "nota_professor": "Comparação de cor entre objetos diferentes, sem precisar nomear a cor.",
-      "estimulo": { "tipo": "imagem", "asset": "img/cores/bola-verde-modelo.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/folha-verde.png", "rotulo": "folha verde", "correta": true },
-        { "imagem": "img/cores/chapeu-vermelho.png", "rotulo": "chapéu vermelho", "correta": false },
-        { "imagem": "img/cores/copo-azul.png", "rotulo": "copo azul", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! As duas são verdes.", "erro": "Olhe a cor da bola de novo e procure a mesma cor." }
-    },
-    {
-      "id": "CO-008", "nivel": 2, "subhabilidade": "selecionar_todas", "bncc_sugerido": ["EI03ET05"],
-      "tipo": "selecao_multipla",
-      "comando": "Toque em TODAS as frutas vermelhas.",
-      "nota_professor": "Mais de uma resposta certa: a criança precisa varrer o conjunto inteiro em vez de parar no primeiro acerto.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/frutas/morango.png", "rotulo": "morango", "correta": true },
-        { "imagem": "img/frutas/maca-vermelha.png", "rotulo": "maçã vermelha", "correta": true },
-        { "imagem": "img/frutas/banana.png", "rotulo": "banana", "correta": false },
-        { "imagem": "img/frutas/uva.png", "rotulo": "uva", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Você achou todas as vermelhas.", "erro": "Falta alguma. Olhe todas as frutas antes de confirmar." }
-    },
-    {
-      "id": "CO-009", "nivel": 3, "subhabilidade": "mistura_de_cores", "bncc_sugerido": ["EI03TS02", "EI03ET02"],
-      "tipo": "escolha_imagem",
-      "comando": "O pintor misturou tinta azul com tinta amarela. Qual cor apareceu?",
-      "nota_professor": "Faça a experiência real com guache ANTES de jogar; sem a vivência concreta o item vira adivinhação.",
-      "estimulo": { "tipo": "imagem", "asset": "img/cores/mistura-azul-amarelo.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/mancha-verde.png", "rotulo": "verde", "correta": true },
-        { "imagem": "img/cores/mancha-roxa.png", "rotulo": "roxo", "correta": false },
-        { "imagem": "img/cores/mancha-laranja.png", "rotulo": "laranja", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Azul com amarelo dá verde.", "erro": "Lembra da tinta que a gente misturou? Deu a cor da grama." }
-    },
-    {
-      "id": "CO-010", "nivel": 3, "subhabilidade": "mistura_de_cores", "bncc_sugerido": ["EI03TS02", "EI03ET02"],
-      "tipo": "escolha_imagem",
-      "comando": "Agora ele misturou vermelho com amarelo. Qual cor apareceu?",
-      "nota_professor": "Segunda mistura. Se a criança acertou a CO-009 por sorte, aqui aparece.",
-      "estimulo": { "tipo": "imagem", "asset": "img/cores/mistura-vermelho-amarelo.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/mancha-laranja.png", "rotulo": "laranja", "correta": true },
-        { "imagem": "img/cores/mancha-verde.png", "rotulo": "verde", "correta": false },
-        { "imagem": "img/cores/mancha-roxa.png", "rotulo": "roxo", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Deu laranja, a cor da fruta laranja.", "erro": "Pense na cor da cenoura e da fruta laranja." }
-    },
-    {
-      "id": "CO-011", "nivel": 3, "subhabilidade": "tom_claro_escuro", "bncc_sugerido": ["EI03TS02", "EI03ET01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no azul mais ESCURO.",
-      "nota_professor": "Variação dentro da mesma cor. Exige contraste bem marcado entre os três tons para não virar teste de monitor.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cores/azul-escuro.png", "rotulo": "azul escuro", "correta": true },
-        { "imagem": "img/cores/azul-medio.png", "rotulo": "azul médio", "correta": false },
-        { "imagem": "img/cores/azul-claro.png", "rotulo": "azul bem claro", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Esse é o azul mais fechado.", "erro": "O mais escuro é o que parece mais fundo, quase da cor da noite." }
-    },
-    {
-      "id": "CO-012", "nivel": 3, "subhabilidade": "ordenar_tons", "bncc_sugerido": ["EI03TS02", "EI03ET01"],
-      "tipo": "ordenar_sequencia",
-      "comando": "Coloque os verdes em ordem, do mais CLARO para o mais ESCURO.",
-      "nota_professor": "Seriação aplicada à cor. Item de fechamento do eixo; cruza com Grandezas e Comparações.",
-      "interacao": { "itens": [
-        { "imagem": "img/cores/verde-claro.png", "rotulo": "verde bem claro", "ordem": 1 },
-        { "imagem": "img/cores/verde-medio.png", "rotulo": "verde médio", "ordem": 2 },
-        { "imagem": "img/cores/verde-escuro.png", "rotulo": "verde escuro", "ordem": 3 }
-      ]},
-      "feedback": { "acerto": "Muito bem! Do clarinho até o bem escuro.", "erro": "Comece pelo verde mais clarinho de todos." }
-    }
-  ]
+ "eixo": "cores",
+ "atividades": [
+  {
+   "id": "CO-004",
+   "nivel": 2,
+   "subhabilidade": "cor_secundaria",
+   "bncc_sugerido": [
+    "EI03TS02"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no que é da cor ROXA.",
+   "nota_professor": "Cores secundárias costumam ser as últimas a serem nomeadas. Roxo e laranja podem exigir mais repetições.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/frutas/uva.png",
+      "rotulo": "uva roxa",
+      "correta": true
+     },
+     {
+      "imagem": "img/frutas/laranja.png",
+      "rotulo": "laranja",
+      "correta": false
+     },
+     {
+      "imagem": "img/frutas/limao.png",
+      "rotulo": "limão verde",
+      "correta": false
+     },
+     {
+      "imagem": "img/frutas/morango.png",
+      "rotulo": "morango vermelho",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! A uva é roxinha.",
+    "erro": "Roxo é uma cor parecida com o azul misturado com vermelho."
+   }
+  },
+  {
+   "id": "CO-007",
+   "nivel": 2,
+   "subhabilidade": "mesma_cor",
+   "bncc_sugerido": [
+    "EI03ET05"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no objeto que tem a MESMA cor da bola.",
+   "nota_professor": "Comparação de cor entre objetos diferentes, sem precisar nomear a cor.",
+   "estimulo": {
+    "tipo": "imagem",
+    "asset": "img/cores/bola-verde-modelo.png"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/cores/folha-verde.png",
+      "rotulo": "folha verde",
+      "correta": true
+     },
+     {
+      "imagem": "img/cores/chapeu-vermelho.png",
+      "rotulo": "chapéu vermelho",
+      "correta": false
+     },
+     {
+      "imagem": "img/cores/copo-azul.png",
+      "rotulo": "copo azul",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! As duas são verdes.",
+    "erro": "Olhe a cor da bola de novo e procure a mesma cor."
+   }
+  }
+ ]
 }

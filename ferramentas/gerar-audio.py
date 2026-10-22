@@ -7,12 +7,11 @@ Três categorias, com honestidade sobre o que dá e o que não dá:
    silábica, as sílabas isoladas e as duas histórias. Gerados com o Kokoro-82M
    (TTS neural Apache 2.0 que roda LOCAL: nenhum texto sai da máquina).
 
-2. SONS SINTETIZADOS — chuva, sirene, tambor, flauta, violão, chocalho, andamento
-   e intensidade. Feitos com ffmpeg. São APROXIMAÇÕES: acertam o caráter (percussivo,
-   sustentado, dedilhado) mas não o timbre real de um instrumento.
+2. SONS SINTETIZADOS — chuva e violão. Feitos com ffmpeg. São APROXIMAÇÕES: acertam
+   o caráter (sustentado, dedilhado) mas não o timbre real de um instrumento.
 
-3. SONS QUE NÃO DÁ PARA GERAR — vaca e galo. Nenhum sintetizador faz isso. Precisam
-   de gravação real, com licença compatível com uso público municipal.
+3. SONS QUE NÃO DÁ PARA GERAR — mugido de vaca. Nenhum sintetizador faz isso.
+   Precisa de gravação real, com licença compatível com uso público municipal.
 
 Uso:
     python3 ferramentas/gerar-audio.py            # só o que falta
@@ -59,23 +58,14 @@ if "--so" in sys.argv:
     SO = sys.argv[sys.argv.index("--so") + 1]
 
 # ─── fala: palavras e sílabas dos eixos 6 e 7 ────────────────────────────
-PALAVRAS = {
-    "pato": "pato", "pao": "pão", "mala": "mala", "caneca": "caneca",
-    "faca": "faca", "bola": "bola", "macaco": "macaco", "cafe": "café",
-    "flor": "flor", "janela": "janela", "banana": "banana", "sapato": "sapato",
-}
+# só o que as 20 atividades usam: o resto saiu com as 100 atividades
+PALAVRAS = {"pato": "pato", "mala": "mala", "banana": "banana"}
 # silabado = cada sílaba gerada separada e emendada com silêncio, do jeito que
 # a professora bate palmas. Ler "BO-LA" corrido não serve para o exercício.
 # O item pode ser (o que a tela mostra, o que o sintetizador fala): em "bola" o
 # o é ABERTO (/bɔ/), e o espeak lê "bo" como "bê-ó" e "bô" fechado — só "bó"
 # sai certo. Nas outras palavras o o é fechado e o "ô" do dicionário vale.
-SILABADO = {
-    "bola-silabado": [("bo", "bó"), "la"],
-    "pe-silabado": ["pé"],
-    "boneca-silabado": ["bo", "ne", "ca"],
-    "borboleta-silabado": ["bor", "bo", "le", "ta"],
-}
-SILABAS = {"bo": "bo", "ca": "ca", "lo": "lo", "sa": "sa"}
+SILABADO = {"bola-silabado": [("bo", "bó"), "la"]}
 
 # ─── frases curtas que o código fala e não vêm do banco ──────────────────
 # Sem estes arquivos, estas três frases caíam SEMPRE na voz do navegador — que
@@ -91,42 +81,16 @@ SONS = {
     "ambiente/chuva": (
         "anoisesrc=d=4:c=white:a=0.6,highpass=f=500,lowpass=f=7000,"
         "volume=0.45,afade=t=in:d=0.3,afade=t=out:st=3.5:d=0.5"),
-    "ambiente/sirene": (
-        "aevalsrc='0.35*sin(2*PI*t*(760+260*sin(2*PI*t*0.9)))':d=3.5,"
-        "afade=t=in:d=0.2,afade=t=out:st=3.1:d=0.4"),
-    # 0.95 de seno + 0.3 de ruído chega a 1.10: estourava o fundo de escala e
-    # a batida saía com estalo. Medido: max_volume -0.1 dB, 107 amostras no teto.
-    "instrumentos/tambor": (
-        "aevalsrc='0.74*exp(-13*t)*sin(2*PI*92*t)"
-        "+0.234*exp(-42*t)*(random(0)-0.5)':d=0.7"),
-    "instrumentos/flauta": (
-        "aevalsrc='0.45*(1-exp(-14*t))*exp(-0.7*t)"
-        "*sin(2*PI*(880+7*sin(2*PI*5.5*t))*t)"
-        "+0.03*exp(-1.2*t)*(random(0)-0.5)':d=1.8,lowpass=f=4000"),
     "instrumentos/violao": (
         "aevalsrc='exp(-2.6*t)*(0.45*sin(2*PI*196*t)+0.3*sin(2*PI*392*t)"
         "+0.17*sin(2*PI*588*t)+0.09*sin(2*PI*784*t)"
         "+0.05*sin(2*PI*980*t))':d=1.9"),
-    "instrumentos/chocalho": (
-        "aevalsrc='1.1*(random(0)-0.5)*pow(max(0,sin(2*PI*9*t)),6)"
-        "*exp(-0.35*t)':d=1.6,highpass=f=2500,lowpass=f=11000"),
-    # mesma correção; forte e fraco descem pelo MESMO fator (0.78), senão o
-    # contraste de intensidade — que é a resposta de CA-005 — encolhe junto
-    "intensidade/tambor-forte": (
-        "aevalsrc='0.78*exp(-13*t)*sin(2*PI*92*t)"
-        "+0.234*exp(-42*t)*(random(0)-0.5)':d=0.8"),
-    "intensidade/tambor-fraco": (
-        "aevalsrc='0.125*exp(-13*t)*sin(2*PI*92*t)"
-        "+0.039*exp(-42*t)*(random(0)-0.5)':d=0.8"),
 }
-# melodia lenta: notas emendadas (dó ré mi ré dó), 0.9 s cada
-MELODIA_LENTA = [(262, 0.9), (294, 0.9), (330, 0.9), (294, 0.9), (262, 1.1)]
 
 # Nenhum sintetizador faz som de animal. Estes vieram do Wikimedia Commons e estão
 # registrados em jogo/audio/CREDITOS.md — a vaca é CC BY-SA e EXIGE atribuição.
 IMPOSSIVEIS = {
     "animais/vaca": "mugido de vaca (Wikimedia, CC BY-SA — ver CREDITOS.md)",
-    "animais/galo": "canto de galo (Wikimedia, domínio público)",
 }
 
 
@@ -289,28 +253,6 @@ def sintetizar(filtro, destino):
     return ok
 
 
-def melodia(notas, destino):
-    destino.parent.mkdir(parents=True, exist_ok=True)
-    partes = []
-    for i, (freq, dur) in enumerate(notas):
-        w = destino.with_suffix(f".n{i}.wav")
-        f = (f"aevalsrc='0.4*(1-exp(-18*t))*exp(-1.1*t)*sin(2*PI*{freq}*t)"
-             f"+0.12*(1-exp(-18*t))*exp(-1.4*t)*sin(2*PI*{freq*2}*t)':d={dur}")
-        if not roda(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", f,
-                     "-ac", "1", "-ar", "44100", str(w)]):
-            return False
-        partes.append(w)
-    entradas = [x for w in partes for x in ("-i", str(w))]
-    cadeia = "".join(f"[{i}:a]" for i in range(len(partes)))
-    cadeia += f"concat=n={len(partes)}:v=0:a=1[out]"
-    ok = roda(["ffmpeg", "-y", "-v", "error", *entradas,
-               "-filter_complex", cadeia, "-map", "[out]",
-               "-codec:a", "libmp3lame", "-b:a", "96k", str(destino)])
-    for w in partes:
-        w.unlink(missing_ok=True)
-    return ok
-
-
 def main():
     for v in (KOKORO_MODELO, KOKORO_VOZES):
         if not v.exists():
@@ -371,11 +313,6 @@ def main():
             if precisa(d, " ".join(falados), VOZ, RITMO_PALAVRA):
                 registrar(falar_silabado(silabas, d))
             else: pulados += 1
-        for nome, texto in SILABAS.items():
-            d = SAIDA / "silabas" / f"{nome}.mp3"
-            if precisa(d, para_fala(texto), VOZ, RITMO_PALAVRA):
-                registrar(falar_solto(texto, d))
-            else: pulados += 1
 
         print("── frases do código ──")
         for nome, texto in EXTRAS.items():
@@ -402,9 +339,6 @@ def main():
             d = SAIDA / f"{nome}.mp3"
             if precisa(d): registrar(sintetizar(filtro, d))
             else: pulados += 1
-        d = SAIDA / "andamento" / "musica-lenta.mp3"
-        if precisa(d): registrar(melodia(MELODIA_LENTA, d))
-        else: pulados += 1
 
     print(f"\ngerados {feitos} · já existiam {pulados} · falharam {falhos}")
     print("\nNÃO GERÁVEIS — precisam de gravação real:")

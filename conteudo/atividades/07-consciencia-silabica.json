@@ -1,158 +1,85 @@
 {
-  "eixo": "consciencia_silabica",
-  "atividades": [
-    {
-      "id": "CS-001", "nivel": 1, "subhabilidade": "contar_silabas", "bncc_sugerido": ["EI03EF02", "EI03EF09"],
-      "tipo": "escolha_imagem",
-      "comando": "Bata palmas falando BO-LA. Quantas palmas você bateu?",
-      "nota_professor": "Sempre com o corpo primeiro: a criança bate palmas de verdade, só depois toca no número.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/bola-silabado.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "texto": "2", "rotulo": "duas", "correta": true },
-        { "texto": "1", "rotulo": "uma", "correta": false },
-        { "texto": "3", "rotulo": "três", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! BO-LA, duas palmas.", "erro": "Bata junto comigo: BO (palma) LA (palma)." }
-    },
-    {
-      "id": "CS-002", "nivel": 1, "subhabilidade": "contar_silabas", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Bata palmas falando PÉ. Quantas palmas?",
-      "nota_professor": "Monossílabo. Importante para a criança perceber que existe palavra de uma sílaba só.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/pe-silabado.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "texto": "1", "rotulo": "uma", "correta": true },
-        { "texto": "2", "rotulo": "duas", "correta": false },
-        { "texto": "3", "rotulo": "três", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! PÉ é uma palma só.", "erro": "PÉ é curtinha: dá uma palma só." }
-    },
-    {
-      "id": "CS-003", "nivel": 2, "subhabilidade": "contar_silabas", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Bata palmas falando BO-NE-CA. Quantas palmas?",
-      "nota_professor": "Trissílabo. Aqui aparece o erro de juntar duas sílabas numa palma só.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/boneca-silabado.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "texto": "3", "rotulo": "três", "correta": true },
-        { "texto": "2", "rotulo": "duas", "correta": false },
-        { "texto": "4", "rotulo": "quatro", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! BO-NE-CA, três palmas.", "erro": "Devagar: BO (palma) NE (palma) CA (palma)." }
-    },
-    {
-      "id": "CS-004", "nivel": 2, "subhabilidade": "contar_silabas", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Bata palmas falando BOR-BO-LE-TA. Quantas palmas?",
-      "nota_professor": "Quatro sílabas: limite superior confortável para a faixa. Não passe disso.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/borboleta-silabado.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "texto": "4", "rotulo": "quatro", "correta": true },
-        { "texto": "3", "rotulo": "três", "correta": false },
-        { "texto": "5", "rotulo": "cinco", "correta": false }
-      ]},
-      "feedback": { "acerto": "Muito bem! Quatro palmas.", "erro": "Fale bem devagar, batendo uma palma para cada pedacinho." }
-    },
-    {
-      "id": "CS-005", "nivel": 2, "subhabilidade": "silaba_inicial", "bncc_sugerido": ["EI03EF02", "EI03EF09"],
-      "tipo": "escolha_imagem",
-      "comando": "BANANA começa com BA. Toque na figura que também começa com BA.",
-      "nota_professor": "Sílaba inicial é intermediária entre rima e fonema — bom degrau antes do som isolado.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/banana.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/transporte/barco.png", "rotulo": "barco", "correta": true },
-        { "imagem": "img/animais/pato.png", "rotulo": "pato", "correta": false },
-        { "imagem": "img/objetos/vela.png", "rotulo": "vela", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! BA-nana, BAR-co.", "erro": "Escute o primeiro pedacinho: BA..." }
-    },
-    {
-      "id": "CS-006", "nivel": 2, "subhabilidade": "silaba_inicial", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "parear",
-      "comando": "Ligue as figuras que começam com o mesmo pedacinho.",
-      "nota_professor": "Pareamento por sílaba inicial. Fale o nome das seis figuras antes de começar.",
-      "interacao": { "pares": [
-        { "a": { "imagem": "img/animais/sapo.png", "rotulo": "sapo" }, "b": { "imagem": "img/roupas/sapato.png", "rotulo": "sapato" } },
-        { "a": { "imagem": "img/objetos/bola.png", "rotulo": "bola" }, "b": { "imagem": "img/roupas/bone.png", "rotulo": "boné" } },
-        { "a": { "imagem": "img/objetos/cadeira.png", "rotulo": "cadeira" }, "b": { "imagem": "img/animais/cavalo.png", "rotulo": "cavalo" } }
-      ]},
-      "feedback": { "acerto": "Perfeito! SA-po e SA-pato, BO-la e BO-né.", "erro": "Fale as palavras devagar e escute o primeiro pedacinho." }
-    },
-    {
-      "id": "CS-007", "nivel": 2, "subhabilidade": "comparar_silabas", "bncc_sugerido": ["EI03EF02", "EI03ET01"],
-      "tipo": "escolha_imagem",
-      "comando": "Qual palavra tem MENOS pedacinhos?",
-      "nota_professor": "Cruza consciência silábica com comparação de quantidade. Atenção: a palavra mais curta é de um objeto grande (sol) e a mais longa de um pequeno (borboleta) — de propósito, para desfazer a confusão entre tamanho da coisa e tamanho da palavra.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/natureza/sol.png", "rotulo": "sol", "correta": true },
-        { "imagem": "img/animais/cavalo.png", "rotulo": "cavalo", "correta": false },
-        { "imagem": "img/animais/borboleta.png", "rotulo": "borboleta", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! SOL tem uma palma só.", "erro": "Bata palmas em cada palavra e veja qual dá menos palmas." }
-    },
-    {
-      "id": "CS-008", "nivel": 3, "subhabilidade": "comparar_silabas", "bncc_sugerido": ["EI03EF02", "EI03ET01"],
-      "tipo": "escolha_imagem",
-      "comando": "Qual palavra tem MAIS pedacinhos?",
-      "nota_professor": "Inverso do CS-007, e com um bicho pequeno vencendo — reforça a dissociação entre palavra e objeto.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/borboleta.png", "rotulo": "borboleta", "correta": true },
-        { "imagem": "img/corpo/pe.png", "rotulo": "pé", "correta": false },
-        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! BOR-BO-LE-TA, quatro palmas.", "erro": "Conte as palmas de cada palavra e compare." }
-    },
-    {
-      "id": "CS-009", "nivel": 3, "subhabilidade": "sintese_silabica", "bncc_sugerido": ["EI03EF02", "EI03EF09"],
-      "tipo": "escolha_imagem",
-      "comando": "Junte os pedacinhos: CA... SA... Que palavra formou?",
-      "nota_professor": "Síntese silábica. Fale as sílabas com um segundo de pausa entre elas.",
-      "estimulo": { "tipo": "audio_sequencia", "assets": ["audio/silabas/ca.mp3", "audio/silabas/sa.mp3"] },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/objetos/casa.png", "rotulo": "casa", "correta": true },
-        { "imagem": "img/animais/cavalo.png", "rotulo": "cavalo", "correta": false },
-        { "imagem": "img/animais/sapo.png", "rotulo": "sapo", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! CA + SA = CASA.", "erro": "Fale rápido, juntando: casa..." }
-    },
-    {
-      "id": "CS-010", "nivel": 3, "subhabilidade": "sintese_silabica", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "Junte os pedacinhos: BO... LO... Que palavra formou?",
-      "nota_professor": "Segunda síntese. Distrator 'bola' difere só na última sílaba — exige escuta fina.",
-      "estimulo": { "tipo": "audio_sequencia", "assets": ["audio/silabas/bo.mp3", "audio/silabas/lo.mp3"] },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/alimentos/bolo.png", "rotulo": "bolo", "correta": true },
-        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": false },
-        { "imagem": "img/roupas/bone.png", "rotulo": "boné", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! BO + LO = BOLO.", "erro": "Escute o segundo pedacinho com atenção: é LO, não LA." }
-    },
-    {
-      "id": "CS-011", "nivel": 3, "subhabilidade": "ordenar_silabas", "bncc_sugerido": ["EI03EF02", "EI03EF09"],
-      "tipo": "ordenar_sequencia",
-      "comando": "Coloque os pedacinhos na ordem certa para formar BONECA.",
-      "nota_professor": "As sílabas aparecem escritas em cartões grandes E são faladas ao toque. A criança se apoia no som, não na leitura.",
-      "estimulo": { "tipo": "imagem", "asset": "img/objetos/boneca.png" },
-      "interacao": { "itens": [
-        { "texto": "BO", "rotulo": "bo", "ordem": 1 },
-        { "texto": "NE", "rotulo": "ne", "ordem": 2 },
-        { "texto": "CA", "rotulo": "ca", "ordem": 3 }
-      ]},
-      "feedback": { "acerto": "Perfeito! BO-NE-CA.", "erro": "Fale a palavra devagar e veja qual pedacinho vem primeiro." }
-    },
-    {
-      "id": "CS-012", "nivel": 3, "subhabilidade": "silaba_final", "bncc_sugerido": ["EI03EF02"],
-      "tipo": "escolha_imagem",
-      "comando": "SAPATO termina com TO. Toque na figura que também termina com TO.",
-      "nota_professor": "Sílaba final. Mais difícil que a inicial porque exige segurar a palavra inteira na memória.",
-      "estimulo": { "tipo": "audio", "asset": "audio/palavras/sapato.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/pato.png", "rotulo": "pato", "correta": true },
-        { "imagem": "img/objetos/bola.png", "rotulo": "bola", "correta": false },
-        { "imagem": "img/objetos/vela.png", "rotulo": "vela", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! SapaTO, paTO.", "erro": "Escute o último pedacinho de cada palavra." }
-    }
-  ]
+ "eixo": "consciencia_silabica",
+ "atividades": [
+  {
+   "id": "CS-001",
+   "nivel": 1,
+   "subhabilidade": "contar_silabas",
+   "bncc_sugerido": [
+    "EI03EF02",
+    "EI03EF09"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Bata palmas falando BO-LA. Quantas palmas você bateu?",
+   "nota_professor": "Sempre com o corpo primeiro: a criança bate palmas de verdade, só depois toca no número.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/bola-silabado.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "texto": "2",
+      "rotulo": "duas",
+      "correta": true
+     },
+     {
+      "texto": "1",
+      "rotulo": "uma",
+      "correta": false
+     },
+     {
+      "texto": "3",
+      "rotulo": "três",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! BO-LA, duas palmas.",
+    "erro": "Bata junto comigo: BO (palma) LA (palma)."
+   }
+  },
+  {
+   "id": "CS-005",
+   "nivel": 2,
+   "subhabilidade": "silaba_inicial",
+   "bncc_sugerido": [
+    "EI03EF02",
+    "EI03EF09"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "BANANA começa com BA. Toque na figura que também começa com BA.",
+   "nota_professor": "Sílaba inicial é intermediária entre rima e fonema — bom degrau antes do som isolado.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/palavras/banana.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/transporte/barco.png",
+      "rotulo": "barco",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/pato.png",
+      "rotulo": "pato",
+      "correta": false
+     },
+     {
+      "imagem": "img/objetos/vela.png",
+      "rotulo": "vela",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! BA-nana, BAR-co.",
+    "erro": "Escute o primeiro pedacinho: BA..."
+   }
+  }
+ ]
 }

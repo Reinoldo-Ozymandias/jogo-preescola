@@ -1,162 +1,85 @@
 {
-  "eixo": "animais_habitats",
-  "atividades": [
-    {
-      "id": "AH-001", "nivel": 1, "subhabilidade": "identificar_animal", "bncc_sugerido": ["EI03ET01", "EI03EF01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no cachorro.",
-      "nota_professor": "Item de entrada: vocabulário de animais domésticos, que a criança já traz de casa.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/cachorro.png", "rotulo": "cachorro", "correta": true },
-        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false },
-        { "imagem": "img/animais/passarinho.png", "rotulo": "passarinho", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Esse é o cachorro.", "erro": "O cachorro é o que faz au-au. Tente de novo." }
-    },
-    {
-      "id": "AH-002", "nivel": 1, "subhabilidade": "som_do_animal", "bncc_sugerido": ["EI03TS03", "EI03EF01"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute o som. Que animal fez esse barulho?",
-      "nota_professor": "Escuta antes da imagem. Toque o áudio inteiro uma vez antes de liberar as opções.",
-      "estimulo": { "tipo": "audio", "asset": "audio/animais/vaca.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/vaca.png", "rotulo": "vaca", "correta": true },
-        { "imagem": "img/animais/cavalo.png", "rotulo": "cavalo", "correta": false },
-        { "imagem": "img/animais/ovelha.png", "rotulo": "ovelha", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! A vaca faz muuu.", "erro": "Escute de novo com atenção e pense em quem faz esse som." }
-    },
-    {
-      "id": "AH-003", "nivel": 2, "subhabilidade": "som_do_animal", "bncc_sugerido": ["EI03TS03"],
-      "tipo": "escolha_imagem",
-      "comando": "Escute o som. Quem está cantando?",
-      "nota_professor": "Som mais específico que o da vaca; galo e pato podem se confundir para quem mora na cidade.",
-      "estimulo": { "tipo": "audio", "asset": "audio/animais/galo.mp3" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/galo.png", "rotulo": "galo", "correta": true },
-        { "imagem": "img/animais/pato.png", "rotulo": "pato", "correta": false },
-        { "imagem": "img/animais/porco.png", "rotulo": "porco", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! O galo canta de manhã cedo.", "erro": "Esse é o bichinho que acorda todo mundo na roça." }
-    },
-    {
-      "id": "AH-004", "nivel": 2, "subhabilidade": "habitat", "bncc_sugerido": ["EI03ET01", "EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Onde o peixe vive?",
-      "nota_professor": "Relação animal-habitat mais direta possível. Bom para abrir a conversa sobre o rio Itajaí-Mirim.",
-      "estimulo": { "tipo": "imagem", "asset": "img/animais/peixe-m.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/habitats/rio.png", "rotulo": "no rio", "correta": true },
-        { "imagem": "img/habitats/floresta.png", "rotulo": "na floresta", "correta": false },
-        { "imagem": "img/habitats/deserto.png", "rotulo": "no deserto", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! O peixe vive na água.", "erro": "O peixe precisa de água para respirar. Onde tem água?" }
-    },
-    {
-      "id": "AH-005", "nivel": 2, "subhabilidade": "habitat", "bncc_sugerido": ["EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Qual desses animais vive na FAZENDA?",
-      "nota_professor": "Agora o caminho é inverso: dado o lugar, achar o animal.",
-      "estimulo": { "tipo": "imagem", "asset": "img/habitats/fazenda.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/vaca.png", "rotulo": "vaca", "correta": true },
-        { "imagem": "img/animais/leao.png", "rotulo": "leão", "correta": false },
-        { "imagem": "img/animais/tubarao.png", "rotulo": "tubarão", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! A vaca vive na fazenda.", "erro": "Pense em qual desses a gente vê no sítio, perto de casa." }
-    },
-    {
-      "id": "AH-006", "nivel": 2, "subhabilidade": "classificar_habitat", "bncc_sugerido": ["EI03ET05"],
-      "tipo": "arrastar_para_alvo",
-      "comando": "Leve cada animal para o lugar onde ele vive.",
-      "nota_professor": "Classificação em três categorias: água, terra e ar. O morcego costuma gerar discussão — deixe a turma argumentar.",
-      "interacao": {
-        "alvos": [
-          { "id": "agua", "imagem": "img/habitats/agua.png", "rotulo": "na água" },
-          { "id": "terra", "imagem": "img/habitats/terra.png", "rotulo": "na terra" },
-          { "id": "ar", "imagem": "img/habitats/ceu.png", "rotulo": "no ar" }
-        ],
-        "arrastaveis": [
-          { "imagem": "img/animais/peixe-m.png", "rotulo": "peixe", "alvo": "agua" },
-          { "imagem": "img/animais/tartaruga-marinha.png", "rotulo": "tartaruga do mar", "alvo": "agua" },
-          { "imagem": "img/animais/cavalo.png", "rotulo": "cavalo", "alvo": "terra" },
-          { "imagem": "img/animais/passarinho.png", "rotulo": "passarinho", "alvo": "ar" }
-        ]
-      },
-      "feedback": { "acerto": "Muito bem! Cada um na sua casa.", "erro": "Pense: esse bichinho nada, anda ou voa?" }
-    },
-    {
-      "id": "AH-007", "nivel": 2, "subhabilidade": "locomocao", "bncc_sugerido": ["EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no animal que VOA.",
-      "nota_professor": "Classificação por forma de deslocamento.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/borboleta.png", "rotulo": "borboleta", "correta": true },
-        { "imagem": "img/animais/tartaruga.png", "rotulo": "tartaruga", "correta": false },
-        { "imagem": "img/animais/peixe-m.png", "rotulo": "peixe", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! A borboleta voa com as asinhas.", "erro": "Procure quem tem asas para voar." }
-    },
-    {
-      "id": "AH-008", "nivel": 2, "subhabilidade": "filhotes", "bncc_sugerido": ["EI03ET02", "EI03ET05"],
-      "tipo": "parear",
-      "comando": "Ligue cada mamãe ao seu filhote.",
-      "nota_professor": "Trabalha também a noção de crescimento e transformação.",
-      "interacao": { "pares": [
-        { "a": { "imagem": "img/animais/galinha.png", "rotulo": "galinha" }, "b": { "imagem": "img/animais/pintinho.png", "rotulo": "pintinho" } },
-        { "a": { "imagem": "img/animais/vaca.png", "rotulo": "vaca" }, "b": { "imagem": "img/animais/bezerro.png", "rotulo": "bezerro" } },
-        { "a": { "imagem": "img/animais/cadela.png", "rotulo": "cadela" }, "b": { "imagem": "img/animais/filhote-cachorro.png", "rotulo": "filhote de cachorro" } }
-      ]},
-      "feedback": { "acerto": "Perfeito! Cada filhote com a mãe.", "erro": "O filhote é parecido com a mãe, só que pequenininho." }
-    },
-    {
-      "id": "AH-009", "nivel": 2, "subhabilidade": "fauna_local", "bncc_sugerido": ["EI03ET03", "EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Qual desses animais vive na mata aqui perto de Brusque?",
-      "nota_professor": "Fauna da Mata Atlântica catarinense. Traga fotos reais do entorno da escola antes de aplicar.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/tucano.png", "rotulo": "tucano", "correta": true },
-        { "imagem": "img/animais/pinguim.png", "rotulo": "pinguim", "correta": false },
-        { "imagem": "img/animais/camelo.png", "rotulo": "camelo", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! O tucano vive na nossa mata.", "erro": "Um deles mora no gelo e o outro no deserto. Sobrou qual?" }
-    },
-    {
-      "id": "AH-010", "nivel": 3, "subhabilidade": "alimentacao", "bncc_sugerido": ["EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "O que o coelho gosta de comer?",
-      "nota_professor": "Cadeia alimentar em versão simples. Evita o estereótipo do desenho animado usando alimentos plausíveis.",
-      "estimulo": { "tipo": "imagem", "asset": "img/animais/coelho.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/alimentos/cenoura.png", "rotulo": "cenoura", "correta": true },
-        { "imagem": "img/alimentos/osso.png", "rotulo": "osso", "correta": false },
-        { "imagem": "img/alimentos/peixe-cru.png", "rotulo": "peixe", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! O coelho adora cenoura e folhinhas.", "erro": "O coelho come verdurinhas. Qual dessas é uma verdura?" }
-    },
-    {
-      "id": "AH-011", "nivel": 3, "subhabilidade": "cobertura_corporal", "bncc_sugerido": ["EI03ET01", "EI03ET05"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no animal que tem PENAS.",
-      "nota_professor": "Atributo físico como critério de classificação — mais abstrato que 'onde vive'.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/papagaio.png", "rotulo": "papagaio", "correta": true },
-        { "imagem": "img/animais/gato.png", "rotulo": "gato", "correta": false },
-        { "imagem": "img/animais/cobra.png", "rotulo": "cobra", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Os passarinhos têm penas.", "erro": "Penas são o que cobre o corpo das aves." }
-    },
-    {
-      "id": "AH-012", "nivel": 3, "subhabilidade": "negacao", "bncc_sugerido": ["EI03ET05", "EI03EF01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no animal que NÃO vive na água.",
-      "nota_professor": "Instrução com negação: muitas crianças de 5 anos ignoram o 'não'. Fale a palavra NÃO com ênfase e pausa.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/leao.png", "rotulo": "leão", "correta": true },
-        { "imagem": "img/animais/golfinho.png", "rotulo": "golfinho", "correta": false },
-        { "imagem": "img/animais/peixe-m.png", "rotulo": "peixe", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! O leão vive na terra, não na água.", "erro": "Atenção: eu pedi o que NÃO vive na água." }
-    }
-  ]
+ "eixo": "animais_habitats",
+ "atividades": [
+  {
+   "id": "AH-002",
+   "nivel": 1,
+   "subhabilidade": "som_do_animal",
+   "bncc_sugerido": [
+    "EI03TS03",
+    "EI03EF01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Escute o som. Que animal fez esse barulho?",
+   "nota_professor": "Escuta antes da imagem. Toque o áudio inteiro uma vez antes de liberar as opções.",
+   "estimulo": {
+    "tipo": "audio",
+    "asset": "audio/animais/vaca.mp3"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/animais/vaca.png",
+      "rotulo": "vaca",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/cavalo.png",
+      "rotulo": "cavalo",
+      "correta": false
+     },
+     {
+      "imagem": "img/animais/ovelha.png",
+      "rotulo": "ovelha",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! A vaca faz muuu.",
+    "erro": "Escute de novo com atenção e pense em quem faz esse som."
+   }
+  },
+  {
+   "id": "AH-004",
+   "nivel": 2,
+   "subhabilidade": "habitat",
+   "bncc_sugerido": [
+    "EI03ET01",
+    "EI03ET05"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Onde o peixe vive?",
+   "nota_professor": "Relação animal-habitat mais direta possível. Bom para abrir a conversa sobre o rio Itajaí-Mirim.",
+   "estimulo": {
+    "tipo": "imagem",
+    "asset": "img/animais/peixe-m.png"
+   },
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/habitats/rio.png",
+      "rotulo": "no rio",
+      "correta": true
+     },
+     {
+      "imagem": "img/habitats/floresta.png",
+      "rotulo": "na floresta",
+      "correta": false
+     },
+     {
+      "imagem": "img/habitats/deserto.png",
+      "rotulo": "no deserto",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! O peixe vive na água.",
+    "erro": "O peixe precisa de água para respirar. Onde tem água?"
+   }
+  }
+ ]
 }

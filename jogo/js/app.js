@@ -30,13 +30,13 @@
 
   /* ─── carga do banco ─────────────────────────────────────────────────── */
 
-  /* O jogo roda o corte fixo, não o banco inteiro: são as 20 verificadas como
-   * jogáveis hoje (ver conteudo/piloto.json). As outras 100 continuam existindo em
-   * dist/atividades.json e são alcançadas pela tela de revisão e pelo atalho ?id=,
-   * mas ninguém tropeça nelas jogando. */
+  /* O banco são 20 atividades: duas por eixo, todas escolha_imagem. É o conjunto
+   * que funciona sem nenhuma ilustração e que foi conferido uma a uma. As outras
+   * 100 foram retiradas do projeto em 2026-10-21 — continuam no histórico do git,
+   * mas não são conteúdo entregue. */
   function carregarBanco() {
-    if (!window.BANCO_PILOTO) throw new Error("dist/piloto.js não foi carregado");
-    estado.banco = window.BANCO_PILOTO;
+    if (!window.BANCO_COMPLETO) throw new Error("dist/atividades.js não foi carregado");
+    estado.banco = window.BANCO_COMPLETO;
   }
 
   /* ─── sessão ─────────────────────────────────────────────────────────── */
@@ -55,8 +55,7 @@
    *
    *  Não há sorteio nem tamanho configurável: são 20 atividades fixas, agrupadas
    *  por eixo e do fácil para o difícil dentro de cada um. O que sorteava um
-   *  recorte saiu junto com o controle de quantidade — está no histórico do git,
-   *  e volta quando as outras 100 forem conferidas. */
+   *  recorte saiu junto com o controle de quantidade — está no histórico do git. */
   function iniciarSessao(filtroEixo = null) {
     const universo = filtroEixo
       ? estado.banco.atividades.filter((a) => a.eixo === filtroEixo.id)
@@ -384,8 +383,7 @@
 
   /* ─── revisão pedagógica ─────────────────────────────────────────────── */
 
-  /* A revisão lê o banco completo por conta própria — não depende de o jogo estar
-   * no piloto ou não. */
+  /* A revisão lê o banco por conta própria — não depende da sessão do jogo. */
   async function abrirRevisao() {
     mostrar("tela-revisao");
     try {
@@ -486,20 +484,8 @@
     const q = new URLSearchParams(location.search);
     const id = q.get("id");
     if (id) {
-      // O jogo roda os 20 fixos, mas o atalho tem de alcançar as 120: é ele que a
-      // tela de revisão usa no "▶ ver no jogo", e são justamente as outras 100 que
-      // a coordenação precisa ver.
-      let ativ = estado.banco.atividades.find((a) => a.id === id.toUpperCase());
-      if (!ativ) {
-        const completo = window.BANCO_COMPLETO;
-        if (completo) {
-          ativ = completo.atividades.find((a) => a.id === id.toUpperCase());
-          // NÃO trocar estado.banco pelo completo: o atalho mostra UMA atividade,
-          // mas o banco é o que a próxima sessão joga — trocá-lo fazia o "voltar ao
-          // início" abrir uma sessão de 120. O índice de eixos que o chip precisa
-          // já vem no piloto.json, então não falta nada aqui.
-        }
-      }
+      // é o atalho que a tela de revisão usa no "▶ ver no jogo"
+      const ativ = estado.banco.atividades.find((a) => a.id === id.toUpperCase());
       if (!ativ) return false;
       estado.filtroEixo = null;
       estado.sessao = [ativ];
@@ -527,7 +513,7 @@
         `<div style="padding:40px;font-family:system-ui;line-height:1.6">
            <h1>Não consegui carregar o banco de atividades</h1>
            <p><code>${err.message}</code></p>
-           <p>O <code>index.html</code> carrega <code>dist/piloto.js</code> por
+           <p>O <code>index.html</code> carrega <code>dist/atividades.js</code> por
               <code>&lt;script&gt;</code>. Se esse arquivo não existir, gere com:</p>
            <pre>python3 ferramentas/validar.py --build</pre>
          </div>`;

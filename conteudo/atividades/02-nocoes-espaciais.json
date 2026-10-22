@@ -1,161 +1,72 @@
 {
-  "eixo": "nocoes_espaciais",
-  "atividades": [
-    {
-      "id": "NE-001", "nivel": 1, "subhabilidade": "em_cima_embaixo", "bncc_sugerido": ["EI03ET01", "EI03CG01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no gato que está EM CIMA da mesa.",
-      "nota_professor": "Mesma cena repetida com o gato em posições diferentes — assim só a posição distingue as opções.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/gato-em-cima-mesa.png", "rotulo": "gato em cima da mesa", "correta": true },
-        { "imagem": "img/cenas/gato-embaixo-mesa.png", "rotulo": "gato embaixo da mesa", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Esse subiu na mesa.", "erro": "Procure o gato que está sobre a mesa, lá em cima." }
-    },
-    {
-      "id": "NE-002", "nivel": 1, "subhabilidade": "em_cima_embaixo", "bncc_sugerido": ["EI03ET01", "EI03CG01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no que está EMBAIXO da cadeira.",
-      "nota_professor": "Polo oposto do NE-001, para evitar que a criança acerte por padrão de resposta.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/bola-embaixo-cadeira.png", "rotulo": "bola embaixo da cadeira", "correta": true },
-        { "imagem": "img/cenas/bola-em-cima-cadeira.png", "rotulo": "bola em cima da cadeira", "correta": false }
-      ]},
-      "feedback": { "acerto": "Muito bem! Está debaixo da cadeira.", "erro": "Olhe embaixo, na parte de baixo da cadeira." }
-    },
-    {
-      "id": "NE-003", "nivel": 1, "subhabilidade": "dentro_fora", "bncc_sugerido": ["EI03ET01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque na bola que está DENTRO da caixa.",
-      "nota_professor": "Dentro/fora costuma ser a dupla mais fácil do eixo. Bom item para abrir uma sessão.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/bola-dentro-caixa.png", "rotulo": "bola dentro da caixa", "correta": true },
-        { "imagem": "img/cenas/bola-fora-caixa.png", "rotulo": "bola fora da caixa", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Está guardada dentro.", "erro": "Qual bola está guardada, dentro da caixa?" }
-    },
-    {
-      "id": "NE-004", "nivel": 2, "subhabilidade": "frente_atras", "bncc_sugerido": ["EI03ET01", "EI03CG01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque na criança que está ATRÁS da árvore.",
-      "nota_professor": "Exige entender oclusão: parte do corpo fica escondida. Se a turma errar muito, brinque de esconde-esconde antes.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/crianca-atras-arvore.png", "rotulo": "criança atrás da árvore", "correta": true },
-        { "imagem": "img/cenas/crianca-frente-arvore.png", "rotulo": "criança na frente da árvore", "correta": false },
-        { "imagem": "img/cenas/crianca-ao-lado-arvore.png", "rotulo": "criança ao lado da árvore", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Ela está escondidinha atrás.", "erro": "Quem está meio escondido pela árvore?" }
-    },
-    {
-      "id": "NE-005", "nivel": 2, "subhabilidade": "perto_longe", "bncc_sugerido": ["EI03ET01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque na casa que está mais LONGE da menina.",
-      "nota_professor": "Distância relativa a um ponto de referência. As casas devem ter o mesmo tamanho aparente para não virar item de tamanho.",
-      "estimulo": { "tipo": "imagem", "asset": "img/cenas/menina-referencia.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/casa-longe.png", "rotulo": "casa longe", "correta": true },
-        { "imagem": "img/cenas/casa-media.png", "rotulo": "casa no meio", "correta": false },
-        { "imagem": "img/cenas/casa-perto.png", "rotulo": "casa perto", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Essa é a mais distante dela.", "erro": "Meça com o dedo: qual casa está mais afastada da menina?" }
-    },
-    {
-      "id": "NE-006", "nivel": 2, "subhabilidade": "entre", "bncc_sugerido": ["EI03ET01", "EI03ET07"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no animal que está ENTRE o cachorro e o gato.",
-      "nota_professor": "A noção de 'entre' precisa de dois pontos de referência. Manter os três animais em fila, sem embaralhar.",
-      "interacao": { "embaralhar": false, "opcoes": [
-        { "imagem": "img/animais/cachorro.png", "rotulo": "cachorro, na ponta", "correta": false },
-        { "imagem": "img/animais/coelho.png", "rotulo": "coelho, no meio", "correta": true },
-        { "imagem": "img/animais/gato.png", "rotulo": "gato, na outra ponta", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! O coelho está no meio dos dois.", "erro": "Quem está no meio, com o cachorro de um lado e o gato do outro?" }
-    },
-    {
-      "id": "NE-007", "nivel": 2, "subhabilidade": "dentro_fora", "bncc_sugerido": ["EI03ET01"],
-      "tipo": "arrastar_para_alvo",
-      "comando": "Arraste as frutas para DENTRO da cesta.",
-      "nota_professor": "Passa da identificação para a ação. Distratores (brinquedos) não devem ser arrastados.",
-      "interacao": {
-        "alvos": [ { "id": "cesta", "imagem": "img/objetos/cesta.png", "rotulo": "cesta" } ],
-        "arrastaveis": [
-          { "imagem": "img/frutas/maca.png", "rotulo": "maçã", "alvo": "cesta" },
-          { "imagem": "img/frutas/banana.png", "rotulo": "banana", "alvo": "cesta" },
-          { "imagem": "img/objetos/carrinho.png", "rotulo": "carrinho", "alvo": null }
-        ]
-      },
-      "feedback": { "acerto": "Boa! As frutas ficaram todas dentro.", "erro": "Só as frutas vão para dentro da cesta." }
-    },
-    {
-      "id": "NE-008", "nivel": 2, "subhabilidade": "em_cima_embaixo", "bncc_sugerido": ["EI03ET01"],
-      "tipo": "arrastar_para_alvo",
-      "comando": "Coloque o passarinho EM CIMA do telhado e o cachorro EMBAIXO da árvore.",
-      "nota_professor": "Duas relações espaciais na mesma instrução — trabalha também memória de trabalho auditiva.",
-      "interacao": {
-        "alvos": [
-          { "id": "telhado", "imagem": "img/cenarios/telhado.png", "rotulo": "telhado da casa" },
-          { "id": "sob_arvore", "imagem": "img/cenarios/sombra-arvore.png", "rotulo": "embaixo da árvore" }
-        ],
-        "arrastaveis": [
-          { "imagem": "img/animais/passarinho.png", "rotulo": "passarinho", "alvo": "telhado" },
-          { "imagem": "img/animais/cachorro.png", "rotulo": "cachorro", "alvo": "sob_arvore" }
-        ]
-      },
-      "feedback": { "acerto": "Perfeito! Cada um no seu lugar.", "erro": "Escute de novo: o passarinho vai em cima, o cachorro vai embaixo." }
-    },
-    {
-      "id": "NE-009", "nivel": 2, "subhabilidade": "esquerda_direita", "bncc_sugerido": ["EI03CG01"],
-      "tipo": "escolha_imagem",
-      "comando": "Toque no peixe que está nadando para a DIREITA.",
-      "nota_professor": "Direção do objeto, mais fácil que lateralidade do próprio corpo. Faça a criança apontar com a mão antes de responder.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/animais/peixe-direita.png", "rotulo": "peixe virado para a direita", "correta": true },
-        { "imagem": "img/animais/peixe-esquerda.png", "rotulo": "peixe virado para a esquerda", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Ele vai para a direita.", "erro": "Levante a sua mão direita e veja para que lado o peixe está indo." }
-    },
-    {
-      "id": "NE-010", "nivel": 3, "subhabilidade": "percurso", "bncc_sugerido": ["EI03ET01", "EI03CG01"],
-      "tipo": "escolha_imagem",
-      "comando": "Qual caminho leva o coelho até a cenoura?",
-      "nota_professor": "Rastreamento visual de trajeto. Os três caminhos devem se cruzar, senão fica óbvio.",
-      "estimulo": { "tipo": "imagem", "asset": "img/cenas/labirinto-coelho.png" },
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/caminho-a.png", "rotulo": "caminho de cima", "correta": true },
-        { "imagem": "img/cenas/caminho-b.png", "rotulo": "caminho do meio", "correta": false },
-        { "imagem": "img/cenas/caminho-c.png", "rotulo": "caminho de baixo", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Por aí ele chega na cenoura.", "erro": "Siga a linha com o dedinho, do coelho até o fim." }
-    },
-    {
-      "id": "NE-011", "nivel": 3, "subhabilidade": "classificar_espacial", "bncc_sugerido": ["EI03ET01", "EI03ET05"],
-      "tipo": "arrastar_para_alvo",
-      "comando": "Guarde os brinquedos DENTRO do baú e as roupas DENTRO do armário.",
-      "nota_professor": "Junta noção espacial com classificação por categoria. Bom item de fechamento do eixo.",
-      "interacao": {
-        "alvos": [
-          { "id": "bau", "imagem": "img/objetos/bau.png", "rotulo": "baú de brinquedos" },
-          { "id": "armario", "imagem": "img/objetos/armario.png", "rotulo": "armário de roupas" }
-        ],
-        "arrastaveis": [
-          { "imagem": "img/objetos/urso-pelucia.png", "rotulo": "urso de pelúcia", "alvo": "bau" },
-          { "imagem": "img/objetos/carrinho.png", "rotulo": "carrinho", "alvo": "bau" },
-          { "imagem": "img/roupas/camiseta.png", "rotulo": "camiseta", "alvo": "armario" },
-          { "imagem": "img/roupas/calca.png", "rotulo": "calça", "alvo": "armario" }
-        ]
-      },
-      "feedback": { "acerto": "Muito bem! Quarto arrumado.", "erro": "Brinquedo vai no baú; roupa vai no armário." }
-    },
-    {
-      "id": "NE-012", "nivel": 3, "subhabilidade": "lateralidade_corporal", "bncc_sugerido": ["EI03CG01", "EI03CG02"],
-      "tipo": "escolha_imagem",
-      "comando": "A menina levantou uma das mãos. Toque na menina que levantou a mão ESQUERDA.",
-      "nota_professor": "Item mais difícil do eixo: as figuras estão de costas, para não exigir inversão de espelho. Registre separadamente — muitas crianças de 5 anos ainda não consolidaram lateralidade.",
-      "interacao": { "embaralhar": true, "opcoes": [
-        { "imagem": "img/cenas/menina-costas-mao-esq.png", "rotulo": "menina de costas com a mão esquerda levantada", "correta": true },
-        { "imagem": "img/cenas/menina-costas-mao-dir.png", "rotulo": "menina de costas com a mão direita levantada", "correta": false }
-      ]},
-      "feedback": { "acerto": "Isso! Essa é a mão esquerda.", "erro": "Levante a sua mão esquerda e compare com a da menina — ela está de costas, igual a você." }
-    }
-  ]
+ "eixo": "nocoes_espaciais",
+ "atividades": [
+  {
+   "id": "NE-001",
+   "nivel": 1,
+   "subhabilidade": "em_cima_embaixo",
+   "bncc_sugerido": [
+    "EI03ET01",
+    "EI03CG01"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no gato que está EM CIMA da mesa.",
+   "nota_professor": "Mesma cena repetida com o gato em posições diferentes — assim só a posição distingue as opções.",
+   "interacao": {
+    "embaralhar": true,
+    "opcoes": [
+     {
+      "imagem": "img/cenas/gato-em-cima-mesa.png",
+      "rotulo": "gato em cima da mesa",
+      "correta": true
+     },
+     {
+      "imagem": "img/cenas/gato-embaixo-mesa.png",
+      "rotulo": "gato embaixo da mesa",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! Esse subiu na mesa.",
+    "erro": "Procure o gato que está sobre a mesa, lá em cima."
+   }
+  },
+  {
+   "id": "NE-006",
+   "nivel": 2,
+   "subhabilidade": "entre",
+   "bncc_sugerido": [
+    "EI03ET01",
+    "EI03ET07"
+   ],
+   "tipo": "escolha_imagem",
+   "comando": "Toque no animal que está ENTRE o cachorro e o gato.",
+   "nota_professor": "A noção de 'entre' precisa de dois pontos de referência. Manter os três animais em fila, sem embaralhar.",
+   "interacao": {
+    "embaralhar": false,
+    "opcoes": [
+     {
+      "imagem": "img/animais/cachorro.png",
+      "rotulo": "cachorro, na ponta",
+      "correta": false
+     },
+     {
+      "imagem": "img/animais/coelho.png",
+      "rotulo": "coelho, no meio",
+      "correta": true
+     },
+     {
+      "imagem": "img/animais/gato.png",
+      "rotulo": "gato, na outra ponta",
+      "correta": false
+     }
+    ]
+   },
+   "feedback": {
+    "acerto": "Isso! O coelho está no meio dos dois.",
+    "erro": "Quem está no meio, com o cachorro de um lado e o gato do outro?"
+   }
+  }
+ ]
 }

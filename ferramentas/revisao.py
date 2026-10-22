@@ -9,8 +9,7 @@ mostra a mesma folha, abre cada atividade no jogo de verdade e exporta o
 Markdown já PREENCHIDO. Este script continua aqui para quem revisa no papel.
 
 Uso:
-    python3 ferramentas/revisao.py           > dist/revisao-pedagogica.md
-    python3 ferramentas/revisao.py --piloto  > dist/revisao-piloto.md
+    python3 ferramentas/revisao.py > dist/revisao-pedagogica.md
 """
 import json
 import sys
@@ -19,17 +18,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 indice = json.loads((RAIZ / "conteudo" / "eixos.json").read_text(encoding="utf-8"))
 
-so_piloto = "--piloto" in sys.argv
-filtro = None
-if so_piloto:
-    cfg = json.loads((RAIZ / "conteudo" / "piloto.json").read_text(encoding="utf-8"))
-    filtro = set(cfg["ids"])
-
-titulo = "Piloto — folha de revisão pedagógica" if so_piloto \
-    else "Banco de atividades — folha de revisão pedagógica"
-print(f"# {titulo}\n")
-if so_piloto:
-    print(f"> **Corte de piloto:** {cfg['descricao']}\n")
+print("# Banco de atividades — folha de revisão pedagógica\n")
 print(f"**Público:** {indice['publico']}  ")
 print(f"**Versão do banco:** {indice['versao']}\n")
 print(f"> {indice['aviso_bncc']}\n")
@@ -43,8 +32,6 @@ for eixo in indice["eixos"]:
     print(f"*{eixo['descricao']}*\n")
     print(f"Campo de experiência: {eixo['campo_experiencia']}\n")
     for a in dados["atividades"]:
-        if filtro is not None and a["id"] not in filtro:
-            continue
         total += 1
         print(f"### {a['id']} — nível {a['nivel']} · {a['subhabilidade'].replace('_', ' ')}\n")
         print(f"**Fala do jogo:** “{a['comando']}”\n")
